@@ -1,0 +1,40 @@
+При выполнении данного кожа возникает ошибка. Найти причину и исправить ее.
+
+public class Employee extends Person{
+    String job;
+
+    public Employee(String name, String job) {
+
+        super(name);
+        System.out.println("Вызов конструктора Employee");
+        this.job = job;
+    }
+
+    public void printInfo() {
+        System.out.println("printInfo from Employee");
+        System.out.println(name.toUpperCase() + " " + job.toUpperCase()) ;
+    }
+}
+
+public class Person {
+    String name;
+
+    public Person(String name) {
+        System.out.println("Вызов конструктора Person");
+        this.name = name;
+        printInfo();
+    }
+
+    public void printInfo(){
+        System.out.println("printInfo from Person");
+        System.out.println(name.toUpperCase());
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee("Mike", "Manager");
+        employee.printInfo();
+    }
+}
