@@ -8,6 +8,4 @@ target/
 
 *.class
 *.info
-*.properties
 *.jar
-
