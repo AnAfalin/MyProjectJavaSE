@@ -19,43 +19,21 @@ public class Date {
     }
 
     private boolean dayIsCorrect(Month month, int day, int year){
-        if(month == Month.JANUARY && day > 0 && day <= 31) {
-            return true;
+        if(day > 0 && day <= 31) {
+            if (month.ordinal() == 0 || month.ordinal() == 2 || month.ordinal() == 4 ||
+                    month.ordinal() == 6 || month.ordinal() == 7 || month.ordinal() == 9 || month.ordinal() == 11)
+                return true;
         }
-        if(month == Month.FEBRUARY && day > 0 && year % 4 == 0 && day <=29) {
-            return true;
+        if(day > 0 && day <= 30) {
+            if (month.ordinal() == 3 || month.ordinal() == 5 || month.ordinal() == 8 || month.ordinal() == 10)
+                return true;
         }
-        if(month == Month.FEBRUARY && day > 0 && day <=28) {
-            return true;
+        if (month.ordinal() == 1) {
+            if (day > 0 && year % 4 == 0 && day <=29) {
+                return true;
+            }else return day > 0 && day <= 28;
         }
-        if(month == Month.MARCH && day > 0 && day <= 31) {
-            return true;
-        }
-        if(month == Month.APRIL && day > 0 && day <= 30) {
-            return true;
-        }
-        if(month == Month.MAY && day > 0 && day <= 31) {
-            return true;
-        }
-        if(month == Month.JUNE && day > 0 && day <= 30) {
-            return true;
-        }
-        if(month == Month.JULY && day > 0 && day <= 31) {
-            return true;
-        }
-        if(month == Month.AUGUST && day > 0 && day <= 30) {
-            return true;
-        }
-        if(month == Month.SEPTEMBER && day > 0 && day <= 31) {
-            return true;
-        }
-        if(month == Month.OCTOBER && day > 0 && day <= 30) {
-            return true;
-        }
-        if(month == Month.NOVEMBER&& day > 0 && day <= 31) {
-            return true;
-        }
-        return month == Month.DECEMBER && day > 0 && day <= 31;
+        return false;
     }
 
     @Override
