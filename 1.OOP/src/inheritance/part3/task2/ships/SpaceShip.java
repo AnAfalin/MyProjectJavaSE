@@ -1,6 +1,6 @@
 package inheritance.part3.task2.ships;
 
-import oop.inheritance.part3.task2.controls.SpaceShipControls;
+import inheritance.part3.task2.controls.SpaceShipControls;
 
 public class SpaceShip extends SpaceShipControls {
     @Override
