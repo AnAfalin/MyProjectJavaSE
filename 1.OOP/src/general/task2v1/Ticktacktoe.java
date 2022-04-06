@@ -1,59 +1,59 @@
 package general.task2v1;
 
-
+import java.util.Arrays;
 import java.util.Scanner;
 
-import static java.lang.System.*;
-import static java.lang.System.out;
-
-public class TicktacktoeV2 {
-    private static final char SIGN_X = 'x';
-    private static final char SIGN_O = 'o';
+public class Ticktacktoe {
+    private static final char SIGN_X = 'X';
+    private static final char SIGN_O = 'O';
     private final char[][] table = new char[3][3];;
 
     public void startGame() {
         fillTable();
         while (true) {
+            printTable();
             doStep();
+            printTable();
             if (isWinX()) {
-                out.println("Вы Выйграли!");
+                System.out.println("Вы Выйграли!");
                 break;
             }
             doStepComputer();
+            printTable();
             if (isWinO()) {
-                out.println("Выйграл Компьютер!");
+                System.out.println("Выйграл Компьютер!");
                 break;
             }
         }
     }
 
     private void doStep() {
-        Scanner scanner = new Scanner(in);
+        Scanner scanner = new Scanner(System.in);
         printTable();
-        out.println("Ваш ход. Введите координаты своей метки № строки и № стобца");
-        int j;
-        int i;
+        System.out.println("Ваш ход. Введите координаты своей метки № строки и № стобца");
+        int y;
+        int x;
         while (true) {
-            i = scanner.nextInt() - 1;
-            j = scanner.nextInt() - 1;
-            if (table[i][j] == '.') {
-                table[i][j] = SIGN_X;
+            x = scanner.nextInt() - 1;
+            y = scanner.nextInt() - 1;
+            if (table[x][y] == '.') {
+                table[x][y] = SIGN_X;
                 break;
             } else {
-                out.println("Ячейка занята. Введите еще раз координаты");
+                System.out.println("Ячейка занята. Введите еще раз координаты");
             }
         }
     }
 
     private void doStepComputer() {
-        out.println("Ход компьютера...");
-        int j;
-        int i;
+        System.out.println("Ход компьютера.");
+        int y;
+        int X;
         while (true) {
-            i = (int) (Math.random() * 3);
-            j = (int) (Math.random() * 3);
-            if (table[i][j] == '.') {
-                table[i][j] = SIGN_O;
+            X = (int) (Math.random() * 3);
+            y = (int) (Math.random() * 3);
+            if (table[X][y] == '.') {
+                table[X][y] = SIGN_O;
                 break;
             }
         }
@@ -89,19 +89,17 @@ public class TicktacktoeV2 {
     }
 
     private void fillTable() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                table[i][j] = '.';
-            }
+        for (char[] chars : table) {
+            Arrays.fill(chars, '.');
         }
     }
 
     private void printTable() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                out.print(table[i][j] + " ");
+        for (char[] chars : table) {
+            for (char aChar : chars) {
+                System.out.println(aChar + " ");
             }
-            out.println();
+            System.out.println();
         }
     }
 

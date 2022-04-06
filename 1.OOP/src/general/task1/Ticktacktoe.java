@@ -3,7 +3,6 @@ package general.task1;
 
 import java.util.Scanner;
 
-import static java.lang.System.*;
 
 public class Ticktacktoe {
     private static final char SIGN_X = 'x';
@@ -20,12 +19,12 @@ public class Ticktacktoe {
         while (true) {
             doStepFirst();
             if (isWinX()) {
-                out.println("Выйграл Х!");
+                System.out.println("Выйграл Х!");
                 break;
             }
             doStepSecond();
             if (isWinO()) {
-                out.println("Выйграл О!");
+                System.out.println("Выйграл О!");
                 break;
             }
         }
@@ -70,7 +69,7 @@ public class Ticktacktoe {
     private void doStep(char sign) {
         Scanner scanner = new Scanner(System.in);
         printTable();
-        out.println("Введите координаты своей метки № строки и № стобца");
+        System.out.println("Введите координаты своей метки № строки и № стобца");
         int j;
         int i;
         while (true) {
@@ -83,7 +82,7 @@ public class Ticktacktoe {
                 table[i][j] = sign;
                 break;
             } else {
-                out.println("Ячейка занята. Введите еще раз координаты");
+                System.out.println("Ячейка занята. Введите еще раз координаты");
             }
         }
     }
@@ -99,9 +98,9 @@ public class Ticktacktoe {
     private void printTable() {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                out.print(table[i][j] + " ");
+                System.out.print(table[i][j] + " ");
             }
-            out.println();
+            System.out.println();
         }
     }
 
