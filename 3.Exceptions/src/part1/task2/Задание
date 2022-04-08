@@ -1,0 +1,2 @@
+Написать методы, в которых может возникнуть ArrayIndexOutOfBoundsException и NullPointerException .
+Обработать их с помощью механизма исключений.
