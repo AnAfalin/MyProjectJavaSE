@@ -8,6 +8,9 @@ public class Solution {
         if(end < 0 || end > 24) {
             throw new IllegalArgumentException("Введено неверное время конца оповещения");
         }
+        if(start > end) {
+            throw new IllegalArgumentException("Введено неверное время начала и конца оповещения");
+        }
         System.out.printf("Оповещение будет включено в %d и выключено в %d", start, end);
     }
 
