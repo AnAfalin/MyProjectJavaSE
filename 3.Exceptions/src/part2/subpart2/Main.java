@@ -7,10 +7,8 @@ public class Main {
         storage.add(new Person("Евгений", 10));
         storage.add(new Person("Сергей", 4));
 
-        try {
-            System.out.println(storage.getIndexAdultPerson());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        storage.changeAgePerson(2);
+        System.out.println(storage.getIndexAdultPerson());
+
     }
 }

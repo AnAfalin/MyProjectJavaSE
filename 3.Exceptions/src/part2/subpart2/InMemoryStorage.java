@@ -32,19 +32,19 @@ public class InMemoryStorage {
         }
     }
 
-    public void changeNamePerson(int index){
+    public void changeAgePerson(int index)  {
         Person foundPerson = null;
         Scanner sc = new Scanner(System.in);
         int newAge = sc.nextInt();
-        try {
-            foundPerson = getElement(index);
-            foundPerson.setAge(newAge);
-        }catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ex){
-            System.out.println(ex.getMessage());
+        foundPerson = getElement(index);
+        if(newAge < 0 || newAge > 95) {
+            throw new IllegalArgumentAgeException("Недопустимое значение возраста");
         }
+        foundPerson.setAge(newAge);
+
     }
 
-    public int getIndexAdultPerson() throws Exception {
+    public int getIndexAdultPerson() {
         int index = -1;
         for (int i = 0; i < arrayPerson.length; i++) {
             if(arrayPerson[i].getAge() >= 18) {
@@ -52,10 +52,15 @@ public class InMemoryStorage {
             }
         }
         if(index < 0) {
-            throw new Exception("Человек с возрастом 18лет не найден");
+            throw new RuntimeException("Человек с возрастом 18лет не найден");
         }
         else return index;
 
     }
 
+    private static class IllegalArgumentAgeException extends RuntimeException {
+        public IllegalArgumentAgeException(String message) {
+            super(message);
+        }
+    }
 }

@@ -18,9 +18,6 @@ public class Person {
     }
 
     public void setAge(int age) {
-        if(age < 0 || age > 95) {
-            throw new IllegalArgumentException("Недопустимое значение возраста");
-        }
         this.age = age;
     }
 

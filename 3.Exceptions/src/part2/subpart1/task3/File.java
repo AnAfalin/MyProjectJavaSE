@@ -13,16 +13,6 @@ public class File extends AbstractFile{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                if (fileWriter != null) {
-                    fileWriter.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
         return null;
     }
 }
