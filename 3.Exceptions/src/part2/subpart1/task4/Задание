@@ -1,0 +1,5 @@
+Посмотреть, как работает метод getCause.
+Создать исключение с помощью конструктора:
+public RuntimeException(String message, Throwable cause){
+    super(message, cause);
+}

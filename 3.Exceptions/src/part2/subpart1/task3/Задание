@@ -1,0 +1,5 @@
+Дан класс AbstractFile. В нем есть метод:
+public abstract class AbstractFile{
+    public abstract FileWriter createFileWriter();
+}
+Переопределить такой метод в наследнике. В этом методе создать и вернуть объект FileWriter.
