@@ -15,29 +15,31 @@ public class Ticktacktoe {
         fillTable();
         while (true) {
             doStep();
+            printTable();
             if (isWinX()) {
                 System.out.println("Вы Выиграли!");
                 break;
             }
             doStepComputer();
+            printTable();
             if (isWinO()) {
                 System.out.println("Выиграл Компьютер!");
                 break;
             }
+
         }
     }
 
     private void doStep() {
         Scanner scanner = new Scanner(System.in);
-        printTable();
         System.out.println("Ваш ход. Введите координаты своей метки № строки и № стобца");
         int y;
         int x;
         while (true) {
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
-            if (table[y][x] == '.') {
-                table[y][x] = SIGN_X;
+            if (table[x][y] == '.') {
+                table[x][y] = SIGN_X;
                 break;
             } else {
                 System.out.println("Ячейка занята. Введите еще раз координаты");
@@ -46,94 +48,44 @@ public class Ticktacktoe {
     }
 
     private void doStepComputer() {
-        printTable();
         System.out.println("Ход компьютера.");
-        switch (checkComputerWin()) {
-            case 1: table[0][0] = SIGN_O; break;
-            case 2: table[0][1] = SIGN_O; break;
-            case 3: table[0][2] = SIGN_O; break;
-            case 4: table[1][0] = SIGN_O; break;
-            case 5: table[1][1] = SIGN_O; break;
-            case 6: table[1][2] = SIGN_O; break;
-            case 7: table[2][0] = SIGN_O; break;
-            case 8: table[2][1] = SIGN_O; break;
-            case 9: table[2][2] = SIGN_O; break;
-            default: switch (checkUserWin()) {
-                case 1: table[0][0] = SIGN_O; break;
-                case 2: table[0][1] = SIGN_O; break;
-                case 3: table[0][2] = SIGN_O; break;
-                case 4: table[1][0] = SIGN_O; break;
-                case 5: table[1][1] = SIGN_O; break;
-                case 6: table[1][2] = SIGN_O; break;
-                case 7: table[2][0] = SIGN_O; break;
-                case 8: table[2][1] = SIGN_O; break;
-                case 9: table[2][2] = SIGN_O; break;
-                default: {
-                    int x = 0;
-                    int y = 0;
-                    while (true) {
-                        x = (int) (Math.random() * 3);
-                        y = (int) (Math.random() * 3);
-                        if (table[x][y] == '.') {
-                            table[x][y] = SIGN_O;
-                            break;
-                        }
-                    }
-                }
+        if(checkComputerWin() != -1) {
+            int result = checkComputerWin() - 1;
+            int y = result / 3;  //2
+            int x = result - y * 3;
+            table[y][x] = SIGN_X;
+        }else if(checkUserWin() != -1){
+            int res = checkUserWin() - 1;
+            int y = res / 3;  //2
+            int x = res - y * 3;
+            table[y][x] = SIGN_O;
+        }else {
+            int x = 0;
+            int y = 0;
+            while (true) {
+                x = (int) (Math.random() * 3);
+                y = (int) (Math.random() * 3);
+                if (table[x][y] == '.') {
+                    table[x][y] = SIGN_O;
+                    break;
                 }
             }
         }
+    }
 
     private int checkComputerWin() {
-        for (int i = 0; i < table.length; i++) {
-            int countO = 0;
-            for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j] == 'O') {
-                    countO++;
-                }
-            }
-            if (countO == 2) {
-                return findEmptyCellInRow(i);
-            }
-        }
-        for (int i = 0; i < table.length; i++) {
-            int countO = 0;
-            for (int j = i; j < table.length; j++) {
-                if (table[j][i] == 'O') {
-                    countO++;
-                }
-            }
-            if (countO == 2) {
-                return findEmptyCellInColumn(i);
-            }
-        }
-        int countOd = 0;
-        for (int i = 0; i < table.length; i++) {
-
-            if (table[i][i] == 'O') {
-                countOd++;
-            }
-            if (countOd == 2) {
-                return findEmptyCellInDiagonalFirst();
-            }
-        }
-        countOd = 0;
-        for (int i = 0; i < table.length; i++) {
-            if (table[i][table.length - 1 - i] == 'O') {
-                countOd++;
-            }
-            if (countOd == 2) {
-                return findEmptyCellInDiagonalSecond();
-            }
-        }
-        return -1;
+        return checkWin(SIGN_O);
     }
 
     private int checkUserWin() {
+        return checkWin(SIGN_X);
+    }
+
+    private int checkWin(char sign){
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
             for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j] == 'O') {
+                if (table[i][j] == sign) {
                     countX++;
                 }
             }
@@ -144,7 +96,7 @@ public class Ticktacktoe {
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
             for (int j = i; j < table.length; j++) {
-                if (table[j][i] == 'O') {
+                if (table[j][i] == sign) {
                     countX++;
                 }
             }
@@ -155,7 +107,7 @@ public class Ticktacktoe {
         int countXd = 0;
         for (int i = 0; i < table.length; i++) {
 
-            if (table[i][i] == 'O') {
+            if (table[i][i] == sign) {
                 countXd++;
             }
             if (countXd == 2) {
@@ -164,7 +116,7 @@ public class Ticktacktoe {
         }
         countXd = 0;
         for (int i = 0; i < table.length; i++) {
-            if (table[i][table.length - 1 - i] == 'O') {
+            if (table[i][table.length - 1 - i] == sign) {
                 countXd++;
             }
             if (countXd == 2) {
@@ -193,15 +145,29 @@ public class Ticktacktoe {
     }
 
     private int findEmptyCellInDiagonalFirst() {
-        if (table[0][0] == '.') return 1;
-        else if (table[1][1] == '.') return 5;
-        else return 9;
+        if (table[0][0] == '.') {
+            return 1;
+        }
+        else if (table[1][1] == '.') {
+            return 5;
+        }
+        else if (table[2][1] == '.') {
+            return 9;
+        }
+        return -1;
     }
 
     private int findEmptyCellInDiagonalSecond() {
-        if (table[0][2] == '.') return 3;
-        else if (table[1][1] == '.') return 5;
-        else return 7;
+        if (table[0][2] == '.') {
+            return 3;
+        }
+        else if (table[1][1] == '.') {
+            return 5;
+        }
+        else if(table[2][0] == '.'){
+            return 7;
+        }
+        return -1;
     }
 
 
@@ -229,7 +195,6 @@ public class Ticktacktoe {
 
     }
 
-
     private boolean isWinX() {
         return isWin(SIGN_X);
     }
@@ -242,6 +207,7 @@ public class Ticktacktoe {
         for (char[] chars : table) {
             Arrays.fill(chars, '.');
         }
+        printTable();
     }
 
     private void printTable() {
