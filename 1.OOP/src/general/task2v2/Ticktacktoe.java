@@ -49,16 +49,16 @@ public class Ticktacktoe {
 
     private void doStepComputer() {
         System.out.println("Ход компьютера.");
-        if(checkComputerWin() != -1) {
-            int result = checkComputerWin() - 1;
-            int y = result / 3;  //2
-            int x = result - y * 3;
-            table[y][x] = SIGN_X;
-        }else if(checkUserWin() != -1){
+        if(checkUserWin() != -1){
             int res = checkUserWin() - 1;
             int y = res / 3;  //2
             int x = res - y * 3;
-            table[y][x] = SIGN_O;
+            table[x][y] = SIGN_O;
+        }else if(checkComputerWin() != -1) {
+            int result = checkComputerWin() - 1;
+            int y = result / 3;  //2
+            int x = result - y * 3;
+            table[x][y] = SIGN_O;
         }else {
             int x = 0;
             int y = 0;
@@ -81,7 +81,22 @@ public class Ticktacktoe {
         return checkWin(SIGN_X);
     }
 
-    private int checkWin(char sign){
+    private int checkWin(char sign) {
+        int res = 0;
+        res = checkDiagonalFirstWin(sign);
+        if(res == -1) {
+            res = checkDiagonalSecondWin(sign);
+            if (res == -1) {
+                res = checkRowWin(sign);
+                if (res == -1) {
+                    res = checkColumnWin(sign);
+                }
+            }
+        }
+        return res;
+
+    }
+    private int checkRowWin(char sign) {
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
             for (int j = 0; j < table[i].length; j++) {
@@ -93,6 +108,9 @@ public class Ticktacktoe {
                 return findEmptyCellInRow(i);
             }
         }
+        return -1;
+    }
+    private int checkColumnWin(char sign) {
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
             for (int j = i; j < table.length; j++) {
@@ -104,6 +122,9 @@ public class Ticktacktoe {
                 return findEmptyCellInColumn(i);
             }
         }
+        return -1;
+    }
+    private int checkDiagonalFirstWin(char sign) {
         int countXd = 0;
         for (int i = 0; i < table.length; i++) {
 
@@ -114,9 +135,12 @@ public class Ticktacktoe {
                 return findEmptyCellInDiagonalFirst();
             }
         }
-        countXd = 0;
+        return -1;
+    }
+    private int checkDiagonalSecondWin(char sign){
+        int countXd = 0;
         for (int i = 0; i < table.length; i++) {
-            if (table[i][table.length - 1 - i] == sign) {
+            if (table[table.length - 1 - i][i] == sign) {
                 countXd++;
             }
             if (countXd == 2) {
@@ -173,13 +197,13 @@ public class Ticktacktoe {
 
     private boolean isWin(char sign) {
         //проверка по горизонтали
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (table[i][0] == sign && table[i][1] == sign && table[i][2] == sign) {
                 return true;
             }
         }
         //проверка по вертикали
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < 3; j++) {
             if (table[0][j] == sign && table[1][j] == sign && table[2][j] == sign) {
                 return true;
             }
