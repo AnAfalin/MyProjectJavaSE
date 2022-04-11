@@ -1,8 +1,8 @@
 package part1.task3;
 
 public class MyArrayList<T> {
-    T[] array;
-    int size;
+    private T[] array;
+    private int size;
 
     public MyArrayList(T[] array) {
         this.array = array;
@@ -10,6 +10,7 @@ public class MyArrayList<T> {
 
     //метод добавления элемента
     public void add(T element){
+        checkIndex(size);
         array[size] = element;
         size++;
     }
