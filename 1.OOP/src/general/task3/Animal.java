@@ -1,9 +1,18 @@
 package general.task3;
 
 public abstract class Animal {
-    private char sign; //символ животного
+    int stepRange; //область действия животного
+    int stepWithoutMeal; //количество ходов без еды
+    char sign;//обозначение
 
-    public Animal(char sign) {
-        this.sign = sign;
+    abstract void move();
+
+    public Animal() {
+        stepRange = 2;
+        stepWithoutMeal = 5;
+    }
+
+    public char getSign() {
+        return sign;
     }
 }

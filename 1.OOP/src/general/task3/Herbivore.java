@@ -1,8 +1,18 @@
 package general.task3;
 
-public class Herbivore extends Animal{
+//хищник
 
-    public Herbivore(char sign) {
-        super('X');
+public class Herbivore extends Animal{
+    private static int count; //количество созданных
+
+    public Herbivore() {
+        sign = 'X';
+    }
+
+
+
+    @Override
+    void move() {
+
     }
 }
