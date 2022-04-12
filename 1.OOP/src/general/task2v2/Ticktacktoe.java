@@ -10,7 +10,6 @@ public class Ticktacktoe {
     private static final int HEIGHT = 3;
     private final char[][] table = new char[WEIGHT][HEIGHT];
 
-
     public void startGame() {
         fillTable();
         while (true) {
@@ -49,26 +48,32 @@ public class Ticktacktoe {
 
     private void doStepComputer() {
         System.out.println("Ход компьютера.");
-        if(checkUserWin() != -1){
-            int res = checkUserWin() - 1;
-            int y = res / 3;  //2
-            int x = res - y * 3;
-            table[x][y] = SIGN_O;
-        }else if(checkComputerWin() != -1) {
-            int result = checkComputerWin() - 1;
-            int y = result / 3;  //2
-            int x = result - y * 3;
-            table[x][y] = SIGN_O;
+        if (checkUserWin() != -1) {
+            int y = (checkUserWin() - 1) / 3;
+            int x = checkUserWin() - 1 - y * 3;
+            if (table[y][x] == '.') {
+                table[y][x] = SIGN_O;
+            }
+        }else if(checkComputerWin() != -1){
+            int y = (checkComputerWin() - 1) / 3;
+            int x = checkComputerWin() - 1 - y * 3;
+            if (table[x][y] == '.') {
+                table[x][y] = SIGN_O;
+            }
         }else {
-            int x = 0;
-            int y = 0;
-            while (true) {
-                x = (int) (Math.random() * 3);
-                y = (int) (Math.random() * 3);
-                if (table[x][y] == '.') {
-                    table[x][y] = SIGN_O;
-                    break;
-                }
+            stepRandomComputer();
+        }
+    }
+
+    private void stepRandomComputer() {
+        int x = 0;
+        int y = 0;
+        while (true) {
+            x = (int) (Math.random() * 3);
+            y = (int) (Math.random() * 3);
+            if (table[x][y] == '.') {
+                table[x][y] = SIGN_O;
+                break;
             }
         }
     }
@@ -82,20 +87,19 @@ public class Ticktacktoe {
     }
 
     private int checkWin(char sign) {
-        int res = 0;
-        res = checkDiagonalFirstWin(sign);
-        if(res == -1) {
-            res = checkDiagonalSecondWin(sign);
-            if (res == -1) {
-                res = checkRowWin(sign);
-                if (res == -1) {
-                    res = checkColumnWin(sign);
-                }
-            }
+        if (checkDiagonalFirstWin(sign) != -1) {
+            return checkDiagonalFirstWin(sign);
+        }else if(checkDiagonalSecondWin(sign) != -1) {
+            return checkDiagonalSecondWin(sign);
+        }else if(checkRowWin(sign) != -1) {
+            return checkRowWin(sign);
+        }else if (checkColumnWin(sign) != -1) {
+            return checkColumnWin(sign);
+        }else {
+            return -1;
         }
-        return res;
-
     }
+
     private int checkRowWin(char sign) {
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
@@ -110,6 +114,7 @@ public class Ticktacktoe {
         }
         return -1;
     }
+
     private int checkColumnWin(char sign) {
         for (int i = 0; i < table.length; i++) {
             int countX = 0;
@@ -124,6 +129,7 @@ public class Ticktacktoe {
         }
         return -1;
     }
+
     private int checkDiagonalFirstWin(char sign) {
         int countXd = 0;
         for (int i = 0; i < table.length; i++) {
@@ -137,6 +143,7 @@ public class Ticktacktoe {
         }
         return -1;
     }
+
     private int checkDiagonalSecondWin(char sign){
         int countXd = 0;
         for (int i = 0; i < table.length; i++) {
@@ -175,7 +182,7 @@ public class Ticktacktoe {
         else if (table[1][1] == '.') {
             return 5;
         }
-        else if (table[2][1] == '.') {
+        else if (table[2][2] == '.') {
             return 9;
         }
         return -1;
@@ -193,7 +200,6 @@ public class Ticktacktoe {
         }
         return -1;
     }
-
 
     private boolean isWin(char sign) {
         //проверка по горизонтали
