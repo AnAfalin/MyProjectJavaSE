@@ -9,10 +9,4 @@ public class Herbivore extends Animal{
         sign = 'X';
     }
 
-
-
-    @Override
-    void move() {
-
-    }
 }

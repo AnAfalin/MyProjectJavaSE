@@ -3,13 +3,15 @@ package general.task3;
 import java.util.Random;
 
 public class AnimalGame {
-    private static final int WEIGHT = 25;
-    private static final int HEIGHT = 25;
-    private static final int VOLUME_ANIMAL = 5;
-    private static final int VOLUME_FOOD = 10;
+    private static final int WEIGHT = 10;
+    private static final int HEIGHT = 10;
+    private static final int VOLUME_ANIMAL = 1;
+    private static final int VOLUME_FOOD = 2;
     private Object[][] field = new Object[WEIGHT][HEIGHT];
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
+    private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
+    private int size;
 
 
     //вывод поля на консоль
@@ -23,6 +25,7 @@ public class AnimalGame {
         System.out.println(LINE_SEPARATOR.repeat(98));
     }
 
+    //стартовое заполнение игрового поля
     private void firstFillField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[i].length; j++) {
@@ -30,17 +33,23 @@ public class AnimalGame {
             }
         }
         addElementsOnField();
+        printField();
         System.out.println(LINE_SEPARATOR.repeat(98));
     }
 
     public void startGame() {
         firstFillField();
-
-
-
+        while (true) {
+            for (int i = 0; i < size; i++) {
+                oneStep(arrayPlayers[i]);
+            }
+            printField();
+            randomAddFoodOnField();
+            printField();
+        }
     }
 
-
+    //добавление элементов на поле
     private void addElementsOnField() {
         for (int i = 0; i < VOLUME_ANIMAL; i++) {
             addAnimalOnField(new Predator());
@@ -52,38 +61,123 @@ public class AnimalGame {
         }
     }
 
+    private void randomAddFoodOnField() {
+        int volume = random.nextInt(5) + 1;
+        for (int i = 0; i < volume; i++) {
+            addFoodOnField(new Meal());
+            addFoodOnField(new Grass());
+        }
+    }
+
+    //добавление животных на поле
     private void addAnimalOnField(Animal animal) {
-        int x, y; //координаты
-        while (true){
-            x = random.nextInt(25);
-            y = random.nextInt(25);
-            if (checkCellIsEmpty(x, y)) {
-                field[x][y] = animal.getSign();
+        int i, j; //координаты
+        while (true) {
+            i = random.nextInt(WEIGHT);
+            j = random.nextInt(HEIGHT);
+            if (checkCellIsEmpty(i, j)) {
+                field[i][j] = animal.getSign();
+                animal.setXY(i, j);
+                addAnimalInArrayPlayers(animal);
                 break;
             }
         }
     }
 
+    //добавление еды на поле
     private void addFoodOnField(Food food) {
-        int x, y; //координаты
-        while (true){
-            x = random.nextInt(25);
-            y = random.nextInt(25);
-            if (checkCellIsEmpty(x, y)) {
-                field[x][y] = food.getSign();
+        int i, j; //координаты
+        while (true) {
+            i = random.nextInt(WEIGHT);
+            j = random.nextInt(HEIGHT);
+            if (checkCellIsEmpty(i, j)) {
+                field[i][j] = food.getSign();
                 break;
             }
         }
     }
 
-    private boolean checkCellIsEmpty(int x, int y){
-        return field[x][y].equals(".");
+    //проверка что клетка не занята животным или едой
+    private boolean checkCellIsEmpty(int i, int j) {
+        return field[i][j].equals(".");
+    }
+
+    //добавление животных в массив животных
+    private void addAnimalInArrayPlayers(Animal animal) {
+        arrayPlayers[size] = animal;
+        size++;
     }
 
     public void oneStep(Animal animal) {
-        animal.move();
+        int j = animal.getX();
+        int i = animal.getY();
+        if (animal instanceof Predator) {
+            boolean isNecessaryRandom = true;
+            int minI, minJ, maxI, maxJ;
+            minI = Math.max(i - 2, 0);
+            minJ = Math.max(j - 2, 0);
+            maxI = Math.min(i + 2, HEIGHT);
+            maxJ = Math.min(j + 2, WEIGHT);
+            for (int y = minI; y < maxI; y++) {
+                for (int x = minJ; x < maxJ; x++) {
+                    if (field[y][x].equals('X')) {
+                        //съедается травоядный
+                        field[y][x] = animal.getSign();
+                        field[i][j] = '.';
+                        animal.setXY(y,x);
+                        isNecessaryRandom = false;
+                        break;
+                    } else if (field[y][x].equals('m')) {
+                        field[y][x] = animal.getSign();
+                        field[i][j] = '.';
+                        animal.setXY(y,x);
+                        isNecessaryRandom = false;
+                        break;
+                    }
+                }
+            }
+            if (isNecessaryRandom) {
+                while (true) {
+                    int newI = random.nextInt(minI, maxI);
+                    int newJ = random.nextInt(minJ, maxJ);
+                    if (checkCellIsEmpty(newI, newJ)) {
+                        field[newI][newJ] = animal.getSign();
+                        field[i][j] = '.';
+                        break;
+                    }
+                }
+            }
+        }
+        if (animal instanceof Herbivore) {
+            boolean isNecessaryRandom = true;
+            int minI, minJ, maxI, maxJ;
+            minI = Math.max(i - 2, 0);
+            minJ = Math.max(j - 2, 0);
+            maxI = Math.min(i + 2, HEIGHT);
+            maxJ = Math.min(j + 2, WEIGHT);
+            for (int y = minI; y < maxI; y++) {
+                for (int x = minJ; x < maxJ; x++) {
+                    if (field[y][x].equals('g')) {
+                        field[y][x] = animal.getSign();
+                        field[i][j] = '.';
+                        isNecessaryRandom = false;
+                        break;
+                    }
+                }
+            }
+            if (isNecessaryRandom) {
+                while (true) {
+                    int newI = random.nextInt(minI, maxI);
+                    int newJ = random.nextInt(minJ, maxJ);
+                    if (checkCellIsEmpty(newI, newJ)) {
+                        field[newI][newJ] = animal.getSign();
+                        field[i][j] = '.';
+                        break;
+                    }
+                }
+            }
+        }
     }
-
 
     public static void main(String[] args) {
         AnimalGame game = new AnimalGame();

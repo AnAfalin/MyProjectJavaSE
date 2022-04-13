@@ -4,8 +4,9 @@ public abstract class Animal {
     int stepRange; //область действия животного
     int stepWithoutMeal; //количество ходов без еды
     char sign;//обозначение
+    int x;
+    int y;
 
-    abstract void move();
 
     public Animal() {
         stepRange = 2;
@@ -14,5 +15,19 @@ public abstract class Animal {
 
     public char getSign() {
         return sign;
+    }
+
+    public void setXY(int i, int j) {
+        this.y = i;
+        this.x = j;
+
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

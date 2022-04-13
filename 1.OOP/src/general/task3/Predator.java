@@ -9,7 +9,5 @@ public class Predator extends Animal{
         sign ='Y';
     }
 
-    @Override
-    void move() {}
-    }
+}
 
