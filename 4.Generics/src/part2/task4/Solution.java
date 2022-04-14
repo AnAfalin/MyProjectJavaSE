@@ -15,8 +15,9 @@ public class Solution {
 
     public static void main(String[] args) {
         List<Figure> list = new ArrayList<>();
-        list.add(new Square(5.0));
-        list.add(new Circle(1.0));
-        list.add(new Triangle(2, 2, 1));
+        list.add(new Square(1.0));
+        list.add(new Circle(10.0));
+        list.add(new Triangle(1, 1, 2));
+        System.out.println(sumArea(list));
     }
 }
