@@ -7,7 +7,7 @@ public class AnimalGame {
     private static final int HEIGHT = 10;
     private static final int VOLUME_ANIMAL = 1;
     private static final int VOLUME_FOOD = 2;
-    private Object[][] field = new Object[WEIGHT][HEIGHT];
+    private final Object[][] field = new Object[WEIGHT][HEIGHT];
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
     private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
@@ -143,6 +143,7 @@ public class AnimalGame {
                     if (checkCellIsEmpty(newI, newJ)) {
                         field[newI][newJ] = animal.getSign();
                         field[i][j] = '.';
+                        animal.stepWithoutMeal++;
                         break;
                     }
                 }
