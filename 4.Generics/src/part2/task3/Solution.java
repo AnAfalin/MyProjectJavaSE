@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-    public static <T extends Number> double sumOfTwoList(List<T> list1, List<T> list2){
+    public static <T> double sumOfTwoList(List<? extends Number> list1, List<? extends Number> list2){
         return sumElementOfListT(list1) + sumElementOfListT(list2);
     }
 
