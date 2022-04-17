@@ -41,7 +41,9 @@ public class AnimalGame {
         firstFillField();
         while (true) {
             for (int i = 0; i < size; i++) {
-                oneStep(arrayPlayers[i]);
+                if(arrayPlayers[i] != null) {
+                    oneStep(arrayPlayers[i], i);
+                }
             }
             printField();
             randomAddFoodOnField();
@@ -108,7 +110,7 @@ public class AnimalGame {
         size++;
     }
 
-    public void oneStep(Animal animal) {
+    public void oneStep(Animal animal, int index) {
         int j = animal.getX();
         int i = animal.getY();
         if (animal instanceof Predator) {
@@ -138,6 +140,10 @@ public class AnimalGame {
             }
             if (isNecessaryRandom) {
                 while (true) {
+                    if(animal.stepWithoutMeal + 1 > 3){
+                        field[i][j] = '.';
+                        arrayPlayers[index] = null;
+                    }
                     int newI = random.nextInt(minI, maxI);
                     int newJ = random.nextInt(minJ, maxJ);
                     if (checkCellIsEmpty(newI, newJ)) {
