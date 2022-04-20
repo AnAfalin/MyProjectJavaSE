@@ -10,8 +10,8 @@ public abstract class Animal {
 
 
     public Animal() {
-        stepRange = 2;
-        stepWithoutMeal = 3;
+        stepRange = 1;
+        stepWithoutMeal = 0;
     }
 
     public char getSign() {

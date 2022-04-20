@@ -3,10 +3,10 @@ package general.task3;
 import java.util.Random;
 
 public class AnimalGame {
-    private static final int WEIGHT = 25;
-    private static final int HEIGHT = 25;
-    private static final int VOLUME_ANIMAL = 5;
-    private static final int VOLUME_FOOD = 5;
+    private static final int WEIGHT = 5;
+    private static final int HEIGHT = 5;
+    private static final int VOLUME_ANIMAL = 2;
+    private static final int VOLUME_FOOD = 1;
     private final Object[][] field = new Object[WEIGHT][HEIGHT];
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
@@ -68,7 +68,7 @@ public class AnimalGame {
 
     //добавление еды на поле
     private void randomAddFoodOnField() {
-        int volume = random.nextInt(5) + 1;
+        int volume = random.nextInt(1) + 1;
         for (int i = 0; i < volume; i++) {
             addFoodOnField(new Meal());
             addFoodOnField(new Grass());
@@ -132,13 +132,13 @@ public class AnimalGame {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
                         animal.setXY(y, x);
-                        addRandomNewAnimal(animal);
+                        //addRandomNewAnimal(animal);
                         isNecessaryRandom = false;
                         isContinue = false;
                     } else if (field[y][x].equals('m')) {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
-                        addRandomNewAnimal(animal);
+                        //addRandomNewAnimal(animal);
                         animal.setXY(y, x);
                         isNecessaryRandom = false;
                         isContinue = false;
@@ -175,7 +175,7 @@ public class AnimalGame {
                     if (field[y][x].equals('g')) {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
-                        addRandomNewAnimal(animal);
+                        //addRandomNewAnimal(animal);
                         isNecessaryRandom = false;
                         isContinue = false;
                     }
@@ -236,9 +236,9 @@ public class AnimalGame {
             }
         }
         if (countHerbivore == 0){
-            System.out.println("В игре победил вид Травоядного животного");
-        }else if (countPredator == 0){
             System.out.println("В игре победил вид животного - Хищник");
+        }else if (countPredator == 0){
+            System.out.println("В игре победил вид животного - Травоядный");
         }
 
     }
