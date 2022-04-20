@@ -3,8 +3,8 @@ package general.task3;
 import java.util.Random;
 
 public class AnimalGame {
-    private static final int WEIGHT = 5;
-    private static final int HEIGHT = 5;
+    private static final int WEIGHT = 10;
+    private static final int HEIGHT = 10;
     private static final int VOLUME_ANIMAL = 2;
     private static final int VOLUME_FOOD = 1;
     private final Object[][] field = new Object[WEIGHT][HEIGHT];
@@ -13,16 +13,29 @@ public class AnimalGame {
     private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
     private int size;
 
+    public static void main(String[] args) {
+        AnimalGame game = new AnimalGame();
+        game.startGame();
+        game.printField();
 
-    //вывод поля на консоль
-    private void printField() {
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                System.out.print(field[i][j] + "   ");
+    }
+
+    //метод хода игры
+    public void startGame() {
+        firstFillField();
+        while (true) {
+            for (int i = 0; i < arrayPlayers.length; i++) {
+                if (arrayPlayers[i] != null) {
+                    oneStep(arrayPlayers[i], i);
+                }
             }
-            System.out.println();
+            randomAddFoodOnField();
+            printField();
+            if (isWin()){
+                break;
+            }
         }
-        System.out.println(LINE_SEPARATOR.repeat(98));
+        printInfoGameOver();
     }
 
     //стартовое заполнение игрового поля
@@ -35,23 +48,6 @@ public class AnimalGame {
         addElementsOnField();
         printField();
         System.out.println(LINE_SEPARATOR.repeat(98));
-    }
-
-    public void startGame() {
-        firstFillField();
-        while (true) {
-            for (int i = 0; i < size; i++) {
-                if (arrayPlayers[i] != null) {
-                    oneStep(arrayPlayers[i], i);
-                }
-            }
-            randomAddFoodOnField();
-            printField();
-            if (isWin()){
-                break;
-            }
-        }
-        printInfoGameOver();
     }
 
     //добавление элементов на поле
@@ -90,6 +86,12 @@ public class AnimalGame {
         }
     }
 
+    //добавление животных в массив животных
+    private void addAnimalInArrayPlayers(Animal animal) {
+        arrayPlayers[size] = animal;
+        size++;
+    }
+
     //добавление еды на поле
     private void addFoodOnField(Food food) {
         int i, j; //координаты
@@ -108,25 +110,21 @@ public class AnimalGame {
         return field[i][j].equals(".");
     }
 
-    //добавление животных в массив животных
-    private void addAnimalInArrayPlayers(Animal animal) {
-        arrayPlayers[size] = animal;
-        size++;
-    }
 
     public void oneStep(Animal animal, int index) {
-        int j = animal.getX();
         int i = animal.getY();
+        int j = animal.getX();
+        int minI, minJ, maxI, maxJ;
+        minI = Math.max(i - animal.stepRange, 0);
+        minJ = Math.max(j - animal.stepRange, 0);
+        maxI = Math.min(i + animal.stepRange, HEIGHT-1);
+        maxJ = Math.min(j + animal.stepRange, WEIGHT-1);
         if (animal instanceof Predator) {
             boolean isNecessaryRandom = true;
-            int minI, minJ, maxI, maxJ;
-            minI = Math.max(i - 2, 0);
-            minJ = Math.max(j - 2, 0);
-            maxI = Math.min(i + 2, HEIGHT);
-            maxJ = Math.min(j + 2, WEIGHT);
+
             boolean isContinue = true;
-            for (int y = minI; y < maxI && isContinue; y++) {
-                for (int x = minJ; x < maxJ && isContinue; x++) {
+            for (int y = minI; y <= maxI && isContinue; y++) {
+                for (int x = minJ; x <= maxJ && isContinue; x++) {
                     if (field[y][x].equals('X')) {
                         killAnimal(y, x); //съедается травоядный
                         field[y][x] = animal.getSign();
@@ -151,8 +149,8 @@ public class AnimalGame {
                         field[i][j] = '.';
                         arrayPlayers[index] = null;
                     }
-                    int newI = random.nextInt(minI, maxI);
-                    int newJ = random.nextInt(minJ, maxJ);
+                    int newI = random.nextInt(minI, maxI+1);
+                    int newJ = random.nextInt(minJ, maxJ+1);
                     if (checkCellIsEmpty(newI, newJ)) {
                         field[newI][newJ] = animal.getSign();
                         field[i][j] = '.';
@@ -164,14 +162,9 @@ public class AnimalGame {
         }
         if (animal instanceof Herbivore) {
             boolean isNecessaryRandom = true;
-            int minI, minJ, maxI, maxJ;
-            minI = Math.max(i - 2, 0);
-            minJ = Math.max(j - 2, 0);
-            maxI = Math.min(i + 2, HEIGHT);
-            maxJ = Math.min(j + 2, WEIGHT);
             boolean isContinue = true;
-            for (int y = minI; y < maxI && isContinue; y++) {
-                for (int x = minJ; x < maxJ && isContinue; x++) {
+            for (int y = minI; y <= maxI && isContinue; y++) {
+                for (int x = minJ; x <= maxJ && isContinue; x++) {
                     if (field[y][x].equals('g')) {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
@@ -200,6 +193,7 @@ public class AnimalGame {
             if(arrayPlayers[i] != null) {
                 if (arrayPlayers[i].getX() == j && arrayPlayers[i].getY() == i) {
                     arrayPlayers[i] = null;
+                    break;
                 }
             }
         }
@@ -220,6 +214,14 @@ public class AnimalGame {
         }
         System.out.println("В игре: Хищников " + countPredator + " Травоядных " + countHerbivore);
         return countHerbivore == 0 || countPredator == 0;
+    }
+
+    //метод размножения животного
+    private void addRandomNewAnimal(Animal animal){
+        Random random = new Random();
+        if(random.nextInt(1,3) == 1){
+            addAnimalOnField(animal);
+        }
     }
 
     private void printInfoGameOver(){
@@ -243,18 +245,14 @@ public class AnimalGame {
 
     }
 
-    //метод размножения животного
-    private void addRandomNewAnimal(Animal animal){
-        Random random = new Random();
-        if(random.nextInt(1,3) == 1){
-            addAnimalOnField(animal);
+    //вывод поля на консоль
+    private void printField() {
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                System.out.print(field[i][j] + "   ");
+            }
+            System.out.println();
         }
-    }
-
-    public static void main(String[] args) {
-        AnimalGame game = new AnimalGame();
-        game.startGame();
-        game.printField();
-
+        System.out.println(LINE_SEPARATOR.repeat(98));
     }
 }
