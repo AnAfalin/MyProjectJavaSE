@@ -11,7 +11,7 @@ public abstract class Animal {
 
     public Animal() {
         stepRange = 2;
-        stepWithoutMeal = 5;
+        stepWithoutMeal = 3;
     }
 
     public char getSign() {
