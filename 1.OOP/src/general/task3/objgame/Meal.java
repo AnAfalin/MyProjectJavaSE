@@ -1,4 +1,4 @@
-package general.task3;
+package general.task3.objgame;
 
 public class Meal extends Food{
     public Meal() {

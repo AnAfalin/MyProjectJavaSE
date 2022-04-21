@@ -1,4 +1,4 @@
-package general.task3;
+package general.task3.objgame;
 
 public abstract class Food {
     char sign;//обозначение

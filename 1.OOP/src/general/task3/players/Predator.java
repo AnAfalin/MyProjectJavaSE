@@ -1,4 +1,4 @@
-package general.task3;
+package general.task3.players;
 
 //хищник
 

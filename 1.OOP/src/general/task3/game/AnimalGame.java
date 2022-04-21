@@ -1,24 +1,25 @@
-package general.task3;
+package general.task3.game;
+
+import general.task3.objgame.Food;
+import general.task3.objgame.Grass;
+import general.task3.objgame.Meal;
+import general.task3.players.Animal;
+import general.task3.players.Herbivore;
+import general.task3.players.Predator;
 
 import java.util.Random;
 
 public class AnimalGame {
-    private static final int WEIGHT = 10;
-    private static final int HEIGHT = 10;
-    private static final int VOLUME_ANIMAL = 2;
-    private static final int VOLUME_FOOD = 1;
+    private static final int WEIGHT = 25;
+    private static final int HEIGHT = 25;
+    private static final int VOLUME_ANIMAL = 10;
+    private static final int VOLUME_FOOD = 5;
     private final Object[][] field = new Object[WEIGHT][HEIGHT];
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
     private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
     private int size;
-
-    public static void main(String[] args) {
-        AnimalGame game = new AnimalGame();
-        game.startGame();
-        game.printField();
-
-    }
+    private static final int COUNT_WITHOUT_MEAL = 5;
 
     //метод хода игры
     public void startGame() {
@@ -34,7 +35,9 @@ public class AnimalGame {
             if (isWin()){
                 break;
             }
+
         }
+        printField();
         printInfoGameOver();
     }
 
@@ -64,7 +67,7 @@ public class AnimalGame {
 
     //добавление еды на поле
     private void randomAddFoodOnField() {
-        int volume = random.nextInt(1) + 1;
+        int volume = random.nextInt(VOLUME_FOOD) + 1;
         for (int i = 0; i < volume; i++) {
             addFoodOnField(new Meal());
             addFoodOnField(new Grass());
@@ -130,14 +133,16 @@ public class AnimalGame {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
                         animal.setXY(y, x);
-                        //addRandomNewAnimal(animal);
+                        animal.stepWithoutMeal = 0;
+                        addRandomNewAnimal(animal);
                         isNecessaryRandom = false;
                         isContinue = false;
                     } else if (field[y][x].equals('m')) {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
-                        //addRandomNewAnimal(animal);
+                        addRandomNewAnimal(animal);
                         animal.setXY(y, x);
+                        animal.stepWithoutMeal = 0;
                         isNecessaryRandom = false;
                         isContinue = false;
                     }
@@ -145,14 +150,16 @@ public class AnimalGame {
             }
             if (isNecessaryRandom) {
                 while (true) {
-                    if (animal.stepWithoutMeal + 1 > 3) {
+                    if (animal.stepWithoutMeal + 1 > COUNT_WITHOUT_MEAL) {
                         field[i][j] = '.';
                         arrayPlayers[index] = null;
+                        break;
                     }
                     int newI = random.nextInt(minI, maxI+1);
                     int newJ = random.nextInt(minJ, maxJ+1);
                     if (checkCellIsEmpty(newI, newJ)) {
                         field[newI][newJ] = animal.getSign();
+                        animal.setXY(newI, newJ);
                         field[i][j] = '.';
                         animal.stepWithoutMeal++;
                         break;
@@ -168,7 +175,9 @@ public class AnimalGame {
                     if (field[y][x].equals('g')) {
                         field[y][x] = animal.getSign();
                         field[i][j] = '.';
-                        //addRandomNewAnimal(animal);
+                        animal.setXY(y, x);
+                        animal.stepWithoutMeal = 0;
+                        addRandomNewAnimal(animal);
                         isNecessaryRandom = false;
                         isContinue = false;
                     }
@@ -176,11 +185,18 @@ public class AnimalGame {
             }
             if (isNecessaryRandom) {
                 while (true) {
+                    if (animal.stepWithoutMeal + 1 > COUNT_WITHOUT_MEAL) {
+                        field[i][j] = '.';
+                        arrayPlayers[index] = null;
+                        break;
+                    }
                     int newI = random.nextInt(minI, maxI);
                     int newJ = random.nextInt(minJ, maxJ);
                     if (checkCellIsEmpty(newI, newJ)) {
                         field[newI][newJ] = animal.getSign();
                         field[i][j] = '.';
+                        animal.stepWithoutMeal++;
+                        animal.setXY(newI, newJ);
                         break;
                     }
                 }
@@ -193,6 +209,7 @@ public class AnimalGame {
             if(arrayPlayers[i] != null) {
                 if (arrayPlayers[i].getX() == j && arrayPlayers[i].getY() == i) {
                     arrayPlayers[i] = null;
+                    field[i][j] = '.';
                     break;
                 }
             }
@@ -255,4 +272,5 @@ public class AnimalGame {
         }
         System.out.println(LINE_SEPARATOR.repeat(98));
     }
+
 }
