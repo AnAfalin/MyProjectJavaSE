@@ -18,7 +18,6 @@ public class AnimalGame {
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
     private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
-    private int size;
     private static final int COUNT_WITHOUT_MEAL = 3;
 
     //метод хода игры
@@ -117,7 +116,7 @@ public class AnimalGame {
         return field[i][j].equals(".");
     }
 
-
+    //один ход
     public void oneStep(Animal animal, int index) {
         int i = animal.getY();
         int j = animal.getX();
@@ -155,7 +154,7 @@ public class AnimalGame {
             if (isNecessaryRandom) {
                 while (true) {
                     if (animal.stepWithoutMeal + 1 > COUNT_WITHOUT_MEAL) {
-                        field[i][j] = ".";;
+                        field[i][j] = ".";
                         arrayPlayers[index] = null;
                         break;
                     }
@@ -208,6 +207,7 @@ public class AnimalGame {
         }
     }
 
+    //съедение животного
     private void killAnimal(int i, int j) {
         for (int y = 0; y < arrayPlayers.length; y++) {
             if(arrayPlayers[i] != null) {
@@ -220,6 +220,7 @@ public class AnimalGame {
         }
     }
 
+    //проверка на выигрыш типа животного и вывод информации о количестве игроков на поле
     private boolean isWin(){
         int countPredator = countPredator();
         int countHerbivore = countHerbivore();
@@ -239,6 +240,7 @@ public class AnimalGame {
         }
     }
 
+    //вывод информации в конце игры
     private void printInfoGameOver(){
         int countPredator = countPredator();
         int countHerbivore = countHerbivore();
@@ -249,6 +251,7 @@ public class AnimalGame {
         }
     }
 
+    //подсчет хищников
     private int countPredator(){
         int countPredator = 0;
         for (Animal arrayPlayer : arrayPlayers) {
@@ -261,6 +264,7 @@ public class AnimalGame {
         return countPredator;
     }
 
+    //подсчет травоядных
     private int countHerbivore(){
         int countHerbivore = 0;
         for (Animal arrayPlayer : arrayPlayers) {
@@ -275,9 +279,9 @@ public class AnimalGame {
 
     //вывод поля на консоль
     private void printField() {
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                System.out.print(field[i][j] + "   ");
+        for (String[] cellRowField : field) {
+            for (String cellColumnField : cellRowField) {
+                System.out.print(cellColumnField + "   ");
             }
             System.out.println();
         }
