@@ -12,14 +12,14 @@ import java.util.Random;
 public class AnimalGame {
     private static final int WEIGHT = 25;
     private static final int HEIGHT = 25;
-    private static final int VOLUME_ANIMAL = 10;
+    private static final int VOLUME_ANIMAL = 3;
     private static final int VOLUME_FOOD = 5;
-    private final Object[][] field = new Object[WEIGHT][HEIGHT];
+    private final String[][] field = new String[WEIGHT][HEIGHT];
     private static final String LINE_SEPARATOR = "-";
     private static final Random random = new Random();
     private Animal[] arrayPlayers = new Animal[WEIGHT * HEIGHT];
     private int size;
-    private static final int COUNT_WITHOUT_MEAL = 5;
+    private static final int COUNT_WITHOUT_MEAL = 3;
 
     //метод хода игры
     public void startGame() {
@@ -32,13 +32,13 @@ public class AnimalGame {
             }
             randomAddFoodOnField();
             printField();
+            //printInfoGame();
             if (isWin()){
+                printInfoGameOver();
                 break;
             }
-
         }
-        printField();
-        printInfoGameOver();
+
     }
 
     //стартовое заполнение игрового поля
@@ -81,7 +81,7 @@ public class AnimalGame {
             i = random.nextInt(WEIGHT);
             j = random.nextInt(HEIGHT);
             if (checkCellIsEmpty(i, j)) {
-                field[i][j] = animal.getSign();
+                field[i][j] = String.valueOf(animal.getSign());
                 animal.setXY(i, j);
                 addAnimalInArrayPlayers(animal);
                 break;
@@ -91,8 +91,12 @@ public class AnimalGame {
 
     //добавление животных в массив животных
     private void addAnimalInArrayPlayers(Animal animal) {
-        arrayPlayers[size] = animal;
-        size++;
+        for (int i = 0; i < arrayPlayers.length; i++) {
+            if(arrayPlayers[i] == null){
+                arrayPlayers[i] = animal;
+                break;
+            }
+        }
     }
 
     //добавление еды на поле
@@ -102,7 +106,7 @@ public class AnimalGame {
             i = random.nextInt(WEIGHT);
             j = random.nextInt(HEIGHT);
             if (checkCellIsEmpty(i, j)) {
-                field[i][j] = food.getSign();
+                field[i][j] = String.valueOf(food.getSign());
                 break;
             }
         }
@@ -128,18 +132,18 @@ public class AnimalGame {
             boolean isContinue = true;
             for (int y = minI; y <= maxI && isContinue; y++) {
                 for (int x = minJ; x <= maxJ && isContinue; x++) {
-                    if (field[y][x].equals('X')) {
+                    if (field[y][x].equals("X")) {
                         killAnimal(y, x); //съедается травоядный
-                        field[y][x] = animal.getSign();
-                        field[i][j] = '.';
+                        field[y][x] = String.valueOf(animal.getSign());
+                        field[i][j] = ".";
                         animal.setXY(y, x);
                         animal.stepWithoutMeal = 0;
                         addRandomNewAnimal(animal);
                         isNecessaryRandom = false;
                         isContinue = false;
-                    } else if (field[y][x].equals('m')) {
-                        field[y][x] = animal.getSign();
-                        field[i][j] = '.';
+                    } else if (field[y][x].equals("m")) {
+                        field[y][x] = String.valueOf(animal.getSign());
+                        field[i][j] = ".";
                         addRandomNewAnimal(animal);
                         animal.setXY(y, x);
                         animal.stepWithoutMeal = 0;
@@ -151,16 +155,16 @@ public class AnimalGame {
             if (isNecessaryRandom) {
                 while (true) {
                     if (animal.stepWithoutMeal + 1 > COUNT_WITHOUT_MEAL) {
-                        field[i][j] = '.';
+                        field[i][j] = ".";;
                         arrayPlayers[index] = null;
                         break;
                     }
                     int newI = random.nextInt(minI, maxI+1);
                     int newJ = random.nextInt(minJ, maxJ+1);
                     if (checkCellIsEmpty(newI, newJ)) {
-                        field[newI][newJ] = animal.getSign();
+                        field[newI][newJ] = String.valueOf(animal.getSign());
                         animal.setXY(newI, newJ);
-                        field[i][j] = '.';
+                        field[i][j] = ".";
                         animal.stepWithoutMeal++;
                         break;
                     }
@@ -172,9 +176,9 @@ public class AnimalGame {
             boolean isContinue = true;
             for (int y = minI; y <= maxI && isContinue; y++) {
                 for (int x = minJ; x <= maxJ && isContinue; x++) {
-                    if (field[y][x].equals('g')) {
-                        field[y][x] = animal.getSign();
-                        field[i][j] = '.';
+                    if (field[y][x].equals("g")) {
+                        field[y][x] = String.valueOf(animal.getSign());
+                        field[i][j] = ".";
                         animal.setXY(y, x);
                         animal.stepWithoutMeal = 0;
                         addRandomNewAnimal(animal);
@@ -186,15 +190,15 @@ public class AnimalGame {
             if (isNecessaryRandom) {
                 while (true) {
                     if (animal.stepWithoutMeal + 1 > COUNT_WITHOUT_MEAL) {
-                        field[i][j] = '.';
+                        field[i][j] = ".";
                         arrayPlayers[index] = null;
                         break;
                     }
                     int newI = random.nextInt(minI, maxI);
                     int newJ = random.nextInt(minJ, maxJ);
                     if (checkCellIsEmpty(newI, newJ)) {
-                        field[newI][newJ] = animal.getSign();
-                        field[i][j] = '.';
+                        field[newI][newJ] = String.valueOf(animal.getSign());
+                        field[i][j] = ".";
                         animal.stepWithoutMeal++;
                         animal.setXY(newI, newJ);
                         break;
@@ -209,7 +213,7 @@ public class AnimalGame {
             if(arrayPlayers[i] != null) {
                 if (arrayPlayers[i].getX() == j && arrayPlayers[i].getY() == i) {
                     arrayPlayers[i] = null;
-                    field[i][j] = '.';
+                    field[i][j] = ".";
                     break;
                 }
             }
@@ -217,18 +221,8 @@ public class AnimalGame {
     }
 
     private boolean isWin(){
-        int countPredator = 0;
-        int countHerbivore = 0;
-        for (Animal arrayPlayer : arrayPlayers) {
-            if (arrayPlayer != null) {
-                if (arrayPlayer instanceof Predator) {
-                    countPredator++;
-                }
-                if (arrayPlayer instanceof Herbivore) {
-                    countHerbivore++;
-                }
-            }
-        }
+        int countPredator = countPredator();
+        int countHerbivore = countHerbivore();
         System.out.println("В игре: Хищников " + countPredator + " Травоядных " + countHerbivore);
         return countHerbivore == 0 || countPredator == 0;
     }
@@ -237,29 +231,46 @@ public class AnimalGame {
     private void addRandomNewAnimal(Animal animal){
         Random random = new Random();
         if(random.nextInt(1,3) == 1){
-            addAnimalOnField(animal);
+            if (animal instanceof Predator) {
+                addAnimalOnField(new Predator());
+            }else if(animal instanceof Herbivore){
+                addAnimalOnField(new Herbivore());
+            }
         }
     }
 
     private void printInfoGameOver(){
+        int countPredator = countPredator();
+        int countHerbivore = countHerbivore();
+        if(countHerbivore == 0){
+            System.out.println("В игре победили Хищники");
+        }else if (countPredator == 0){
+            System.out.println("В игре победили Травоядные");
+        }
+    }
+
+    private int countPredator(){
         int countPredator = 0;
-        int countHerbivore = 0;
         for (Animal arrayPlayer : arrayPlayers) {
             if (arrayPlayer != null) {
                 if (arrayPlayer instanceof Predator) {
                     countPredator++;
                 }
+            }
+        }
+        return countPredator;
+    }
+
+    private int countHerbivore(){
+        int countHerbivore = 0;
+        for (Animal arrayPlayer : arrayPlayers) {
+            if (arrayPlayer != null) {
                 if (arrayPlayer instanceof Herbivore) {
                     countHerbivore++;
                 }
             }
         }
-        if (countHerbivore == 0){
-            System.out.println("В игре победил вид животного - Хищник");
-        }else if (countPredator == 0){
-            System.out.println("В игре победил вид животного - Травоядный");
-        }
-
+        return countHerbivore;
     }
 
     //вывод поля на консоль

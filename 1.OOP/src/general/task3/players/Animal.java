@@ -8,7 +8,7 @@ public abstract class Animal {
     int y;
 
     public Animal() {
-        stepRange = 4;
+        stepRange = 2;
         stepWithoutMeal = 0;
     }
 
