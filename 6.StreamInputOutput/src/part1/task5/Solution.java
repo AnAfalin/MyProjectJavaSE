@@ -4,8 +4,8 @@ import java.io.*;
 
 public class Solution {
     public static void main(String[] args) {
-        try (OutputStream os = new FileOutputStream("6.StreamInputOutput/src/part1/task1/Task5.txt");
-             InputStream is = new FileInputStream("6.StreamInputOutput/src/part1/task1/Task5.txt");
+        try (OutputStream os = new FileOutputStream("6.StreamInputOutput/src/part1/task5/Task5.txt");
+             InputStream is = new FileInputStream("6.StreamInputOutput/src/part1/task5/Task5.txt");
              DataOutputStream dos = new DataOutputStream(os);
              DataInputStream dis = new DataInputStream(is)) {
 

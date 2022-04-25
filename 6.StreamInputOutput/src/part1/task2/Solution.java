@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in);
-             OutputStream os = new FileOutputStream("6.StreamInputOutput/src/part1/task1/Task2.txt");
-             InputStream is = new FileInputStream("6.StreamInputOutput/src/part1/task1/Task2.txt");
+             OutputStream os = new FileOutputStream("6.StreamInputOutput/src/part1/task2/Task2.txt");
+             InputStream is = new FileInputStream("6.StreamInputOutput/src/part1/task2/Task2.txt");
              BufferedOutputStream bos = new BufferedOutputStream(os);
              BufferedInputStream bis = new BufferedInputStream(is)) {
             String text = scanner.nextLine();
