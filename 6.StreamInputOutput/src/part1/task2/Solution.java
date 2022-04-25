@@ -6,24 +6,21 @@ import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in);
-             OutputStream os = new FileOutputStream("Task2.txt")) {
+             OutputStream os = new FileOutputStream("6.StreamInputOutput/src/part1/task1/Task2.txt");
+             InputStream is = new FileInputStream("6.StreamInputOutput/src/part1/task1/Task2.txt");
+             BufferedOutputStream bos = new BufferedOutputStream(os);
+             BufferedInputStream bis = new BufferedInputStream(is)) {
             String text = scanner.nextLine();
-            try(BufferedOutputStream bos = new BufferedOutputStream(os)){
-                bos.write(text.getBytes());
+
+            bos.write(text.getBytes());
+            int c;
+            while ((c = bis.read()) != -1) {
+                System.out.print((char) (c));
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             e.printStackTrace();
         }
 
-        try (InputStream is = new FileInputStream("Task2.txt")) {
-            try (BufferedInputStream bis = new BufferedInputStream(is)) {
-                int c;
-                while ((c = bis.read()) != -1){
-                    System.out.print((char)(c));
-                }
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }
