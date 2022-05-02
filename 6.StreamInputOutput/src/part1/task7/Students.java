@@ -6,19 +6,20 @@ public class Students {
     private int group;
     private double mark;
 
-    public String getName() {
-        return name;
+    public Students(String name, String lastName, int group, double mark) {
+        this.name = name;
+        this.lastName = lastName;
+        this.group = group;
+        this.mark = mark;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getGroup() {
-        return group;
-    }
-
-    public double getMark() {
-        return mark;
+    @Override
+    public String toString() {
+        return "Students{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", group=" + group +
+                ", mark=" + mark +
+                '}';
     }
 }
