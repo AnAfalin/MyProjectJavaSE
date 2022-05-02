@@ -3,13 +3,12 @@ package part1.task11;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Solution {
     public static void main(String[] args) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("6.StreamInputOutput/src/part1/task11/LargeNumber.txt"))) {
             String str = bufferedReader.readLine();
+
             int[] arrNum = new int[10];
             for (int i = 0; i < str.length(); i++) {
                 int number = Integer.parseInt(String.valueOf(str.charAt(i)));
