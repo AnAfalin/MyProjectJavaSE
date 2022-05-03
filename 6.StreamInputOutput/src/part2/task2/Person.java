@@ -1,10 +1,9 @@
-package part2.task1;
+package part2.task2;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-            
+    
     private String name;
     private int age;
 
