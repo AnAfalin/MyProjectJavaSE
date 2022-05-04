@@ -13,11 +13,18 @@ public class Solution {
         arrPerson[1] = person2;
         arrPerson[2] = person3;
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("6.StreamInputOutput/src/part2/task2/PersonArray.bin"));
-             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("6.StreamInputOutput/src/part2/task2/PersonArray.bin"))){
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("6.StreamInputOutput/src/part2/task2/PersonArray.bin"))){
 
             oos.writeObject(arrPerson);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("6.StreamInputOutput/src/part2/task2/PersonArray.bin"))){
+
             Person[] array = (Person[])ois.readObject();
+
             for (Person el:array) {
                 System.out.println(el);
             }
