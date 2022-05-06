@@ -1,5 +1,7 @@
 package ArrayListCollection.part1;
 
+import java.util.Collections;
+
 public class Test {
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();//создания списка
@@ -26,10 +28,21 @@ public class Test {
         list.deleteLast();
 
         //удаление элемента по индексу
-        list.delete(1);
+        list.delete(-5);
 
         System.out.println(list);
 
-        System.out.println(list.contains(40));
+        System.out.println(list.contains(10));
+
+        ArrayList<Integer> list2 = new ArrayList<>();//создания списка #2 и добавление элементов
+        list.add(55);
+        list.add(66);
+        list.add(77);
+
+        //добавление всех элементов из списка #2 в список #1
+        list.addAll(list2);
+
+        System.out.println(list);
+
     }
 }

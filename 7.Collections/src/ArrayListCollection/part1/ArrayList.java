@@ -13,19 +13,20 @@ public class ArrayList<E> {
 
     //метод добавления в конец
     public void add(E el) {
-        if (size + 1 >= capacity) {
-            grow();
-        }
         add(el, size);
     }
 
     //метод добавления по любому индексу
     public void add(E el, int index) {
-        if (size + 1 >= capacity) {
-            grow();
-        }
-        for (int i = size; i > index; i--) {
-            array[i] = array[i - 1];
+        if (indexIsCheck(index)) {
+
+            if (size + 1 == capacity) {
+                grow();
+            }
+
+            for (int i = size; i > index; i--) {
+                array[i] = array[i - 1];
+            }
         }
         array[index] = el;
         size++;
@@ -33,23 +34,18 @@ public class ArrayList<E> {
 
     //метод добавления в начало
     public void addFirst(E el) {
-        if (size + 1 >= capacity) {
-            grow();
-        }
         add(el, 0);
     }
 
-    //метод добавления - основной
-    private void add(E el, int index, E[] array) {
-        for (int i = size; i > index; i--) {
-            array[i] = array[i - 1];
-        }
-        array[index] = el;
-        size++;
-    }
-
+    //метод расширения
     private void grow() {
         Object[] newArr = new Object[(int) (capacity * 1.5 + 1)];
+        System.arraycopy(array, 0, newArr, 0, array.length);
+        array = newArr;
+    }
+
+    private void grow(int minCapacity) {
+        Object[] newArr = new Object[minCapacity];
         System.arraycopy(array, 0, newArr, 0, array.length);
         array = newArr;
     }
@@ -64,12 +60,14 @@ public class ArrayList<E> {
         return arrayStr.toString();
     }
 
-    //метод удаления
+    //метод удаления по индексу
     public void delete(int index){
-        for (int i = index; i < size; i++) {
-            array[i] = array[i+1];
+        if(indexIsCheck(index)) {
+            for (int i = index; i < size; i++) {
+                array[i] = array[i + 1];
+            }
+            size--;
         }
-        size--;
     }
 
     //метод удаления из начала
@@ -85,6 +83,7 @@ public class ArrayList<E> {
     //метод получения элемента по индексу
     @SuppressWarnings("unchecked")
     public E get(int index){
+        exceptionCheckIndex(index);
         return (E) array[index];
     }
 
@@ -104,6 +103,55 @@ public class ArrayList<E> {
             }
         }
         return false;
+    }
+
+    //метод сокращения размера внутреннего массива до size
+    public void trimToSize(){
+        if (size != capacity){
+            capacity = size;
+
+            Object[] newArr = new Object[capacity];
+
+            for (int i = 0; i < size; i++) {
+                newArr[i] = array[i];
+            }
+
+            array = newArr;
+        }
+    }
+
+    //метод увеличения внутреннего размера массива, чтобы в него поместилось minCapacity элементов
+    public void ensureCapacity(int minCapacity){
+        if(minCapacity > array.length) {
+            grow(minCapacity);
+        }
+    }
+
+    //метод, возвращающий массив элементов
+    @SuppressWarnings("unchecked")
+    public <E> E[] toArray(E[] arr){
+        Object[] ar = new Object[size - 1];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (E) array[i];
+        }
+        return arr;
+    }
+
+    //метод, добавляющий в текущий список все элементы из другого списка
+    public void addAll(ArrayList<E> list){
+        for (int i = 0; i < list.size; i++) {
+            this.add(list.get(i));
+        }
+    }
+
+    private void exceptionCheckIndex(int index) {
+        if(index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Введен неверный индекс");
+        }
+    }
+
+    private boolean indexIsCheck(int index){
+        return index >= 0 && index < size;
     }
 }
 
