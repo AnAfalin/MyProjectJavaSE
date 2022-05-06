@@ -11,12 +11,12 @@ public class ArrayList<E> {
         array = new Object[capacity];
     }
 
-    //метод добавления в конец
+    //метод добавления в конец  O(1)
     public void add(E el) {
         add(el, size);
     }
 
-    //метод добавления по любому индексу
+    //метод добавления по любому индексу  O(n)
     public void add(E el, int index) {
         if (indexIsCheck(index)) {
 
@@ -24,22 +24,26 @@ public class ArrayList<E> {
                 grow();
             }
 
-            for (int i = size; i > index; i--) {
-                array[i] = array[i - 1];
+            if(index != size){
+                for (int i = size; i > index; i--) {
+                    array[i] = array[i - 1];
+                }
             }
+            array[index] = el;
+            size++;
         }
-        array[index] = el;
-        size++;
     }
 
-    //метод добавления в начало
+    //метод добавления в начало     O(n)
     public void addFirst(E el) {
         add(el, 0);
     }
 
-    //метод расширения
+    //метод расширения  O(n)
     private void grow() {
         Object[] newArr = new Object[(int) (capacity * 1.5 + 1)];
+
+        //O(n)
         System.arraycopy(array, 0, newArr, 0, array.length);
         array = newArr;
     }
@@ -60,7 +64,7 @@ public class ArrayList<E> {
         return arrayStr.toString();
     }
 
-    //метод удаления по индексу
+    //метод удаления по индексу     O(n)
     public void delete(int index){
         if(indexIsCheck(index)) {
             for (int i = index; i < size; i++) {
@@ -70,24 +74,24 @@ public class ArrayList<E> {
         }
     }
 
-    //метод удаления из начала
+    //метод удаления из начала      O(n)
     public void deleteFirst(){
         delete(0);
     }
 
-    //метод удаления из конца
+    //метод удаления из конца       O(1)
     public void deleteLast(){
         delete(size-1);
     }
 
-    //метод получения элемента по индексу
+    //метод получения элемента по индексу   O(1)
     @SuppressWarnings("unchecked")
     public E get(int index){
         exceptionCheckIndex(index);
         return (E) array[index];
     }
 
-    //метод изменения значения элемента по инждексу
+    //метод изменения значения элемента по инждексу     O(1)
     @SuppressWarnings("unchecked")
     public E set(E el, int index){
         E oldValue = (E) array[index];
@@ -95,7 +99,7 @@ public class ArrayList<E> {
         return oldValue;
     }
 
-    //метод проверки, содержится ли элемент в списке
+    //метод проверки, содержится ли элемент в списке    O(n)
     public boolean contains(E el){
         for (int i = 0; i < size; i++) {
             if (array[i].equals(el)) {
@@ -105,7 +109,7 @@ public class ArrayList<E> {
         return false;
     }
 
-    //метод сокращения размера внутреннего массива до size
+    //метод сокращения размера внутреннего массива до size  O(n)
     public void trimToSize(){
         if (size != capacity){
             capacity = size;
@@ -127,7 +131,7 @@ public class ArrayList<E> {
         }
     }
 
-    //метод, возвращающий массив элементов
+    //метод, возвращающий массив элементов      O(n)
     @SuppressWarnings("unchecked")
     public <E> E[] toArray(E[] arr){
         Object[] ar = new Object[size - 1];
@@ -137,7 +141,7 @@ public class ArrayList<E> {
         return arr;
     }
 
-    //метод, добавляющий в текущий список все элементы из другого списка
+    //метод, добавляющий в текущий список все элементы из другого списка        O(n)
     public void addAll(ArrayList<E> list){
         for (int i = 0; i < list.size; i++) {
             this.add(list.get(i));
@@ -156,7 +160,7 @@ public class ArrayList<E> {
     }
 
     private boolean indexIsCheck(int index){
-        return index >= 0 && index < size;
+        return index >=0 && index <= size;
     }
 }
 
