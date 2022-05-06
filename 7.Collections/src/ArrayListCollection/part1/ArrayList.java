@@ -3,13 +3,12 @@ package ArrayListCollection.part1;
 public class ArrayList<E> {
     private int size;
     private int capacity;
-    private E[] array;
+    private Object[] array;
 
-    @SuppressWarnings("unchecked")
     public ArrayList() {
         capacity = 10;
         size = 0;
-        array = (E[]) new Object[capacity];
+        array = new Object[capacity];
     }
 
     //метод добавления в конец
@@ -17,8 +16,7 @@ public class ArrayList<E> {
         if (size + 1 >= capacity) {
             grow();
         }
-        add(el, size, array);
-
+        add(el, size);
     }
 
     //метод добавления по любому индексу
@@ -26,8 +24,11 @@ public class ArrayList<E> {
         if (size + 1 >= capacity) {
             grow();
         }
-        add(el, index, array);
-
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+        array[index] = el;
+        size++;
     }
 
     //метод добавления в начало
@@ -35,7 +36,7 @@ public class ArrayList<E> {
         if (size + 1 >= capacity) {
             grow();
         }
-        add(el, 0, array);
+        add(el, 0);
     }
 
     //метод добавления - основной
@@ -47,33 +48,52 @@ public class ArrayList<E> {
         size++;
     }
 
-    @SuppressWarnings("unchecked")
     private void grow() {
         Object[] newArr = new Object[(int) (capacity * 1.5 + 1)];
         System.arraycopy(array, 0, newArr, 0, array.length);
-        array = (E[]) newArr;
+        array = newArr;
     }
 
-    //метод вывода на консоль списка
-    public void print() {
+    //метод вывода списка
+    @Override
+    public String toString() {
+        StringBuilder arrayStr = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            System.out.print(array[i] + " ");
+            arrayStr.append(array[i]).append(" ");
         }
-        System.out.println();
+        return arrayStr.toString();
     }
 
-}
+    //метод удаления
+    public void delete(int index){
+        for (int i = index; i < size; i++) {
+            array[i] = array[i+1];
+        }
+        size--;
+    }
 
+    //метод удаления из начала
+    public void deleteFirst(){
+        delete(0);
+    }
 
-class Main {
-    public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(10);
-        list.add(30);
-        list.add(40);
-        list.print();
-        list.addFirst(0);
-        list.add(20, 2);
-        list.print();
+    //метод удаления из конца
+    public void deleteLast(){
+        delete(size-1);
+    }
+
+    //метод получения элемента по индексу
+    @SuppressWarnings("unchecked")
+    public E get(int index){
+        return (E) array[index];
+    }
+
+    //метод изменения значения элемента по инждексу
+    @SuppressWarnings("unchecked")
+    public E set(E el, int index){
+        E oldValue = (E) array[index];
+        array[index] = el;
+        return oldValue;
     }
 }
+
