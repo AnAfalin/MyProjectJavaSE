@@ -95,5 +95,15 @@ public class ArrayList<E> {
         array[index] = el;
         return oldValue;
     }
+
+    //метод проверки, содержится ли элемент в списке
+    public boolean contains(E el){
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(el)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
