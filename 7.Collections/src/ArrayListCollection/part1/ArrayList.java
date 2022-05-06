@@ -18,7 +18,7 @@ public class ArrayList<E> {
             grow();
         }
         add(el, size, array);
-        size++;
+
     }
 
     //метод добавления по любому индексу
@@ -27,7 +27,7 @@ public class ArrayList<E> {
             grow();
         }
         add(el, index, array);
-        size++;
+
     }
 
     //метод добавления в начало
@@ -44,6 +44,7 @@ public class ArrayList<E> {
             array[i] = array[i - 1];
         }
         array[index] = el;
+        size++;
     }
 
     @SuppressWarnings("unchecked")
@@ -67,12 +68,12 @@ public class ArrayList<E> {
 class Main {
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(5);
         list.add(10);
-        list.add(15);
+        list.add(30);
+        list.add(40);
         list.print();
-        list.addFirst(88);
-        list.add(88, 2);
+        list.addFirst(0);
+        list.add(20, 2);
         list.print();
     }
 }
