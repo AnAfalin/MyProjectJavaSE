@@ -144,6 +144,11 @@ public class ArrayList<E> {
         }
     }
 
+    //метод, сортирующий список
+    public void sort(){
+
+    }
+
     private void exceptionCheckIndex(int index) {
         if(index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Введен неверный индекс");

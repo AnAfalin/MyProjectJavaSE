@@ -1,5 +1,6 @@
 package ArrayListCollection.part1;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Test {
@@ -35,14 +36,19 @@ public class Test {
         System.out.println(list.contains(10));
 
         ArrayList<Integer> list2 = new ArrayList<>();//создания списка #2 и добавление элементов
-        list.add(55);
-        list.add(66);
-        list.add(77);
+        list.add(90);
+        list.add(80);
+        list.add(70);
 
         //добавление всех элементов из списка #2 в список #1
         list.addAll(list2);
 
         System.out.println(list);
+
+        list.sort();
+        System.out.println(list);
+
+        Integer[] arr = new Integer[10];
 
     }
 }
