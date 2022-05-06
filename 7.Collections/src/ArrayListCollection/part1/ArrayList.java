@@ -1,6 +1,8 @@
 package ArrayListCollection.part1;
 
-public class ArrayList<E> {
+import java.util.Comparator;
+
+public class ArrayList<E>{
     private int size;
     private int capacity;
     private Object[] array;
@@ -133,7 +135,7 @@ public class ArrayList<E> {
 
     //метод, возвращающий массив элементов      O(n)
     @SuppressWarnings("unchecked")
-    public <E> E[] toArray(E[] arr){
+    public E[] toArray(E[] arr){
         Object[] ar = new Object[size - 1];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (E) array[i];
@@ -148,9 +150,20 @@ public class ArrayList<E> {
         }
     }
 
-    //метод, сортирующий список
-    public void sort(){
+    //метод, сортирующий список     O(n^2)
+    @SuppressWarnings("unchecked")
+    public void sort(Comparator<E> comparator){
 
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if(comparator.compare((E)array[i], (E)array[j]) > 0){
+                    Object temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+
+        }
     }
 
     private void exceptionCheckIndex(int index) {

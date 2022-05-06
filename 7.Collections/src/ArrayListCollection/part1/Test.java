@@ -2,6 +2,7 @@ package ArrayListCollection.part1;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Test {
     public static void main(String[] args) {
@@ -45,10 +46,10 @@ public class Test {
 
         System.out.println(list);
 
-        list.sort();
+        Comparator<Integer> comp = (o1, o2) -> o1.compareTo(o2);
+        list.sort(comp);
         System.out.println(list);
 
-        Integer[] arr = new Integer[10];
 
     }
 }
