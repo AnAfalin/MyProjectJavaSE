@@ -46,20 +46,60 @@ public class LinkedList<E> {
                 addFirst(element);
                 return;
             }
-            if (index == size){
+            if (index == size) {
                 addLast(element);
                 return;
             }
             Node<E> newNode = new Node<>(element);
             Node<E> currentNode = first;
             int currentIndex = 0;
-            while (currentIndex != index - 1){
+            while (currentIndex != index - 1) {
                 currentNode = currentNode.next;
                 currentIndex++;
             }
             newNode.next = currentNode.next;
             currentNode.next = newNode;
             size++;
+        }
+    }
+
+    //метод удаления из начала
+    public void deleteFirst() {
+        Node<E> currentNode = first.next;
+        first = currentNode;
+        size--;
+    }
+
+    //метод удаления из конца
+    public void deleteLast() {
+
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        while (currentIndex != size - 2) {
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        currentNode.next = null;
+        size--;
+
+    }
+
+    //метод удаления по индексу
+    public void delete(int index) {
+        if (indexIsCorrect(index)) {
+            if (index == 0) {
+                deleteFirst();
+            }
+            Node<E> currentNode = first;
+            Node<E> previousNode = first;
+            int currentIndex = 0;
+            while (currentIndex != index) {
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+                currentIndex++;
+            }
+            previousNode.next = currentNode.next;
+            size--;
         }
     }
 
@@ -75,7 +115,7 @@ public class LinkedList<E> {
         return strLinkedList;
     }
 
-    private boolean indexIsCorrect(int index){
-        return index >=0 && index <=size;
+    private boolean indexIsCorrect(int index) {
+        return index >= 0 && index <= size;
     }
 }

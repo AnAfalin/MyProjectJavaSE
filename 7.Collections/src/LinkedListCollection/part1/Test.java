@@ -5,8 +5,16 @@ public class Test {
         LinkedList<Integer> list = new LinkedList<>();
         list.addFirst(30);
         list.addLast(40);
-        list.addLast(50);
-        list.add(8, 1);
+        list.addLast(60);
+        list.addLast(70);
+        System.out.println(list);
+        list.add(50, 2);
+        System.out.println(list);
+        list.deleteFirst();
+
+        System.out.println(list);
+
+        list.delete(2);
         System.out.println(list);
     }
 }
