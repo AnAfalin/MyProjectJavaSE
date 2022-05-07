@@ -1,13 +1,13 @@
 package LinkedListCollection.part1;
 
 public class LinkedList<E> {
-    private Node<E> first;
-    private int size;
+    private Node<E> first; //значение первого элемента
+    private int size; //размерность списка
 
     private static class Node<E> {
-        E item;
-        Node<E> next;
-        Node<E> prev;
+        E item; //значение самого элемента
+        Node<E> next; //значение следующего
+        Node<E> prev; //значение предыдущего
 
         Node(E element) {
             this.item = element;
@@ -18,15 +18,15 @@ public class LinkedList<E> {
     public void addFirst(E element) {
         Node<E> newNode = new Node<>(element);
         if (first != null) { //если первый элемент пустой
-            newNode.next = first; //у добавляемого элемента в список ссылка на следующий элемент - ссылка на первый элемент
+            newNode.next = first; //то у добавляемого элемента в список ссылка на следующий элемент - ссылка на первый элемент
         }
-        first = newNode; //то первый элемент - это добавляемый элемент
+        first = newNode; //первый элемент - это добавляемый элемент
         size++;
     }
 
     //метод добавления в конец
     public void addLast(E element) {
-        if (first == null) { //если первый элемент пустой
+        if (first == null) {
             addFirst(element);
         } else {
             Node<E> newNode = new Node<>(element);
@@ -72,7 +72,6 @@ public class LinkedList<E> {
 
     //метод удаления из конца
     public void deleteLast() {
-
         Node<E> currentNode = first;
         int currentIndex = 0;
         while (currentIndex != size - 2) {
@@ -81,7 +80,6 @@ public class LinkedList<E> {
         }
         currentNode.next = null;
         size--;
-
     }
 
     //метод удаления по индексу
