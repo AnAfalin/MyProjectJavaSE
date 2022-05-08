@@ -101,6 +101,16 @@ public class LinkedList<E> {
         }
     }
 
+    //метод удаления по ключу - удаление всех вхождений элемента
+    public void removeAll(E element) {
+
+    }
+
+    //метод проверки, содержится ли элемент в списке
+    private void indexOfElement(E element) {
+
+    }
+
     //метод вывода на консоль
     @Override
     public String toString() {
