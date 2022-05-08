@@ -93,7 +93,7 @@ public class ArrayList<E>{
         return (E) array[index];
     }
 
-    //метод изменения значения элемента по инждексу     O(1)
+    //метод изменения значения элемента по индексу     O(1)
     @SuppressWarnings("unchecked")
     public E set(E el, int index){
         E oldValue = (E) array[index];
@@ -126,7 +126,7 @@ public class ArrayList<E>{
         }
     }
 
-    //метод увеличения внутреннего размера массива, чтобы в него поместилось minCapacity элементов
+    //метод увеличения внутреннего размера массива, чтобы в него поместилось minCapacity элементов      O(grow)
     public void ensureCapacity(int minCapacity){
         if(minCapacity > array.length) {
             grow(minCapacity);
