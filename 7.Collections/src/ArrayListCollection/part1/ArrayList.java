@@ -1,4 +1,4 @@
-package ArrayListCollection.part1;
+package arrayListCollection.part1;
 
 import java.util.Comparator;
 
@@ -121,7 +121,6 @@ public class ArrayList<E>{
             for (int i = 0; i < size; i++) {
                 newArr[i] = array[i];
             }
-
             array = newArr;
         }
     }
@@ -162,7 +161,6 @@ public class ArrayList<E>{
                     array[j] = temp;
                 }
             }
-
         }
     }
 

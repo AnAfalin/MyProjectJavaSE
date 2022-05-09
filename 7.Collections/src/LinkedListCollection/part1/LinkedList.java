@@ -1,8 +1,8 @@
-package LinkedListCollection.part1;
+package linkedListCollection.part1;
 
 public class LinkedList<E> {
     private Node<E> first; //значение первого элемента
-    private int size; //размерность списка
+    public int size; //размерность списка
 
     private static class Node<E> {
         E item; //значение самого элемента
@@ -30,11 +30,11 @@ public class LinkedList<E> {
             addFirst(element);
         } else {
             Node<E> newNode = new Node<>(element);
-            Node<E> current = first;
-            while (current.next != null) {
-                current = current.next;
+            Node<E> currentNode = first;
+            while (currentNode.next != null) {
+                currentNode = currentNode.next;
             }
-            current.next = newNode;
+            currentNode.next = newNode;
             size++;
         }
     }
@@ -65,8 +65,7 @@ public class LinkedList<E> {
 
     //метод удаления из начала
     public void deleteFirst() {
-        Node<E> currentNode = first.next;
-        first = currentNode;
+        first = first.next;
         size--;
     }
 
@@ -103,12 +102,104 @@ public class LinkedList<E> {
 
     //метод удаления по ключу - удаление всех вхождений элемента
     public void removeAll(E element) {
-
+        int index;
+        while ((index = getIndex(element)) != -1) {
+            delete(index);
+        }
     }
 
     //метод проверки, содержится ли элемент в списке
-    private void indexOfElement(E element) {
+    public boolean contains(E element) {
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        int index = -1;
+        while (currentNode != null) {
+            if (currentNode.item.equals(element)) {
+                index = currentIndex;
+                break;
+            }
+            currentNode = currentNode.next;
+        }
+        return index != -1;
+    }
 
+    private int getIndex(E element) {
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        int index = -1;
+        while (currentNode != null) {
+            if (currentNode.item.equals(element)) {
+                index = currentIndex;
+                break;
+            }
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        return index;
+    }
+
+    //метод, возвращающий массив элементов
+    public E[] toArray(E[] array) {
+        Node<E> currentNode = first;
+        int index = 0;
+        while (currentNode != null) {
+            array[index] = currentNode.item;
+            currentNode = currentNode.next;
+            index++;
+        }
+        return array;
+    }
+
+    //метод нахождения суммы всех элементов
+    public double sumOfAllElements() {
+        if (first.item instanceof Integer) {
+            int sumEl = 0;
+            for (int i = 0; i < size; i++) {
+                sumEl += (Integer) getElement(i);
+            }
+            return sumEl;
+        } else if (first.item instanceof Double) {
+            double sumEl = 0;
+            for (int i = 0; i < size; i++) {
+                sumEl += (Double) getElement(i);
+            }
+            return sumEl;
+        }else if (first.item instanceof Float) {
+            float sumEl = 0;
+            for (int i = 0; i < size; i++) {
+                sumEl += (Float) getElement(i);
+            }
+            return sumEl;
+        }
+        return 0;
+    }
+
+    private E getElement(int index) {
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        while (currentIndex + 1 == index) {
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        return currentNode.item;
+    }
+
+    public void push(E element) {
+        addLast(element);
+    }
+
+    public void pop() {
+        deleteLast();
+    }
+
+    public E peek() {
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        while (currentIndex != size - 1) {
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        return currentNode.item;
     }
 
     //метод вывода на консоль
