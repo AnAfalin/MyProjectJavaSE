@@ -1,4 +1,4 @@
-package psrt3.task1;
+package part3.task1;
 
 import java.util.Scanner;
 
