@@ -1,0 +1,11 @@
+
+Реализовать обобщенную двустороннюю очередь (наподобие ArrayDeque).
+Методы:
+•	isEmpty
+•	size
+•	pollFirst, pollLast
+•	addFirst, addLast
+•	peekFirst, peekLast
+•	clear (очистить очередь)
+
+
