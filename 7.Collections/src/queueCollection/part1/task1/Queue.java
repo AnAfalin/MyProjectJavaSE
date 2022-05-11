@@ -4,7 +4,6 @@ package queueCollection.part1.task1;
 Односторонняя очередь
  */
 
-import javax.management.ObjectName;
 import java.util.Arrays;
 
 public class Queue<E> {
@@ -35,6 +34,9 @@ public class Queue<E> {
     //метод удаления из очереди
     @SuppressWarnings("unchecked")
     public E poll(){
+        if(isEmptyQueue()){
+            return null;
+        }
         head++;
         Object[] newArray = new Object[capacity];
         System.arraycopy(array, head, newArray, 0, tail);
@@ -46,6 +48,10 @@ public class Queue<E> {
         if(element == null){
             throw new NullPointerException("Element is null");
         }
+    }
+
+    private boolean isEmptyQueue(){
+        return tail == head;
     }
 
     @Override
