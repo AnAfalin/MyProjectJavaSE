@@ -10,9 +10,16 @@ public class Test {
         queue.offer(20);
 
         System.out.println(queue);
+
         System.out.println(queue.poll());
+
+        System.out.println(queue);
+        queue.offer(25);
+
         System.out.println(queue);
 
+        System.out.println(queue.poll());
+        System.out.println(queue);
 
     }
 

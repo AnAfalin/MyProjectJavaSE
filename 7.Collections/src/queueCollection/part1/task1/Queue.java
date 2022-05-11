@@ -37,11 +37,13 @@ public class Queue<E> {
         if(isEmptyQueue()){
             return null;
         }
+        E element = (E)array[head];
         head++;
         Object[] newArray = new Object[capacity];
         System.arraycopy(array, head, newArray, 0, tail);
         array = newArray;
-        return (E) array[head];
+        head--;
+        return element;
     }
 
     private void isNullElement(E element){
@@ -57,9 +59,9 @@ public class Queue<E> {
     @Override
     public String toString() {
         String strQueue = "";
-        for (int i = 0; i < array.length; i++) {
-            if(array[i] != null) {
-                strQueue += array[i] + " ";
+        for (Object o : array) {
+            if (o != null) {
+                strQueue += o + " ";
             }
         }
         return strQueue;
