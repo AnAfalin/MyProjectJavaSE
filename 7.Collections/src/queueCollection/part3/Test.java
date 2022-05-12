@@ -15,5 +15,27 @@ public class Test {
         arrayDeque.addLast(5);
 
         System.out.println(arrayDeque);
+
+        System.out.println(arrayDeque.peekFirst());
+        System.out.println(arrayDeque.peekLast());
+
+        System.out.println(arrayDeque);
+
+        arrayDeque.pollFirst();
+        arrayDeque.pollLast();
+
+        System.out.println(arrayDeque);
+
+        arrayDeque.addFirst(66);
+        arrayDeque.addLast(55);
+
+        System.out.println(arrayDeque);
+
+        arrayDeque.clean();
+        System.out.println(arrayDeque);
+
+        arrayDeque.addFirst(10);
+        arrayDeque.addLast(100);
+        System.out.println(arrayDeque);
     }
 }

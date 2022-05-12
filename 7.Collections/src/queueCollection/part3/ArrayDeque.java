@@ -50,6 +50,36 @@ public class ArrayDeque<E> {
         array = newArray;
     }
 
+    public void pollFirst(){
+        if(!isEmpty()) {
+            array[head] = null;
+            head++;
+        }
+    }
+
+    public void pollLast(){
+        if(!isEmpty()) {
+            array[tail - 1] = null;
+            tail--;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public E peekFirst(){
+        return (E)array[head];
+    }
+
+    @SuppressWarnings("unchecked")
+    public E peekLast(){
+        return (E)array[tail - 1];
+    }
+
+    public void clean(){
+        Arrays.fill(array, null);
+        head = 0;
+        tail = 0;
+    }
+
     private boolean isEmpty(){
         return head == tail;
     }
@@ -63,7 +93,6 @@ public class ArrayDeque<E> {
             }else {
                 strArrayDeque.append(".").append(" ");
             }
-
         }
         return strArrayDeque.toString();
     }
