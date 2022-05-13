@@ -154,6 +154,9 @@ public class LinkedList<E> {
 
     //метод нахождения суммы всех элементов
     public double sumOfAllElements() {
+        if(first.item == null){
+            return 0.0;
+        }
         if (first.item instanceof Number) {
             int sumEl = 0;
             for (int i = 0; i < size; i++) {
@@ -162,6 +165,15 @@ public class LinkedList<E> {
             return sumEl;
         }
         return 0;
+    }
+
+    //метод нахождения суммы всех элементов
+    public static <T extends Number> double sumOfAllElements2 (LinkedList<T> list) {
+            double sumEl = 0;
+            for (int i = 0; i < list.size; i++) {
+                sumEl += (list.getElement(i)).doubleValue();
+            }
+            return sumEl;
     }
 
     private E getElement(int index) {
