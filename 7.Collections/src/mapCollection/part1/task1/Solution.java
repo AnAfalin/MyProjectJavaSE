@@ -4,29 +4,28 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-
-        int[] arrayNumber = new int[10];
-        for (int i = 0; i < 10; i++) {
-            int number = (int)(Math.random() * 10 + 1);
-            arrayNumber[number - 1] += 1;
-        }
-
         Map<String, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < arrayNumber.length; i++) {
-            map.put(Integer.toString(i + 1), arrayNumber[i]);
-        }
-
-        Collection<Integer> collection = map.values();
-        String number = "";
-        int max = Integer.MIN_VALUE;
-        Set<String> set = map.keySet();
-        for (String key : set){
-            if(map.get(key) > max) {
-                max = map.get(key);
-                number = key;
+        for (int i = 0; i < 10; i++) {
+            int number = (int)(Math.random() * 10 + 1);
+            if(map.containsKey(Integer.toString(number))){
+                map.put(Integer.toString(number), map.get(Integer.toString(number)) + 1);
+            }else {
+                map.put(Integer.toString(number), 1);
             }
         }
+        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+        String number = "";
+        int min = 0;
+        for (var el:entrySet) {
+
+            if(el.getValue() > min){
+                min = el.getValue();
+                number = el.getKey();
+            }
+        }
+
+        System.out.println(map);
 
         System.out.println(number + " было загадано больше всего");
     }
