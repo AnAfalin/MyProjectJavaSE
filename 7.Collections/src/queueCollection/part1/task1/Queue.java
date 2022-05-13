@@ -2,7 +2,6 @@ package queueCollection.part1.task1;
 
 /*
 Односторонняя очередь
--head-  --- --- --- --- -tail-
  */
 
 import java.util.Arrays;
@@ -21,10 +20,8 @@ public class Queue<E> {
     }
 
     //метод добавляет элемент в конец очереди.
-    /*
-    Если элемент удачно добавлен, возвращает true
-    Если элемент равен null - бросается исключение NullPointerException
-     */
+    //Если элемент удачно добавлен, возвращает true
+    //Если элемент равен null - бросается исключение NullPointerException
     public boolean offer(E element){
         isNullElement(element);
         if(tail + 1 >= capacity) {
@@ -38,9 +35,7 @@ public class Queue<E> {
     }
 
     //метод возвращает элемент из начала очереди с удалением этого элемента.
-    /*
-    Если очередь пуста, возвращает значение null
-     */
+    //Если очередь пуста, возвращает значение null
     @SuppressWarnings("unchecked")
     public E poll(){
         if(isEmptyQueue()){
@@ -48,18 +43,12 @@ public class Queue<E> {
         }
         E element = (E)array[head];
         head++;
-        Object[] newArray = new Object[capacity];
-        System.arraycopy(array, head, newArray, 0, tail);
-        array = newArray;
-        head--;
         return element;
     }
 
     //метод возвращает элемент из начала очереди с удалением этого элемента.
-    /*
-    Если очередь пуста, генерирует исключение NoSuchElementException
-     */
-    @SuppressWarnings("unchecked")
+    //Если очередь пуста, генерирует исключение NoSuchElementException
+    // @SuppressWarnings("unchecked")
     public E remove(){
         isEmptyQueueException();
         E element = (E)array[head];
@@ -72,9 +61,7 @@ public class Queue<E> {
     }
 
     //метод возвращает, но не удаляет, элемент из начала очереди.
-    /*
-    Если очередь пуста, генерирует исключение NoSuchElementException
-     */
+    //Если очередь пуста, генерирует исключение NoSuchElementException
     @SuppressWarnings("unchecked")
     public E element(){
         isEmptyQueueException();
@@ -82,9 +69,7 @@ public class Queue<E> {
     }
 
     //метод возвращает элемент из начала очереди без удаления этого элемента.
-    /*
-    Если очередь пуста, возвращает значение null
-     */
+    //Если очередь пуста, возвращает значение null
     @SuppressWarnings("unchecked")
     public E peek(){
         if(isEmptyQueue()){
@@ -114,12 +99,12 @@ public class Queue<E> {
 
     @Override
     public String toString() {
-        String strQueue = "";
+        StringBuilder strQueue = new StringBuilder();
         for (Object o : array) {
             if (o != null) {
-                strQueue += o + " ";
+                strQueue.append(o).append(" ");
             }
         }
-        return strQueue;
+        return strQueue.toString();
     }
 }
