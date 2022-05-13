@@ -83,21 +83,23 @@ public class LinkedList<E> {
 
     //метод удаления по индексу
     public void delete(int index) {
-        if (indexIsCorrect(index)) {
-            if (index == 0) {
-                deleteFirst();
-            }
-            Node<E> currentNode = first;
-            Node<E> previousNode = first;
-            int currentIndex = 0;
-            while (currentIndex != index) {
-                previousNode = currentNode;
-                currentNode = currentNode.next;
-                currentIndex++;
-            }
-            previousNode.next = currentNode.next;
-            size--;
+        if (!indexIsCorrect(index)) {
+            return;
         }
+        if (index == 0) {
+            deleteFirst();
+            return;
+        }
+        Node<E> currentNode = first;
+        Node<E> previousNode = first;
+        int currentIndex = 0;
+        while (currentIndex != index) {
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        previousNode.next = currentNode.next;
+        size--;
     }
 
     //метод удаления по ключу - удаление всех вхождений элемента
@@ -152,22 +154,10 @@ public class LinkedList<E> {
 
     //метод нахождения суммы всех элементов
     public double sumOfAllElements() {
-        if (first.item instanceof Integer) {
+        if (first.item instanceof Number) {
             int sumEl = 0;
             for (int i = 0; i < size; i++) {
-                sumEl += (Integer) getElement(i);
-            }
-            return sumEl;
-        } else if (first.item instanceof Double) {
-            double sumEl = 0;
-            for (int i = 0; i < size; i++) {
-                sumEl += (Double) getElement(i);
-            }
-            return sumEl;
-        }else if (first.item instanceof Float) {
-            float sumEl = 0;
-            for (int i = 0; i < size; i++) {
-                sumEl += (Float) getElement(i);
+                sumEl += ((Number) getElement(i)).doubleValue();
             }
             return sumEl;
         }
