@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-        Map<String, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < 10; i++) {
             int number = (int)(Math.random() * 10 + 1);
-            if(map.containsKey(Integer.toString(number))){
-                map.put(Integer.toString(number), map.get(Integer.toString(number)) + 1);
+            if(map.containsKey(number)){
+                map.put(number, map.get(number) + 1);
             }else {
-                map.put(Integer.toString(number), 1);
+                map.put(number, 1);
             }
         }
-        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
-        String number = "";
+        Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+        int number = 0;
         int min = 0;
         for (var el:entrySet) {
 
@@ -26,7 +26,6 @@ public class Solution {
         }
 
         System.out.println(map);
-
         System.out.println(number + " было загадано больше всего");
     }
 }
