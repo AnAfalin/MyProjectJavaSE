@@ -27,7 +27,7 @@ public class Solution {
         office.put(employee7, administration);
 
         Set<Map.Entry<Employee, Department>> entrySet = office.entrySet();
-        for (Map.Entry<Employee, Department> el:entrySet) {
+        for (Map.Entry<Employee, Department> el : entrySet) {
             System.out.println(el);
         }
         System.out.println("-- -- --");
@@ -36,7 +36,7 @@ public class Solution {
         //результат - добавление не произошло
         office.put(employee1, accounting);
 
-        for (Map.Entry<Employee, Department> el:entrySet) {
+        for (Map.Entry<Employee, Department> el : entrySet) {
             System.out.println(el);
         }
         System.out.println("-- -- --");
@@ -45,7 +45,7 @@ public class Solution {
         //результат - добавление произошло, т.к. дабавлялся новый объект работника
         office.put(new Employee("Ирина", 5), accounting);
 
-        for (Map.Entry<Employee, Department> el:entrySet) {
+        for (Map.Entry<Employee, Department> el : entrySet) {
             System.out.println(el);
         }
         System.out.println("-- -- --");
@@ -55,5 +55,23 @@ public class Solution {
         System.out.println("Количество отделов в офисе равно: " + departmentSet.size());
 
 
+        int countAdministration = 0;
+        int countAccounting = 0;
+        int countDepartmentSales = 0;
+        int countDepartmentPurchasing = 0;
+        Set<Map.Entry<Employee, Department>> entries = office.entrySet();
+        for (Map.Entry<Employee, Department> el : entries) {
+            if (el.getValue().toString().equals("Администрация")) {
+                countAdministration++;
+            } else if (el.getValue().toString().equals("Бухгалтерия")) {
+                countAccounting++;
+            } else if (el.getValue().toString().equals("Отдел продаж")) {
+                countDepartmentSales++;
+            } else countDepartmentPurchasing++;
+        }
+        System.out.println("В отеделе: Администрация работает " + countAdministration + " человек");
+        System.out.println("В отеделе: Бухгалтерия работает " + countAccounting + " человек");
+        System.out.println("В отеделе: Отдел продаж работает " + countDepartmentSales + " человек");
+        System.out.println("В отеделе: Отдел закупок работает " + countDepartmentPurchasing + " человек");
     }
 }
