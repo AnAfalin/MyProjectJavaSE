@@ -41,10 +41,10 @@ public class Solution {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Введите id (1-10) пациента для замены пациента");
             if (scanner.hasNextInt()) {
-                int id = scanner.nextInt();
+                int id = Integer.parseInt(scanner.nextLine());
                 if(id > 0 && id <= 10) {
                     System.out.println("Введите имя нового пациента");
-                    String name = scanner.next();
+                    String name = scanner.nextLine();
                     patients.put(id, name);
                     break;
                 }else {
