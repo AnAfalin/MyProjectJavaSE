@@ -14,7 +14,7 @@ public class LinkedList<E> {
         }
     }
 
-    //метод добавления в начало
+    //метод добавления в начало      O(1)-вставка O(n)-итерация по всему списку до конца и изменение их ссылкон на след.эл.
     public void addFirst(E element) {
         Node<E> newNode = new Node<>(element);
         if (first != null) { //если первый элемент пустой
@@ -24,7 +24,7 @@ public class LinkedList<E> {
         size++;
     }
 
-    //метод добавления в конец
+    //метод добавления в конец      O(n)-итерация до конца списка   O(1)-вставка
     public void addLast(E element) {
         if (first == null) {
             addFirst(element);
@@ -39,7 +39,7 @@ public class LinkedList<E> {
         }
     }
 
-    //метод произвольного добавления
+    //метод произвольного добавления    O(n)-поиск элемента   O(1)-вставка
     public void add(E element, int index) {
         if (indexIsCorrect(index)) {
             if (index == 0) {
@@ -63,13 +63,13 @@ public class LinkedList<E> {
         }
     }
 
-    //метод удаления из начала
+    //метод удаления из начала  O(1)
     public void deleteFirst() {
         first = first.next;
         size--;
     }
 
-    //метод удаления из конца
+    //метод удаления из конца   O(1)
     public void deleteLast() {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -81,7 +81,7 @@ public class LinkedList<E> {
         size--;
     }
 
-    //метод удаления по индексу
+    //метод удаления по индексу     O(n)-поиск элемента   O(1)-удаление
     public void delete(int index) {
         if (!indexIsCorrect(index)) {
             return;
@@ -110,7 +110,7 @@ public class LinkedList<E> {
         }
     }
 
-    //метод проверки, содержится ли элемент в списке
+    //метод проверки, содержится ли элемент в списке    O(n)
     public boolean contains(E element) {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -125,6 +125,7 @@ public class LinkedList<E> {
         return index != -1;
     }
 
+    //O(n)
     private int getIndex(E element) {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -140,7 +141,7 @@ public class LinkedList<E> {
         return index;
     }
 
-    //метод, возвращающий массив элементов
+    //метод, возвращающий массив элементов      O(n)
     public E[] toArray(E[] array) {
         Node<E> currentNode = first;
         int index = 0;
@@ -152,7 +153,7 @@ public class LinkedList<E> {
         return array;
     }
 
-    //метод нахождения суммы всех элементов
+    //метод нахождения суммы всех элементов     O(n)
     public double sumOfAllElements() {
         if(first.item == null){
             return 0.0;
@@ -207,13 +208,13 @@ public class LinkedList<E> {
     //метод вывода на консоль
     @Override
     public String toString() {
-        String strLinkedList = "";
+        StringBuilder strLinkedList = new StringBuilder();
         Node<E> current = first;
         while (current != null) {
-            strLinkedList += current.item + " ";
+            strLinkedList.append(current.item).append(" ");
             current = current.next;
         }
-        return strLinkedList;
+        return strLinkedList.toString();
     }
 
     private boolean indexIsCorrect(int index) {
