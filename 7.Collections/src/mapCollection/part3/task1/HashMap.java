@@ -72,6 +72,33 @@ public class HashMap<K, V> {
         put(table, key, value);
     }
 
+    public void remove(K key){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int indexDelete = getIndexLinkedList(indexOfTable, key);
+        if(indexDelete != -1) {
+            table[indexOfTable].remove(indexDelete);
+            size--;
+        }
+    }
+
+    public Entry<K, V> get(K key){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int foundIndex = getIndexLinkedList(indexOfTable, key);
+        if(foundIndex != -1){
+            return table[indexOfTable].get(foundIndex);
+        }
+        return null;
+    }
+
+    private int getIndexLinkedList(int index, K key){
+
+        for (int i = 0; i < table[index].size(); i++) {
+            if(key.hashCode() == table[index].get(i).key.hashCode()){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     @SuppressWarnings("unchecked")
     private void rehash() {
@@ -100,10 +127,12 @@ public class HashMap<K, V> {
 class Test {
     public static void main(String[] args) {
         HashMap<Integer, String> hashMap = new HashMap<>();
-        for (int i = 0; i < 40; i++) {
-            hashMap.put(i, Integer.toString(i));
+        for (int i = 0; i < 10; i++) {
+            hashMap.put(i, Integer.toString(i*i));
         }
         System.out.println(hashMap);
-
+        hashMap.remove(3);
+        System.out.println(hashMap);
+        System.out.println(hashMap.get(5));
     }
 }
