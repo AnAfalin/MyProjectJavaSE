@@ -1,8 +1,7 @@
-package mapCollection.part3.task1;
+package mapCollection.part3;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class HashMap<K, V> {
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
@@ -35,6 +34,36 @@ public class HashMap<K, V> {
         }
     }
 
+    public void put(K key, V value) {
+        if((double)size/capacity >= DEFAULT_LOAD_FACTOR){
+            rehash();
+        }
+        put(table, key, value);
+    }
+
+    public void remove(K key){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int indexDelete = getIndexLinkedList(indexOfTable, key);
+        if(indexDelete != -1) {
+            table[indexOfTable].remove(indexDelete);
+            size--;
+        }
+    }
+
+    public Entry<K, V> get(K key){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int foundIndex = getIndexLinkedList(indexOfTable, key);
+        if(foundIndex != -1){
+            return table[indexOfTable].get(foundIndex);
+        }
+        return null;
+    }
+
+    public boolean containsKey(K key){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        return (getIndexLinkedList(indexOfTable, key) != -1);
+    }
+
     private void put(LinkedList<Entry<K, V>>[] linkedLists, K key, V value) {
         Entry<K, V> entry = new Entry<>(key, value);
         int index = (capacity - 1) & key.hashCode();
@@ -65,33 +94,7 @@ public class HashMap<K, V> {
         //2) false - объекты разные, добавляем в конец связного списка
     }
 
-    public void put(K key, V value) {
-        if((double)size/capacity >= DEFAULT_LOAD_FACTOR){
-            rehash();
-        }
-        put(table, key, value);
-    }
-
-    public void remove(K key){
-        int indexOfTable = (capacity - 1) & key.hashCode();
-        int indexDelete = getIndexLinkedList(indexOfTable, key);
-        if(indexDelete != -1) {
-            table[indexOfTable].remove(indexDelete);
-            size--;
-        }
-    }
-
-    public Entry<K, V> get(K key){
-        int indexOfTable = (capacity - 1) & key.hashCode();
-        int foundIndex = getIndexLinkedList(indexOfTable, key);
-        if(foundIndex != -1){
-            return table[indexOfTable].get(foundIndex);
-        }
-        return null;
-    }
-
     private int getIndexLinkedList(int index, K key){
-
         for (int i = 0; i < table[index].size(); i++) {
             if(key.hashCode() == table[index].get(i).key.hashCode()){
                 return i;
@@ -124,15 +127,4 @@ public class HashMap<K, V> {
     }
 }
 
-class Test {
-    public static void main(String[] args) {
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
-            hashMap.put(i, Integer.toString(i*i));
-        }
-        System.out.println(hashMap);
-        hashMap.remove(3);
-        System.out.println(hashMap);
-        System.out.println(hashMap.get(5));
-    }
-}
+
