@@ -11,7 +11,12 @@ public class Test {
         hashMap.remove(3);
         System.out.println(hashMap);
         System.out.println(hashMap.get(5));
-        System.out.println(hashMap.containsKey(3));
+        System.out.println(hashMap.containsKey(4));
+        System.out.println(hashMap.contains(4, "7"));
+        System.out.println(hashMap.contains(4, "16"));
+
+        System.out.println(hashMap.replace(4, "0"));
+        System.out.println(hashMap);
     }
 
 }

@@ -64,6 +64,25 @@ public class HashMap<K, V> {
         return (getIndexLinkedList(indexOfTable, key) != -1);
     }
 
+    public boolean contains(K key, V value){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int index = getIndexLinkedList(indexOfTable, key);
+        if(index != -1){
+            return table[indexOfTable].get(index).value.equals(value);
+        }
+        return false;
+    }
+
+    public boolean replace(K key, V value){
+        int indexOfTable = (capacity - 1) & key.hashCode();
+        int index = getIndexLinkedList(indexOfTable, key);
+        if(index != -1){
+            table[indexOfTable].get(index).value = value;
+            return true;
+        }
+        return false;
+    }
+
     private void put(LinkedList<Entry<K, V>>[] linkedLists, K key, V value) {
         Entry<K, V> entry = new Entry<>(key, value);
         int index = (capacity - 1) & key.hashCode();
