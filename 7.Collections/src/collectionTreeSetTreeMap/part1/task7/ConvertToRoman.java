@@ -5,8 +5,8 @@ import java.util.TreeMap;
 
 public class ConvertToRoman {
 
-    public void convertToRoman(int number) { //1
-        NavigableMap<Integer, Character> dataArabicRoman = new TreeMap<>() {{
+    public void convertToRoman(int number) {
+        NavigableMap<Integer, Character> data = new TreeMap<>() {{
             put(1, 'I');
             put(5, 'V');
             put(10, 'X');
@@ -15,24 +15,29 @@ public class ConvertToRoman {
             put(500, 'D');
             put(1000, 'M');
         }};
-
+        int numberArabic = number;
         StringBuilder result = new StringBuilder();
-        do{
-            if(dataArabicRoman.containsKey(number)){
-                result.append(dataArabicRoman.get(number));
-                number -= dataArabicRoman.ceilingKey(number);
+        while (number != 0) {
+            if (number > data.lastKey()) {
+                result.append(data.get(data.lowerKey(number)));
+                number -= data.lowerKey(number);
+            } else if (data.containsKey(number)) {
+                result.append(data.get(number));
+                number -= number;
+            } else if (Math.abs(data.lowerKey(number) - number) < Math.abs(data.higherKey(number) - number)) {
+                result.append(data.get(data.lowerKey(number)));
+                number -= data.lowerKey(number);
+            } else if ((Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) && (Math.abs(data.higherKey(number) - number) == 1 || Math.abs(data.higherKey(number) - number) == 10 || Math.abs(data.higherKey(number) - number) == 100)) {
+                result.append(data.get(data.lowerKey(number / 2)));
+                number += data.lowerKey(data.lowerKey(number));
+            } else if (Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) {
+                result.append(data.get(data.lowerKey(number)));
+                number -= data.lowerKey(number);
             }
-        }while (number != 0);
+        }
 
-
-        System.out.println(result);
-
+        System.out.println("Число арабскими цифрами - " + numberArabic + "\nЧисло римскими цифрами - " + result);
     }
-
-
-
-
-
 }
 
 
