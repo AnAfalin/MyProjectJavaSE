@@ -53,7 +53,35 @@ public class MyTreeMap<K extends Comparable<K>>{
     }
 
     //удаление
+    public void delete(K key){
+        if(!find(key)){
+            return;
+        }
 
+        if(root.key == key){
+            deleteFirst();
+            return;
+        }
+
+        Entry<K> current = root;
+        Entry<K> cur = root;
+
+        while (current.key != key) {
+            cur = current;
+            if (key.compareTo(current.key) > 0) {
+                current = current.right;
+            } else if (key.compareTo(current.key) < 0) {
+                current = current.left;
+            }
+        }
+
+        if(cur.left != null && cur.left.key == key){
+            cur.left = current.left;
+        }else if(cur.right != null && cur.right.key == key){
+            cur.right = current.left;
+            cur.right.right = current.right;
+        }
+    }
 
     //поиск элемента
     public boolean find(K key){
@@ -69,6 +97,14 @@ public class MyTreeMap<K extends Comparable<K>>{
             }
         }
         return true;
+    }
+
+    private void deleteFirst(){
+        if(root.left != null){
+            root = root.left;
+        }else if(root.right != null){
+            root = root.right;
+        }
     }
 
     private String printEl(Entry<K> entry){

@@ -7,8 +7,14 @@ public class Test {
         myTreeMap.put(20);
         myTreeMap.put(40);
         myTreeMap.put(15);
-        System.out.println(myTreeMap.find(25));
+        myTreeMap.put(50);
         myTreeMap.print();
+        System.out.println(myTreeMap.find(25));
+        myTreeMap.delete(20);
+        myTreeMap.print();
+        myTreeMap.delete(10);
+        myTreeMap.print();
+
 
 
     }
