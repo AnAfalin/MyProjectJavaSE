@@ -1,5 +1,8 @@
 package collectionTreeSetTreeMap.part2;
 
+import java.io.StringReader;
+import java.util.Arrays;
+
 public class MyTreeMap<K extends Comparable<K>>{
     public  Entry<K> root; //корень
     public int size;
@@ -50,28 +53,7 @@ public class MyTreeMap<K extends Comparable<K>>{
     }
 
     //удаление
-//    public boolean delete(K key){
-//        if(!find(key)){
-//            return false;
-//        }
-//
-//        Entry<K> current = root;
-//        Entry<K> cur = root;
-//        while (current.key != key) {
-//            cur = current;
-//            if (key.compareTo(current.key) > 0) {
-//                current = current.right;
-//            } else if (key.compareTo(current.key) < 0) {
-//                current = current.left;
-//            }
-//        }
-//        if(cur.left != null && cur.left.key == key){
-//            cur.left = current.left;
-//        }else if(cur.right != null && cur.right.key == key){
-//            cur.right = current.right;
-//        }
-//        return true;
-//    }
+
 
     //поиск элемента
     public boolean find(K key){
@@ -89,18 +71,23 @@ public class MyTreeMap<K extends Comparable<K>>{
         return true;
     }
 
-    @Override
-    public String toString() {
-        String strMyTreeMap = " " + root + " ";
-        Entry<K> current = root;
-        for (int i = 0; i < size; i++) {
-            if(current.left != null){
-                strMyTreeMap += current.left.key + " ";
-            }
-            if(current.right != null){
-                strMyTreeMap += current.right.key + " ";
-            }
+    private String printEl(Entry<K> entry){
+        String str = "";
+        if(entry.left != null){
+            str += printEl(entry.left) + " ";
         }
-        return strMyTreeMap;
+        if(entry.right != null){
+            str += printEl(entry.right) + " ";
+        }
+        str += entry.key;
+        return str;
     }
+
+    public void print(){
+        String str = printEl(root);
+        Object[] objects = str.split(" ");
+        Arrays.sort(objects);
+        System.out.println(Arrays.toString(objects));
+    }
+
 }
