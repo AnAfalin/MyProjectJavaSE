@@ -23,8 +23,6 @@ public class Solution {
             System.out.println(student);
         }
 
-        System.out.println("-------");
-
         Student student4 = new Student("Ирина", 22);
         Student student5 = new Student("Ирина", 22);
 
@@ -32,11 +30,11 @@ public class Solution {
         hashSet.add(student5);
 
         //без переопределения методов "equals", "hashcode" в классе Students
-        //        Student Ирина, age 22, marks:
-        //        Student Ирина, age 22, marks:
-        //        Student Илья, age 19, marks: 4.0 3.5 4.0
-        //        Student Ирина, age 22, marks: 4.5
-        //        Student Сергей, age 18, marks: 5.0 5.0
+        //Student Ирина, age 22, marks:
+        //Student Ирина, age 22, marks:
+        //Student Илья, age 19, marks: 4.0 3.5 4.0
+        //Student Ирина, age 22, marks: 4.5
+        //Student Сергей, age 18, marks: 5.0 5.0
 
         //после переопределение методов "equals", "hashcode" в классе Students
         //Student Ирина, age 22, marks: 4.5
