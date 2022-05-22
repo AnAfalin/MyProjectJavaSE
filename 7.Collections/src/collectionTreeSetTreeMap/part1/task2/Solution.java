@@ -1,9 +1,7 @@
 package collectionTreeSetTreeMap.part1.task2;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class Solution {
     public static void main(String[] args) {
@@ -14,19 +12,15 @@ public class Solution {
         System.out.println("Массив\n" + Arrays.toString(array));
 
         TreeMap<Integer, Integer> treeMap = new TreeMap<>();
-        TreeSet<Integer> treeSet = new TreeSet<>();
-        Collections.addAll(treeSet, array);
 
-        for (Integer el:treeSet) {
-            int count = 0;
-            for (int i = 0; i < array.length; i++) {
-                if(el.equals(array[i])){
-                    count++;
-                }
+        for (Integer el : array) {
+            if (treeMap.containsKey(el)) {
+                treeMap.put(el, treeMap.get(el) + 1);
+            } else {
+                treeMap.put(el, 1);
             }
-            treeMap.put(el, count);
-
         }
+
         System.out.println("Элемент - количетсво вхождений элемента в массив");
         System.out.println(treeMap);
     }
