@@ -1,6 +1,7 @@
 package hashSetCollection.part1.task1;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Solution {
     public static void main(String[] args) {
@@ -13,10 +14,11 @@ public class Solution {
         Student student3 = new Student("Ирина", 22);
         student3.addMark(4.5);
 
-        HashSet<Student> hashSet = new HashSet<>();
+        Set<Student> hashSet = new HashSet<>();
         hashSet.add(student1);
         hashSet.add(student2);
         hashSet.add(student3);
+
         for (Student student:hashSet) {
             System.out.println(student);
         }
@@ -24,10 +26,24 @@ public class Solution {
         System.out.println("-------");
 
         Student student4 = new Student("Ирина", 22);
-        student4.addMark(4.5); //добавиться, т.к. новый объект
-        student3.addMark(4.5); //не добавится, т.к. объект такой уже есть
+        Student student5 = new Student("Ирина", 22);
 
         hashSet.add(student4);
+        hashSet.add(student5);
+
+        //без переопределения методов "equals", "hashcode" в классе Students
+        //        Student Ирина, age 22, marks:
+        //        Student Ирина, age 22, marks:
+        //        Student Илья, age 19, marks: 4.0 3.5 4.0
+        //        Student Ирина, age 22, marks: 4.5
+        //        Student Сергей, age 18, marks: 5.0 5.0
+
+        //после переопределение методов "equals", "hashcode" в классе Students
+        //Student Ирина, age 22, marks: 4.5
+        //Student Илья, age 19, marks: 4.0 3.5 4.0
+        //Student Сергей, age 18, marks: 5.0 5.0
+        //Student Ирина, age 22, marks:
+
         for (Student student:hashSet) {
             System.out.println(student);
         }

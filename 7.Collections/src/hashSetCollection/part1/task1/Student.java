@@ -1,5 +1,8 @@
 package hashSetCollection.part1.task1;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Student {
     private String name;
     private int age;
@@ -54,5 +57,20 @@ public class Student {
             }
         }
         return string.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && Objects.equals(name, student.name) && Arrays.equals(marks, student.marks);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, age);
+        result = 31 * result + Arrays.hashCode(marks);
+        return result;
     }
 }
