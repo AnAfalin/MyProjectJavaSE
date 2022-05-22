@@ -5,6 +5,7 @@ public abstract class Car {
     private int fuel;
     private int consumptionFuel;
     private double probabilityDamage;
+    private int countStep;
 
 
     public Car(int speed, int consumptionFuel, double probabilityDamage) {
@@ -27,8 +28,12 @@ public abstract class Car {
             fuel -= consumptionFuel;
             distance -= speed;
         }
-//            countStep++;
+        countStep++;
         return distance;
+    }
+
+    public int getCountStep() {
+        return countStep;
     }
 }
 
