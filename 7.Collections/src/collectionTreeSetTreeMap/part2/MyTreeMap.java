@@ -46,6 +46,8 @@ public class MyTreeMap<K extends Comparable<K>>{
                         break;
                     }
                     current = current.left;
+                }else{
+                    break;
                 }
             }
             size++;
@@ -83,6 +85,14 @@ public class MyTreeMap<K extends Comparable<K>>{
         }
     }
 
+    private void deleteFirst(){
+        if(root.left != null){
+            root = root.left;
+        }else if(root.right != null){
+            root = root.right;
+        }
+    }
+
     //поиск элемента
     public boolean find(K key){
         Entry<K> current = root;
@@ -99,31 +109,17 @@ public class MyTreeMap<K extends Comparable<K>>{
         return true;
     }
 
-    private void deleteFirst(){
-        if(root.left != null){
-            root = root.left;
-        }else if(root.right != null){
-            root = root.right;
-        }
-    }
-
-    private String printEl(Entry<K> entry){
-        String str = "";
-        if(entry.left != null){
-            str += printEl(entry.left) + " ";
-        }
-        if(entry.right != null){
-            str += printEl(entry.right) + " ";
-        }
-        str += entry.key;
-        return str;
-    }
-
     public void print(){
-        String str = printEl(root);
-        Object[] objects = str.split(" ");
-        Arrays.sort(objects);
-        System.out.println(Arrays.toString(objects));
+        inOrder(root);
     }
 
+    private void inOrder(Entry<K> localEntry){
+        if(localEntry == null){
+            return;
+        }
+        inOrder(localEntry.left);
+        System.out.print(localEntry.key);
+        System.out.print(" ");
+        inOrder(localEntry.right);
+    }
 }
