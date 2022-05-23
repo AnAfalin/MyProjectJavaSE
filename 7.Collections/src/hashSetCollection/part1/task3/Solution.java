@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] arrayOfNumber = new int[10];
+        int[] arrayOfNumber = new int[5];
         for (int i = 0; i < arrayOfNumber.length; i++) {
             arrayOfNumber[i] = (int)(Math.random() * 9);
             System.out.print(arrayOfNumber[i] + " ");
@@ -28,12 +28,10 @@ public class Solution {
             int value = num - list.get(i);
             if (set.contains(value)) {
                 count++;
+                list.remove(i);
             }
-            list.remove(i);
-
         }
+
         System.out.println(count);
-
-
     }
 }
