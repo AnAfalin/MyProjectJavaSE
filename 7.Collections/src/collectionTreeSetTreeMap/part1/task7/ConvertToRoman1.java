@@ -19,7 +19,9 @@ public class ConvertToRoman1 {
             put(500, "D");
             put(1000, "M");
         }};
+
         int numberArabic = number;
+
         StringBuilder result = new StringBuilder();
 
         while (number != 0) {
@@ -29,19 +31,22 @@ public class ConvertToRoman1 {
             } else if (data.containsKey(number)) {
                 result.append(data.get(number));
                 number -= number;
-            } else if (Math.abs(data.lowerKey(number) - number) < Math.abs(data.higherKey(number) - number)) {
+            } else if (Integer.toString(number).charAt(0) == '4'){
                 result.append(data.get(data.lowerKey(number)));
-                number -= data.lowerKey(number);
-            } else if ((Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) && (Math.abs(data.higherKey(number) - number) == 1 || Math.abs(data.higherKey(number) - number) == 10 || Math.abs(data.higherKey(number) - number) == 100)) {
-                result.append(data.get(data.lowerKey(number / 2)));
+                number += data.lowerKey(number);
+            } else if (Integer.toString(number).charAt(0) == '9'){
+                result.append(data.get(data.lowerKey(data.lowerKey(number))));
                 number += data.lowerKey(data.lowerKey(number));
-            } else if (Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) {
+            } else if (Integer.toString(number).charAt(0) == '6'){
+                result.append(data.get(data.higherKey(number)));
+                number -= data.higherKey(number);
+            }else {
                 result.append(data.get(data.lowerKey(number)));
                 number -= data.lowerKey(number);
             }
         }
 
-        System.out.println("Число арабскими цифрами - " + numberArabic + "\nЧисло римскими цифрами - " + result);
+        System.out.println("Число арабскими цифрами - " + numberArabic + " == Число римскими цифрами - " + result);
     }
 }
 

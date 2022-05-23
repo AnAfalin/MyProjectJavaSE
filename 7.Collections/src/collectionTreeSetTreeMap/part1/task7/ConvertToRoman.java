@@ -23,29 +23,18 @@ public class ConvertToRoman {
             put(900, "CM");
             put(1000, "M");
         }};
+
         int numberArabic = number;
+
         StringBuilder result = new StringBuilder();
 
         while (number != 0) {
-            if (number > data.lastKey()) {
-                result.append(data.get(data.lowerKey(number)));
-                number -= data.lowerKey(number);
-            } else if (data.containsKey(number)) {
-                result.append(data.get(number));
-                number -= number;
-            } else if (Math.abs(data.lowerKey(number) - number) < Math.abs(data.higherKey(number) - number)) {
-                result.append(data.get(data.lowerKey(number)));
-                number -= data.lowerKey(number);
-            } else if ((Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) && (Math.abs(data.higherKey(number) - number) == 1 || Math.abs(data.higherKey(number) - number) == 10 || Math.abs(data.higherKey(number) - number) == 100)) {
-                result.append(data.get(data.lowerKey(number / 2)));
-                number += data.lowerKey(data.lowerKey(number));
-            } else if (Math.abs(data.lowerKey(number) - number) >= Math.abs(data.higherKey(number) - number)) {
-                result.append(data.get(data.lowerKey(number)));
-                number -= data.lowerKey(number);
-            }
+            int value = data.floorKey(number);
+            result.append(data.get(value));
+            number -= value;
         }
 
-        System.out.println("Число арабскими цифрами - " + numberArabic + "\nЧисло римскими цифрами - " + result);
+        System.out.println("Число арабскими цифрами - " + numberArabic + " == Число римскими цифрами - " + result);
     }
 }
 

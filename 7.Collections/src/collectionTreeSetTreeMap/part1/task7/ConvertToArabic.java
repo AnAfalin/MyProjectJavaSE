@@ -25,6 +25,6 @@ public class ConvertToArabic {
                 result += data.get(number.charAt(i)) - 2 * data.get(number.charAt(i - 1));
             }
         }
-        System.out.println("Число римскими цифрами - " + number + "\nЧисло арабскими цифрами - " + result);
+        System.out.println("Число римскими цифрами - " + number + " == Число арабскими цифрами - " + result);
     }
 }
