@@ -1,10 +1,6 @@
 package hashSetCollection.part1.task3;
 
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
@@ -14,20 +10,27 @@ public class Solution {
             System.out.print(arrayOfNumber[i] + " ");
         }
         System.out.println();
-        int num = new Scanner(System.in).nextInt();
 
-
+        List<Integer> list = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
         for (int i:arrayOfNumber) {
             set.add(i);
+            list.add(i);
         }
+        System.out.println(set);
+        System.out.println(list);
+
+        int num = new Scanner(System.in).nextInt();
 
         int count = 0;
-        for (int i = 0; i < arrayOfNumber.length; i++) {
-            int value = num - arrayOfNumber[i];
-            if(set.contains(value)){
+
+        for (int i = list.size() - 1; i > 0; i--){
+            int value = num - list.get(i);
+            if (set.contains(value)) {
                 count++;
             }
+            list.remove(i);
+
         }
         System.out.println(count);
 
