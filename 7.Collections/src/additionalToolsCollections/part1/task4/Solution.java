@@ -15,7 +15,7 @@ public class Solution {
         Queue<Integer> list = new PriorityQueue<>(List.of(array));
 
         for (int i = 0; i < array.length; i++) {    //O(n)
-            array[i] = list.poll();                 //O(1)
+            array[i] = list.poll();                 //O(log(n))
         }
 
         for (Integer el:array) {
