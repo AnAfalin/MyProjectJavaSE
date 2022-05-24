@@ -2,7 +2,7 @@ package hashSetCollection.part1.task3;
 
 import java.util.*;
 
-public class Solution {
+public class Solution1 {
     public static void main(String[] args) {
         int[] arrayOfNumber = new int[5];
         for (int i = 0; i < arrayOfNumber.length; i++) {
@@ -11,28 +11,25 @@ public class Solution {
         }
         System.out.println();
 
-        List<Integer> list = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
         for (int i:arrayOfNumber) {
             set.add(i);
-            list.add(i);
         }
+
         System.out.println(set);
-        System.out.println(list);
 
         int num = new Scanner(System.in).nextInt();
 
         int count = 0;
 
-        //O(n * n)
-        for (int i = list.size() - 1; i > 0; i--){
-            int value = num - list.get(i);
-            if (set.contains(value)) {
+        //O(n)
+        for (int i = 0; i < arrayOfNumber.length; i++){     //O(n)
+            int value = num - arrayOfNumber[i];
+            if (set.contains(value)) {      //O(1)
                 count++;
-                list.remove(i);
             }
         }
 
-        System.out.println(count);
+        System.out.println(count / 2 );
     }
 }
