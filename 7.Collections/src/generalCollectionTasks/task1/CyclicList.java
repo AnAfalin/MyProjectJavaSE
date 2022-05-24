@@ -1,29 +1,29 @@
 package generalCollectionTasks.task1;
 
 public class CyclicList<E> {
-    private Node<E> first; //значение первого элемента
-    public int size; //размерность списка
+    private Node<E> first;
+    public int size;
 
     private static class Node<E> {
-        E item; //значение самого элемента
-        Node<E> next; //значение следующего
+        E item;
+        Node<E> next;
 
         Node(E element) {
             this.item = element;
         }
     }
 
+    public void add(E element){
+        addLast(element);
+    }
+
     public void add(E element, int index) {
         if (indexIsCorrect(index)) {
             if (index == 0) {
                 addFirst(element);
-                return;
-            }
-            if (index == size + 1) {
+            }else if (index == size + 1) {
                 addLast(element);
-                return;
-            }
-            else {
+            }else {
                 Node<E> newNode = new Node<>(element);
                 Node<E> currentNode = first;
                 int currentIndex = 0;
@@ -41,17 +41,20 @@ public class CyclicList<E> {
     public void addFirst(E element) {
         Node<E> newNode = new Node<>(element);
 
-        if (first == null) {
-            first = newNode;
-            first.next = first;
-        } else if (size == 1) {
+        if (first != null) {
+            Node<E> currentNode = first;
+            while (currentNode.next != first) {
+                currentNode = currentNode.next;
+            }
+            currentNode.next = newNode;
             newNode.next = first;
             first = newNode;
-            first.next.next = first;
-        } else {
-            newNode.next = first;
-            first = newNode;
+            size++;
+            return;
         }
+
+        first = newNode;
+        first.next = first;
         size++;
     }
 
@@ -60,16 +63,18 @@ public class CyclicList<E> {
             addFirst(element);
             return;
         }
+
         Node<E> newNode = new Node<>(element);
         newNode.next = first;
         Node<E> currentNode = first;
+
         while (currentNode.next != first) {
             currentNode = currentNode.next;
         }
+
         currentNode.next = newNode;
         size++;
     }
-
 
     private boolean indexIsCorrect(int index) {
         return index >= 0 && index <= size;
@@ -81,7 +86,7 @@ public class CyclicList<E> {
         Node<E> currentNode = first;
         while (true) {
             if(currentNode.next == first){
-                strList.append(currentNode.item).append(" ");
+                strList.append(currentNode.item);
                 break;
             }
             strList.append(currentNode.item).append(" ");
@@ -92,15 +97,4 @@ public class CyclicList<E> {
 }
 
 
-class Main {
-    public static void main(String[] args) {
-        CyclicList<Integer> cyclicList = new CyclicList<>();
 
-        cyclicList.addFirst(5);
-        cyclicList.addFirst(0);
-        cyclicList.addLast(10);
-        cyclicList.addLast(20);
-        cyclicList.add(44, 3);
-        System.out.println(cyclicList);
-    }
-}
