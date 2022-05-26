@@ -15,13 +15,13 @@ public class Solution {
         System.out.println("Исходный set множества с числами");
         System.out.println(set);
 
-        List<Integer> list = new LinkedList<>(set);
+        List<Integer> list = new ArrayList<>(set);
         Collections.sort(list);
 
-        Set<Integer> sortSet = new LinkedHashSet<>(list);
+        set = new LinkedHashSet<>(list);
 
         System.out.println("Вывод отсортированного set множества с числами");
-        System.out.println(sortSet);
+        System.out.println(set);
 
     }
 }
