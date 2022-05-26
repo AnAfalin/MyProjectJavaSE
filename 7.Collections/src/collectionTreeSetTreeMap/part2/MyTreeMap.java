@@ -31,70 +31,118 @@ public class MyTreeMap<K extends Comparable<K>>{
 
         if (root == null) {
             root = newEntry;
-        } else {
-            Entry<K> current = root;
-            while (true) {
-                if (key.compareTo(current.key) > 0) {
-                    if(current.right == null){
-                        current.right = newEntry;
-                        break;
-                    }
-                    current = current.right;
-                } else if (key.compareTo(current.key) < 0) {
-                    if(current.left == null){
-                        current.left = newEntry;
-                        break;
-                    }
-                    current = current.left;
-                }else{
-                    break;
-                }
-            }
-            size++;
-        }
-    }
-
-    //удаление
-    public void delete(K key){
-        if(!find(key)){
-            return;
-        }
-
-        if(root.key == key){
-            deleteFirst();
             return;
         }
 
         Entry<K> current = root;
-        Entry<K> cur = root;
+        while (true) {
+            if (key.compareTo(current.key) > 0) {
+                if (current.right == null) {
+                    current.right = newEntry;
+                    break;
+                }
+                current = current.right;
+            } else if (key.compareTo(current.key) < 0) {
+                if (current.left == null) {
+                    current.left = newEntry;
+                    break;
+                }
+                current = current.left;
+            } else {
+                return;
+            }
+        }
+        size++;
+    }
+
+    //удаление
+    public void delete(K key) {
+        if (root == null) {
+            return;
+        }
+
+        Entry<K> parent = root;
+        Entry<K> current = root;
 
         while (current.key != key) {
-            cur = current;
+            parent = current;
             if (key.compareTo(current.key) > 0) {
                 current = current.right;
             } else if (key.compareTo(current.key) < 0) {
                 current = current.left;
             }
+            if(current == null){
+                return;
+            }
         }
 
-        if(cur.left != null && cur.left.key == key){
-            cur.left = current.left;
-        }else if(cur.right != null && cur.right.key == key){
-            cur.right = current.left;
-            cur.right.right = current.right;
+        if (current.left == null && current.right == null) {   //если у корня нет потомков
+            if(root == current){
+                root = null;
+            }
+            else if (parent.left == current) {
+                parent.left = null;
+            } else if (parent.right == current) {
+                parent.right = null;
+            }
+        } else if (current.left == null || current.right == null) {   //если у корня один потомок
+            if(current.right == null){
+                if(root == current){
+                    root = current.left;
+                }
+                else {
+                    if (parent.left == current) {
+                        parent.left = current.left;
+                    } else if (parent.right == current) {
+                        parent.right = current.left;
+                    }
+                }
+            }
+            else {
+                if(root == current){
+                    root = current.right;
+                }
+                else if (parent.left == current) {
+                    parent.left = current.right;
+                } else if (parent.right == current) {
+                    parent.right = current.right;
+                }
+            }
+        } else {
+            //если два потомка
+            Entry<K> successor = getSuccessor(current);
+
+            if (successor != current.right) {
+                current.right.left = successor.right;
+                successor.right = current.right;
+            }
+            if(root == current){
+                root = successor;
+            }
+            else if(parent.left == current){
+                parent.left = successor;
+            }
+            else {
+                parent.right = successor;
+            }
+            successor.left = current.left;
+
         }
+        size--;
     }
 
-    private void deleteFirst(){
-        if(root.left != null){
-            root = root.left;
-        }else if(root.right != null){
-            root = root.right;
+    private Entry<K> getSuccessor(Entry<K> delNode) {
+        Entry<K> successor = delNode;
+        Entry<K> current = delNode.right;
+        while (current != null) {
+            successor = current;
+            current = current.left;
         }
+        return successor;
     }
 
     //поиск элемента
-    public boolean find(K key){
+    public boolean found(K key){
         Entry<K> current = root;
         while (current.key != key) {
             if (key.compareTo(current.key) > 0) {
@@ -111,6 +159,7 @@ public class MyTreeMap<K extends Comparable<K>>{
 
     public void print(){
         inOrder(root);
+        System.out.println();
     }
 
     private void inOrder(Entry<K> localEntry){
@@ -121,5 +170,9 @@ public class MyTreeMap<K extends Comparable<K>>{
         System.out.print(localEntry.key);
         System.out.print(" ");
         inOrder(localEntry.right);
+    }
+
+    public void printTree(){
+        BinaryTreePrinter.printNode(root);
     }
 }
