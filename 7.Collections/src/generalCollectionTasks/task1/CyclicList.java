@@ -18,24 +18,26 @@ public class CyclicList<E> {
     }
 
     public void add(E element, int index) {
-        if (indexIsCorrect(index)) {
-            if (index == 0) {
-                addFirst(element);
-            }else if (index == size + 1) {
-                addLast(element);
-            }else {
-                Node<E> newNode = new Node<>(element);
-                Node<E> currentNode = first;
-                int currentIndex = 0;
-                while (currentIndex != index - 1){
-                    currentNode = currentNode.next;
-                    currentIndex++;
-                }
-                newNode.next = currentNode.next;
-                currentNode.next = newNode;
-                size++;
-            }
+        if (!indexIsCorrect(index)) {
+            return;
         }
+        if (index == 0) {
+            addFirst(element);
+            return;
+        }
+        if (index == size + 1) {
+            addLast(element);
+        }
+        Node<E> newNode = new Node<>(element);
+        Node<E> currentNode = first;
+        int currentIndex = 0;
+        while (currentIndex != index - 1) {
+            currentNode = currentNode.next;
+            currentIndex++;
+        }
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
+        size++;
     }
 
     public void addFirst(E element) {
@@ -82,7 +84,7 @@ public class CyclicList<E> {
 
     @Override
     public String toString() {
-        StringBuilder strList = new StringBuilder("");
+        StringBuilder strList = new StringBuilder();
         Node<E> currentNode = first;
         while (true) {
             if(currentNode.next == first){
