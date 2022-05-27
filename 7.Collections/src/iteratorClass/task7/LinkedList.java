@@ -4,29 +4,28 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LinkedList<E> implements Iterable<E>{
-    private Node<E> first; //значение первого элемента
-    public int size; //размерность списка
+    private Node<E> first;
+    public int size;
 
     private static class Node<E> {
-        E item; //значение самого элемента
-        Node<E> next; //значение следующего
+        E item;
+        Node<E> next;
 
         Node(E element) {
             this.item = element;
         }
     }
 
-    //метод добавления в начало      O(1)-вставка O(n)-итерация по всему списку до конца и изменение их ссылкон на след.эл.
     public void addFirst(E element) {
         Node<E> newNode = new Node<>(element);
-        if (first != null) { //если первый элемент не пустой
-            newNode.next = first; //то у добавляемого элемента в список ссылка на следующий элемент - ссылка на первый элемент
+        if (first != null) {
+            newNode.next = first;
         }
-        first = newNode; //первый элемент - это добавляемый элемент
+        first = newNode;
         size++;
     }
 
-    //метод добавления в конец      O(n)-итерация до конца списка   O(1)-вставка
+
     public void addLast(E element) {
         if (first == null) {
             addFirst(element);
@@ -45,7 +44,6 @@ public class LinkedList<E> implements Iterable<E>{
         addLast(element);
     }
 
-    //метод произвольного добавления    O(n)-поиск элемента   O(1)-вставка
     public void add(E element, int index) {
         if (indexIsCorrect(index)) {
             if (index == 0) {
@@ -69,13 +67,11 @@ public class LinkedList<E> implements Iterable<E>{
         }
     }
 
-    //метод удаления из начала  O(1)
     public void deleteFirst() {
         first = first.next;
         size--;
     }
 
-    //метод удаления из конца   O(1)
     public void deleteLast() {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -87,7 +83,6 @@ public class LinkedList<E> implements Iterable<E>{
         size--;
     }
 
-    //метод удаления по индексу     O(n)-поиск элемента   O(1)-удаление
     public void delete(int index) {
         if (!indexIsCorrect(index)) {
             return;
@@ -108,7 +103,6 @@ public class LinkedList<E> implements Iterable<E>{
         size--;
     }
 
-    //метод удаления по ключу - удаление всех вхождений элемента
     public void removeAll(E element) {
         int index;
         while ((index = getIndex(element)) != -1) {
@@ -116,7 +110,6 @@ public class LinkedList<E> implements Iterable<E>{
         }
     }
 
-    //метод проверки, содержится ли элемент в списке    O(n)
     public boolean contains(E element) {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -131,7 +124,6 @@ public class LinkedList<E> implements Iterable<E>{
         return index != -1;
     }
 
-    //O(n)
     private int getIndex(E element) {
         Node<E> currentNode = first;
         int currentIndex = 0;
@@ -147,7 +139,6 @@ public class LinkedList<E> implements Iterable<E>{
         return index;
     }
 
-    //метод, возвращающий массив элементов      O(n)
     public E[] toArray(E[] array) {
         Node<E> currentNode = first;
         int index = 0;
@@ -159,7 +150,6 @@ public class LinkedList<E> implements Iterable<E>{
         return array;
     }
 
-    //метод нахождения суммы всех элементов     O(n)
     public double sumOfAllElements() {
         if(first.item == null){
             return 0.0;
@@ -174,7 +164,6 @@ public class LinkedList<E> implements Iterable<E>{
         return 0;
     }
 
-    //метод нахождения суммы всех элементов
     public static <T extends Number> double sumOfAllElements2 (LinkedList<T> list) {
             double sumEl = 0;
             for (int i = 0; i < list.size; i++) {
@@ -211,7 +200,7 @@ public class LinkedList<E> implements Iterable<E>{
         return currentNode.item;
     }
 
-    //метод вывода на консоль
+
     @Override
     public String toString() {
         StringBuilder strLinkedList = new StringBuilder();
@@ -227,6 +216,7 @@ public class LinkedList<E> implements Iterable<E>{
         return index >= 0 && index <= size;
     }
 
+
     @Override
     public Iterator<E> iterator() {
         return new Iter();
@@ -236,7 +226,6 @@ public class LinkedList<E> implements Iterable<E>{
         private Node<E> cursor = first;
         private int cursorIndex;
         private int lastReturnedIndex;
-
 
         @Override
         public boolean hasNext() {
