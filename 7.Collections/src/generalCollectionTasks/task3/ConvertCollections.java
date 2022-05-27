@@ -32,5 +32,12 @@ class Main{
             System.out.print(el + " ");
         }
 
+        System.out.println("");
+
+        ArrayList<Integer> arrayList = new ArrayList<>(List.of(10, 20, 10, 20, 30, 40, 50, 40, 60));
+        Map<Integer, Integer> map = ConvertCollections.convertToMap(arrayList);
+
+        System.out.println(map);
+
     }
 }
