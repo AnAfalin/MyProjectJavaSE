@@ -11,9 +11,9 @@ public class BankMachine {
         System.out.println("Завершено обслуживание клиента №" + bankMachine.peek().getNumber());
         bankMachine.poll();
     }
-    
-    public int timeWaiting(int timeAway){
-        bankMachine.peek().setTimeAway(timeAway);
+
+    public int timeWaiting(){
+        System.out.println("Клиент обслуживался " + bankMachine.peek().getTimeWaiting());
         return bankMachine.peek().getTimeWaiting();
     }
 
@@ -23,6 +23,10 @@ public class BankMachine {
 
     public int sizeQueue(){
         return bankMachine.size();
+    }
+
+    public void startServiceNewClient(int timeStart){
+        bankMachine.peek().setStartTimeService(timeStart);
     }
 
 }
