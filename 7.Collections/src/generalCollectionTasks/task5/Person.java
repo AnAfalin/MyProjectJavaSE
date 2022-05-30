@@ -19,7 +19,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person " + age + " лет. ";// + "Customer number №" + number + " with " + countProduct + " product";
+        return "Person " + age + " лет. " + "Customer number №" + number + " with " + countProduct + " product";
     }
 
 }
