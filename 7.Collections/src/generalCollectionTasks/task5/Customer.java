@@ -1,13 +1,11 @@
 package generalCollectionTasks.task5;
 
-import java.util.Comparator;
-
-public class Person {
-    private int age;
+public class Customer {
+    private final int age;
     public int countProduct;    //количество продуктов
     public int number;
 
-    public Person(int age, int countProduct, int number) {
+    public Customer(int age, int countProduct, int number) {
         this.age = age;
         this.countProduct = countProduct;
         this.number = number;
