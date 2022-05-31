@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dictionary {
-    private final Map<String, String> rus_eng = new HashMap<>();
+    private static final Map<String, String> rus_eng = new HashMap<>();
 
-    public Dictionary() {
+    static {
         firstFullDictionary();
     }
 
@@ -19,10 +19,12 @@ public class Dictionary {
     }
 
     public void add(String wordRus, String wordEng){
-        rus_eng.put(wordRus, wordEng);
+        if(!rus_eng.containsKey(wordRus)) {
+            rus_eng.put(wordRus, wordEng);
+        }
     }
 
-    private void firstFullDictionary(){
+    private static void firstFullDictionary(){
         rus_eng.put("мужчина", "man");
         rus_eng.put("женщина", "woman");
         rus_eng.put("музыка", "music");
