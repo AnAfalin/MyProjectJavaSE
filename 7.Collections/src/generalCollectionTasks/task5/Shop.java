@@ -1,14 +1,13 @@
 package generalCollectionTasks.task5;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 
 public class Shop {
     private static final int MAX_PERSON = 100;
-    private static final int MIN_TIME_FOR_NEW_CUSTOMER = 3;
-    private static final int MAX_TIME_FOR_NEW_CUSTOMER = 5;
+    private static final int MIN_TIME_FOR_NEW_CUSTOMER = 1;
+    private static final int MAX_TIME_FOR_NEW_CUSTOMER = 3;
     private static final int MIN_PRODUCT_IN_BASKET = 5;
     private static final int MAX_PRODUCT_IN_BASKET = 31;
 
@@ -29,7 +28,7 @@ public class Shop {
     private float timeServiceOtherCustomer;
 
     public Shop() {
-        Comparator<Customer> comparatorForShop = (customer1, customer2) -> {
+        shopQueue = new PriorityQueue<>((customer1, customer2) -> {
             if (customer1.getAge() >= 50 && customer2.getAge() >= 50) {
                 return 0;
             }
@@ -43,8 +42,10 @@ public class Shop {
                 return 1;
             }
             return -1;
-        };
-        shopQueue = new PriorityQueue<>(comparatorForShop);
+        });
+    }
+
+    public void start(){
         process();
         info();
     }
@@ -85,6 +86,7 @@ public class Shop {
         shopQueue.offer(new Customer(age, countProduct, numberOfClient));
         timeNextClient = random.nextInt(MIN_TIME_FOR_NEW_CUSTOMER, MAX_TIME_FOR_NEW_CUSTOMER);
         currentCustomer = shopQueue.poll();
+        numberOfClient++;
     }
 
     private void arriveClient() {

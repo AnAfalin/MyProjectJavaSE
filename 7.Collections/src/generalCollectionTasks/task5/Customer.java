@@ -17,7 +17,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Person " + age + " лет. " + "Customer number №" + number + " with " + countProduct + " product";
+        return "Покупатель №" + number + " " + age + " лет. " + " товаров - " + countProduct;
     }
 
 }
