@@ -1,8 +1,8 @@
 package generalCollectionTasks.task4;
 
 public class Client {
-    private final int number;
-    private final int timeArrive;
+    private int number;
+    private int timeArrive;
     private int startTimeService;
 
     public Client(int number, int timeArrive) {
@@ -21,7 +21,4 @@ public class Client {
     public int getNumber() {
         return number;
     }
-
-
-
 }
