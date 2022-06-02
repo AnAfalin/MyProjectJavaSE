@@ -33,4 +33,9 @@ public class Worker {
     public void addMarkInterview(int markInterview) {
         this.markInterview += markInterview;
     }
+
+    @Override
+    public String toString() {
+        return "Сотрудник. Имя: " + name + ". Возраст " + age + ". Стаж работы " + workExperience + ". Отдел работы " + departmentOffice + ". Рейтинг " + markInterview;
+    }
 }

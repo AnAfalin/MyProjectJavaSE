@@ -48,6 +48,34 @@ public class Main {
             }else {
                 System.out.println("Бал по окончанию собеседования составил " + worker.getMarkInterview() + ". Кандидат принят на работу: NO");
             }
+        }
+
+        while (true){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Какую информацию Вы хотите получить?\n" +
+                    "1. Получить список всех сотрудников\n" +
+                    "2. Получить список программистов\n" +
+                    "3. Получить список  HR\n" +
+                    "4. Получить список аналитиков\n" +
+                    "5. Узнать лучшего сотрудника" +
+                    "6. EXIT");
+            int answer = Integer.parseInt(scanner.nextLine());
+            if(answer == 6){
+                break;
+            }
+            if(answer <= 4){
+                System.out.println(company.getInfo(answer));
+            }else {
+                System.out.println("Выберите отдел, в котором хотите узнать лучшего сотрудника:\n1. Программисты\n2. HR\n3.Аналитики");
+                int numDepartment = Integer.parseInt(scanner.nextLine());
+                if(numDepartment == 1){
+                    System.out.println(company.getBestWorker(DepartmentOffice.PROGRAMMER));
+                }else if(numDepartment == 2){
+                    System.out.println(company.getBestWorker(DepartmentOffice.HR_MANAGER));
+                }else if(numDepartment == 3){
+                    System.out.println(company.getBestWorker(DepartmentOffice.ANALYST));
+                }
+            }
 
         }
 
