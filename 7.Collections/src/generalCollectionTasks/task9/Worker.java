@@ -5,13 +5,13 @@ public class Worker {
     private int age;
     private int workExperience;
     private int markInterview;
-    private PostOffice postOffice;
+    private DepartmentOffice departmentOffice;
 
-    public Worker(String name, int age, int workExperience, PostOffice postOffice) {
+    public Worker(String name, int age, int workExperience, DepartmentOffice departmentOffice) {
         this.name = name;
         this.age = age;
         this.workExperience = workExperience;
-        this.postOffice = postOffice;
+        this.departmentOffice = departmentOffice;
     }
 
     public int getWorkExperience() {
@@ -26,8 +26,8 @@ public class Worker {
         return markInterview;
     }
 
-    public PostOffice getPostOffice() {
-        return postOffice;
+    public DepartmentOffice departmentOffice() {
+        return departmentOffice;
     }
 
     public void addMarkInterview(int markInterview) {
