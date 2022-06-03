@@ -2,7 +2,6 @@ package generalCollectionTasks.task3;
 
 import java.util.*;
 
-
 public final class ConvertCollections {
 
     public static <T> LinkedList<T> convertToLinkedList(HashSet<T> hashSet){
@@ -30,7 +29,7 @@ class Main{
             System.out.print(el + " ");
         }
 
-        System.out.println("");
+        System.out.println();
 
         ArrayList<Integer> arrayList = new ArrayList<>(List.of(10, 20, 10, 20, 30, 40, 50, 40, 60));
         Map<Integer, Integer> map = ConvertCollections.convertToMap(arrayList);
