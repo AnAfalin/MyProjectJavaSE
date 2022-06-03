@@ -1,8 +1,8 @@
 package generalCollectionTasks.task6;
 
 public class Client {
-    private int number;
-    private Book bookBorrow;
+    private final int number;
+    private final Book bookBorrow;
     public int timeBorrow;
 
     public Client(int number, Book bookBorrow, int timeBorrow) {

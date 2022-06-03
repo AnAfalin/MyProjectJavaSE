@@ -3,9 +3,9 @@ package generalCollectionTasks.task6;
 import java.util.*;
 
 public class Library {
-    private static Map<Book, Integer> library = new HashMap<>();
-    private static List<Book> listBooks = new ArrayList<>();
-    private static List<Client> listClients = new LinkedList<>();
+    private static final Map<Book, Integer> library = new HashMap<>();
+    private static final List<Book> listBooks = new ArrayList<>();
+    private static final List<Client> listClients = new LinkedList<>();
 
     private static Random random = new Random();
 
