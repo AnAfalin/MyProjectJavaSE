@@ -1,4 +1,4 @@
-package generalCollectionTasks.task9;
+package generalCollectionTasks.task9.solution1;
 
 public class Worker {
     private final String name;
