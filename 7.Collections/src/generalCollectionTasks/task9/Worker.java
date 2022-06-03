@@ -1,11 +1,11 @@
 package generalCollectionTasks.task9;
 
 public class Worker {
-    private String name;
-    private int age;
-    private int workExperience;
+    private final String name;
+    private final int age;
+    private final int workExperience;
     private int markInterview;
-    private DepartmentOffice departmentOffice;
+    private final DepartmentOffice departmentOffice;
 
     public Worker(String name, int age, int workExperience, DepartmentOffice departmentOffice) {
         this.name = name;

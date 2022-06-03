@@ -3,19 +3,19 @@ package generalCollectionTasks.task9;
 import java.util.*;
 
 public class Company {
-    private static List<Worker> listWorker = new LinkedList<>();
-    private static List<Worker> listNOT = new LinkedList<>();
+    private static final List<Worker> listWorker = new LinkedList<>();
+    private static final List<Worker> listNotWorker = new LinkedList<>();
 
     public void interview(Worker worker){
         if(worker.getAge() >= 50 || worker.getAge() <= 18){
             System.out.println("Сожалеем, набор в команду завершен");
-            listNOT.add(worker);
+            listNotWorker.add(worker);
             return;
         }
         Random random = new Random();
-        int markAge = 0;
-        int markWorkExperience = 0;
-        int markPost = 0;
+        int markAge;
+        int markWorkExperience;
+        int markPost;
         if(worker.getAge() <=30){
             markAge = random.nextInt(10, 25);
         }else if(worker.getAge() <= 40){
@@ -52,7 +52,7 @@ public class Company {
         if(worker.getMarkInterview() >=65){
             listWorker.add(worker);
         }else {
-            listNOT.add(worker);
+            listNotWorker.add(worker);
         }
     }
 
@@ -94,7 +94,7 @@ public class Company {
         return list;
     }
 
-    public List<Worker> unification(DepartmentOffice departmentOffice1, DepartmentOffice departmentOffice2){
+    public List<Worker> mergerTwoDepartment(DepartmentOffice departmentOffice1, DepartmentOffice departmentOffice2){
         List<Worker> list = new ArrayList<>();
         for (Worker el:listWorker) {
             if(el.departmentOffice() == departmentOffice1 || el.departmentOffice() == departmentOffice2){
@@ -136,17 +136,17 @@ public class Company {
         return null;
     }
 
-    public void ageMiddle(){
+    public void ageAverage(){
         int ageWorker = 0;
         int ageNotWorker = 0;
         for (Worker el:listWorker) {
             ageWorker += el.getAge();
         }
-        for (Worker el:listNOT) {
+        for (Worker el: listNotWorker) {
             ageNotWorker += el.getAge();
         }
         ageWorker = ageWorker / listWorker.size();
-        ageNotWorker = ageNotWorker / listNOT.size();
+        ageNotWorker = ageNotWorker / listNotWorker.size();
         System.out.println("Средний возраст принятых - " + ageWorker);
         System.out.println("Средний возраст непринятых - " + ageNotWorker);
     }
