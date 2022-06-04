@@ -52,8 +52,6 @@ public class Shop {
 
     private void process() {
 
-        addFirst();
-
         while (!isEnd()) {
             System.out.println(minute);
             System.out.println(currentCustomer);
@@ -80,20 +78,10 @@ public class Shop {
         }
     }
 
-    private void addFirst() {
-        int age = random.nextInt(10, 80);
-        int countProduct = random.nextInt(MIN_PRODUCT_IN_BASKET, MAX_PRODUCT_IN_BASKET);
-        shopQueue.offer(new Customer(age, countProduct, numberOfClient));
-        timeNextClient = random.nextInt(MIN_TIME_FOR_NEW_CUSTOMER, MAX_TIME_FOR_NEW_CUSTOMER);
-        currentCustomer = shopQueue.poll();
-        numberOfClient++;
-    }
-
     private void arriveClient() {
         if (timeNextClient == 0 && numberOfClient != MAX_PERSON + 1) {
             newClient();
             timeNextClient = random.nextInt(MIN_TIME_FOR_NEW_CUSTOMER, MAX_TIME_FOR_NEW_CUSTOMER);
-            numberOfClient++;
         }
         if (timeNextClient != 0) {
             timeNextClient--;
@@ -101,8 +89,8 @@ public class Shop {
     }
 
     private void newClient() {
-        int age = random.nextInt(10, 66);
-        int countProduct = random.nextInt(5, 30);
+        int age = random.nextInt(10, 80);
+        int countProduct = random.nextInt(MIN_PRODUCT_IN_BASKET, MAX_PRODUCT_IN_BASKET);
         if(age >= 50){
             countRetiree++;
             timeServiceRetiree = timeServiceRetiree + (float)(countProduct / 5);
@@ -113,10 +101,10 @@ public class Shop {
             countOtherCustomer++;
             timeServiceOtherCustomer = timeServiceOtherCustomer + (float)(countProduct / 5);
         }
-
+        System.out.println("В магазин пришел покупатель №" + numberOfClient + " возраст " + age + " количество товаров " + countProduct);
         shopQueue.offer(new Customer(age, countProduct, numberOfClient));
         timeNextClient = random.nextInt(MIN_TIME_FOR_NEW_CUSTOMER, MAX_TIME_FOR_NEW_CUSTOMER);
-        System.out.println("В магазин пришел покупатель №" + numberOfClient + " возраст " + age + " количество товаров " + countProduct);
+        numberOfClient++;
     }
 
     private boolean isEnd() {
