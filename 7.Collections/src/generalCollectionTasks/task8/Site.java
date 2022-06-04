@@ -1,46 +1,12 @@
 package generalCollectionTasks.task8;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Site {
-    private static Map<String, String> dataUserSite = new HashMap<>();
-    private static final Administrator admin = new Administrator();
+    private static final Map<String, String> dataUserSite = new HashMap<>();
     static {
-        dataUserSite.put(admin.LOGIN, admin.PASSWORD);
-    }
-
-    private static final class Administrator {
-        private final String LOGIN = "admin";
-        private final String PASSWORD = "admin";
-
-        public Set<String> getAllUsers(){
-            return dataUserSite.keySet();
-        }
-
-        public Set<String> getUsersStrongPassword(){
-            Set<String> userStrongPassword = new HashSet<>();
-            Set<Map.Entry<String, String>> entrySet = dataUserSite.entrySet();
-            for (Map.Entry<String, String> entries:entrySet) {
-                if(entries.getValue().matches("^(?=.*\\d)(?=.*[A-z]).{2,10}$")){
-                    userStrongPassword.add(entries.getKey());
-                }
-            }
-            return userStrongPassword;
-        }
-
-        public Set<String> getUsersEmailLogin(){
-            Set<String> userEmailLogin = new HashSet<>();
-            Set<Map.Entry<String, String>> entrySet = dataUserSite.entrySet();
-            for (Map.Entry<String, String> entries:entrySet) {
-                if(entries.getValue().matches("[A-z\\d]*@(mail.ru)|(yandex.ru)|(google.com)")){
-                    userEmailLogin.add(entries.getKey());
-                }
-            }
-            return userEmailLogin;
-        }
+        dataUserSite.put("admin", "admin");
     }
 
     public int enter(String login, String password){
@@ -63,18 +29,18 @@ public class Site {
     }
 
     public boolean isAdmin(String login, String password){
-        return login.equalsIgnoreCase(admin.LOGIN) && password.equalsIgnoreCase(admin.PASSWORD);
+        return login.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin");
     }
 
     public void functionAdmin(String numberChoice){
         if(numberChoice.equalsIgnoreCase("1")){
-            System.out.println(admin.getAllUsers());
+            System.out.println(FunctionalAdmin.getAllUsers(dataUserSite));
         }
         if(numberChoice.equalsIgnoreCase("2")){
-            System.out.println(admin.getUsersStrongPassword());
+            System.out.println(FunctionalAdmin.getUsersStrongPassword(dataUserSite));
         }
         if(numberChoice.equalsIgnoreCase("3")){
-            System.out.println(admin.getUsersEmailLogin());
+            System.out.println(FunctionalAdmin.getUsersEmailLogin(dataUserSite));
         }
     }
 
