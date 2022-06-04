@@ -3,8 +3,8 @@ package generalCollectionTasks.task4;
 import java.util.*;
 
 public class BanksMachine {
-    private QueueBankMachine bankMachine1 = new QueueBankMachine();
-    private QueueBankMachine bankMachine2 = new QueueBankMachine();
+    private final QueueBankMachine bankMachine1 = new QueueBankMachine();
+    private final QueueBankMachine bankMachine2 = new QueueBankMachine();
 
     private static final int MIN_MINUTES_FOR_NEW_CLIENT = 1;
     private static final int MAX_MINUTES_FOR_NEW_CLIENT = 3;
@@ -19,7 +19,7 @@ public class BanksMachine {
     private Random random = new Random();
 
     private int timeNextClient;     //через сколько придет новый клиент
-    private int numberOfClients;    //номер клиента max = 100
+    private int numberOfClients = 1;    //номер клиента max = 100
     private int minutes = 0;                //время
     private int countAwayClients = 0;      //количество ушедших
 
@@ -67,7 +67,6 @@ public class BanksMachine {
     }
 
     public void start(){
-        addFirst();
         process();
         info();
     }
@@ -82,7 +81,7 @@ public class BanksMachine {
 
     private void arriveClients() {
         //если время до нового клиента осталось 0 минут то он приходит
-        if (timeNextClient == 0 && numberOfClients <= 100) {
+        if (timeNextClient == 0 && numberOfClients <= MAX_PEOPLE_FOR_SERVICE) {
             newClient();
             timeNextClient = random.nextInt(MIN_MINUTES_FOR_NEW_CLIENT, MAX_MINUTES_FOR_NEW_CLIENT);
             numberOfClients++;
@@ -130,50 +129,33 @@ public class BanksMachine {
         }
     }
 
-    private void addFirst() {
-        numberOfClients = 1;
-        int firstClient = newClient();
-        int timeServiceFirstClient = random.nextInt(MIN_MINUTES_FOR_NEW_CLIENT, MAX_MINUTES_FOR_NEW_CLIENT);
-        if (firstClient == 1) {
-            bankMachine1.currentTimeServiceInQueue = timeServiceFirstClient;
-            bankMachine1.timeServiceInQueue = timeServiceFirstClient;
-        } else if (firstClient == 2) {
-            bankMachine2.currentTimeServiceInQueue = timeServiceFirstClient;
-            bankMachine2.timeServiceInQueue = timeServiceFirstClient;
-        }
-        timeNextClient = random.nextInt(MIN_MINUTES_FOR_NEW_CLIENT, MAX_MINUTES_FOR_NEW_CLIENT);
-    }
-
     private boolean isEnd() {
         return numberOfClients == MAX_PEOPLE_FOR_SERVICE + 1 && bankMachine1.sizeQueue() == 0 && bankMachine2.sizeQueue() == 0;
     }
 
-    private int newClient() {
+    private void newClient() {
         if(bankMachine1.sizeQueue() < bankMachine2.sizeQueue()) {
             if (bankMachine1.sizeQueue() < MAX_PEOPLE_IN_QUEUE) {
                 bankMachine1.arriveClient(numberOfClients, minutes);
-                return 1;
             } else {
                 countAwayClients++;
-                return 0;
             }
+            return;
         }
         if(bankMachine1.sizeQueue() > bankMachine2.sizeQueue()) {
             if (bankMachine2.sizeQueue() < MAX_PEOPLE_IN_QUEUE) {
                 bankMachine2.arriveClient(numberOfClients, minutes);
-                return 2;
             } else {
                 countAwayClients++;
-                return 0;
             }
+            return;
         }
         int randomQueue = random.nextInt(1,3);
         if (randomQueue == 1) {
             bankMachine1.arriveClient(numberOfClients, minutes);
-            return 1;
+            return;
         }
         bankMachine2.arriveClient(numberOfClients, minutes);
-        return 2;
     }
 
     private void info() {
