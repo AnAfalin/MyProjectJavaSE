@@ -15,12 +15,6 @@ public class Library {
     private static final int MIN_TIME_BORROW = 5;
     private static final int MAX_TIME_BORROW = 9;
 
-    private int countAwayClient;
-    private int countServiceClient;
-
-    private int timeNextClient;
-    private int currentNumberClient;
-
     static {
         listBooks.add(new Book("Томас Харди", "Тэсс из рода д'Эрбервиллей"));
         listBooks.add(new Book("Артур Хейли", "Аэропорт"));
@@ -38,24 +32,15 @@ public class Library {
         }
     }
 
+    private int countAwayClient;
+    private int countServiceClient;
+
+    private int timeNextClient;
+    private int currentNumberClient = 1;
 
     public void start() {
-        addFirst();
         process();
         info();
-    }
-
-    private void addFirst() {
-        currentNumberClient = 1;
-
-        Book selectBook = selectBook(random.nextInt(library.size()));
-        System.out.println("Посетитель №" + currentNumberClient + " хочет взять кигу " + selectBook.getTitle() + " автора " + selectBook.getAuthor());
-        listClients.add(new Client(currentNumberClient, selectBook, random.nextInt(MIN_TIME_BORROW, MAX_TIME_BORROW)));
-        getBook(selectBook);
-        System.out.println("Книга есть в наличии. Книга выдана.");
-
-        timeNextClient = random.nextInt(MIN_TIME_NEW_CLIENT, MAX_TIME_NEW_CLIENT);
-        currentNumberClient++;
     }
 
     private void newClient() {
@@ -77,7 +62,6 @@ public class Library {
     private void getBook(Book selectBook) {
         library.put(selectBook, library.get(selectBook) - 1);
     }
-
 
     private void process() {
         while (!isEnd()) {
