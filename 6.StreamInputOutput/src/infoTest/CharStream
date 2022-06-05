@@ -1,0 +1,46 @@
+    Производительность символьных потоков немного ниже байтовых. Однако символьные потоки удобочитаемые, так как оперируются понятными человеку символами.
+    Символьные потоки также делятся на посимвольные и буферизированные.
+    Для ввода-вывода символов используются абстрактные классы Reader и Writer.
+
+        Writer                  Reader
+    BufferedWriter      --  BufferedReader
+    PrintWriter         --  CharArrayReader
+    OutputStreamReader  --  InputStreamReader
+         FileWriter     --      FileReader
+    StringWriter        --  StringReader
+    PipedWriter         --  PipedReader
+
+
+    <<FileReader / FileWriter>>
+    посимвольная запись в файл / посимвольное чтение из файла (1 символ за раз), конструктор принимает имя файла;
+
+    <<BufferedReader / BufferedWriter>>
+    буферизированная запись в файл / буфферизированное чтение из файла (последовательность символов за раз), конструктор принимает объект класса Reader / Writer;
+
+    <<CharArrayReader>>
+    входной поток чтения символьного массива, конструктор принимает символьный массив;
+
+    <<PrintWriter>>
+    используется для вывода информации в консоль;
+
+    <<StringReader / StringWriter>>
+    потоки для записи в строку / чтения строки;
+
+    <<PipedReader / PipedWriter>>
+    входной и выходной каналы связи.
+
+    <<InputStreamReader / OutputStreamWriter>>
+    мост между байтовыми потоками и символьными потоками.
+    Он считывает байты и декодирует их в символы с использованием указанной кодировки.
+    Конструкторы принимают объект InputStream / OutputStream и преобразуются их в символьные потоки.
+
+
+
+    FileWriter позволяет записать в файл символы char или строки String:
+    - write (int c)
+    - write (char[] arr)
+    - write (String s)
+
+    FileReader позволяет читать символы из потока:
+    - int read ()
+    - int read (char[] arr)

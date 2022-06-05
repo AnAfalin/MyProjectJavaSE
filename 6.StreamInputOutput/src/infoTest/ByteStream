@@ -1,0 +1,58 @@
+    Stream
+    1.    Поток байтов
+    2.    Поток символов
+
+    Буферизирванные потоки ввода/вывода способны считывать за один раз большое количество байт или символов
+    НеБуферизированные потоки считывают за один раз один байт или символ
+
+    InputStream                     OutputStream
+      FileInput Stream          --    FileOutput Stream
+      ObjectInput Stream        --    ObjectOutput Stream
+      FilterInput Stream        --    FilterIOutput Stream
+          BufferedInput Stream  --        BufferedOutput Stream
+          DataInput Stream      --        DataOutput Stream
+                                          PrintStream
+      ByreArray InputStream     --    ByreArray OutputStream
+      PipeInput Stream          --    PipeOutput Stream
+
+
+    <<FileInputStream / FileOutputStream>>
+    побайтовый ввода в файл / чтение файла, конструктор принимает имя файла;
+
+    <<ByteArrayInputStream / ByteArrayOutputStream>>
+    побайтовое чтение байтового массива / запись в байтовый массив, конструктор принимает байтовый массив;
+
+    <<BufferedInputStream / BufferedOutputStream>>
+    буферизированный ввод / вывод, позволяющий за раз считать / записать последовательной байтов, конструктор принимает объект класса OuputStream / InputStream;
+
+    <<PipedOutputStream>>
+    используется для подключения к PipedInputStream, для установления связи между двумя каналами;
+
+    <<ObjectInputStream / ObjectOutputStream>>
+    ввод-вывод объектов в виде последовательности байтов.
+    Для этого вызывается метод readObject / writeObject, которому передается объект, который нужно ввести-вывести.
+    Конструктор принимает объект класса OuputStream / InputStream.
+    Генерирует исключение ClassNotFoundException.
+    Создается новый объект (записанный и считанный объекты имеют разные ссылки);
+
+    <<DataOutputStream / DataInputStream>>
+    преобразует примитивные значения в форму последовательности байтов, конструктор принимает объект класса OuputStream / InputStream.
+    Считывание должно происходить в том же порядке, что и запись;
+
+    <<PrintStream>>
+    используется для вывода информации в консоль;
+
+    <<ZipInputStream / ZipOutputStream>>
+    классы для работы с архивами (распаковка, запись в архив).
+
+
+
+
+    Для чтения из потока используется метод read:
+    int read () – читает один байт из потока. Возвращает целочисленное представление байта (от 0 до 255) или -1, если нет доступных байтов для чтения
+    int read(byte[]) – читает в массив байтов. Возвращает количество прочитанных байтов в массив или -1, если нет доступных байтов для чтения.
+
+    Для записи в поток используется метод write:
+    void write(int b) – записывает байт данных в поток
+    void write(byte[] b) – записывает массив байтов в поток
+
