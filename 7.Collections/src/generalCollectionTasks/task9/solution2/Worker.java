@@ -5,11 +5,13 @@ public class Worker {
     private final int age;
     private final int workExperience;
     private int markInterview;
+    private final DepartmentOffice departmentOffice;
 
-    public Worker(String name, int age, int workExperience) {
+    public Worker(String name, int age, int workExperience, DepartmentOffice departmentOffice) {
         this.name = name;
         this.age = age;
         this.workExperience = workExperience;
+        this.departmentOffice = departmentOffice;
     }
 
     public int getWorkExperience() {
@@ -24,6 +26,9 @@ public class Worker {
         return markInterview;
     }
 
+    public DepartmentOffice departmentOffice() {
+        return departmentOffice;
+    }
 
     public void addMarkInterview(int markInterview) {
         this.markInterview += markInterview;
@@ -31,6 +36,6 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Сотрудник. Имя: " + name + ". Возраст " + age + ". Стаж работы " + workExperience + ". Рейтинг " + markInterview;
+        return "Сотрудник. Имя: " + name + ". Возраст " + age + ". Стаж работы " + workExperience + ". Отдел работы " + departmentOffice + ". Рейтинг " + markInterview;
     }
 }

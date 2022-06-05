@@ -3,8 +3,8 @@ package generalCollectionTasks.task9.solution2;
 import java.util.*;
 
 public class Company {
-    private final static List<? extends Worker> listWorker = new LinkedList<>();
-    private final static List<? extends Worker> listNotWorker = new LinkedList<>();
+    private final static List<Worker> listWorker = new LinkedList<>();
+    private final static List<Worker> listNotWorker = new LinkedList<>();
 
     public void interview(Worker worker) {
         if (worker.getAge() >= 50 || worker.getAge() <= 18) {
@@ -61,35 +61,47 @@ public class Company {
         return worker.getMarkInterview() >= 65;
     }
 
-    public List<Worker> getAllWorker() {
+    public List<? extends Worker> getListWorkerDepartment(DepartmentOffice departmentOffice){
+        List<? extends Worker> list;
+        if(departmentOffice == DepartmentOffice.PROGRAMMER){
+            list = getProgrammer();
+        }else if(departmentOffice == DepartmentOffice.ANALYST){
+            list = getAnalyst();
+        }else {
+            list = getHRManager();
+        }
+        return list;
+    }
+
+    private List<Worker> getAllWorker() {
         return listWorker;
     }
 
-    public List<Worker> getProgrammer() {
-        List<Worker> list = new ArrayList<>();
+    public List<Programmer> getProgrammer() {
+        List<Programmer> list = new ArrayList<>();
         for (Worker worker : listWorker) {
             if (worker instanceof Programmer) {
-                list.add(worker);
+                list.add((Programmer)worker);
             }
         }
         return list;
     }
 
-    public List<Worker> getHRManager() {
-        List<Worker> list = new ArrayList<>();
+    private  List<HRManager> getHRManager() {
+        List<HRManager> list = new ArrayList<>();
         for (Worker worker : listWorker) {
             if (worker instanceof HRManager) {
-                list.add(worker);
+                list.add((HRManager)worker);
             }
         }
         return list;
     }
 
-    public List<Worker> getAnalyst() {
-        List<Worker> list = new ArrayList<>();
+    private  List<Analyst> getAnalyst() {
+        List<Analyst> list = new ArrayList<>();
         for (Worker worker : listWorker) {
             if (worker instanceof Analyst) {
-                list.add(worker);
+                list.add((Analyst)worker);
             }
         }
         return list;
@@ -140,18 +152,18 @@ public class Company {
 
     }
 
-    public List<Worker> getInfo(int number) {
+    public List<? extends Worker> getInfo(int number) {
         if (number == 1) {
             return getAllWorker();
         }
         if (number == 2) {
-            return getProgrammer();
+            return getListWorkerDepartment(DepartmentOffice.PROGRAMMER);
         }
         if (number == 3) {
-            return getHRManager();
+            return getListWorkerDepartment(DepartmentOffice.HR_MANAGER);
         }
         if (number == 4) {
-            return getAnalyst();
+            return getListWorkerDepartment(DepartmentOffice.ANALYST);
         }
         return null;
     }
@@ -171,12 +183,24 @@ public class Company {
         System.out.println("Средний возраст непринятых - " + ageNotWorker);
     }
 
-    public void mergerTwoDepartment() {
-
+    public List<Worker> mergerTwoDepartment(DepartmentOffice departmentOffice1, DepartmentOffice departmentOffice2) {
+        List<? extends Worker> list1 = getListDepartment(departmentOffice1);
+        List<? extends Worker> list2 = getListDepartment(departmentOffice2);
+        List<Worker> resList = new ArrayList<>();
+        resList.addAll(list1);
+        resList.addAll(list2);
+        return resList;
     }
 
-    public void listWorkerDepartment(List<? extends Worker> list) {
-        Collections.copy(list, listNotWorker);
+    private List<? extends Worker> getListDepartment(DepartmentOffice departmentOffice){
+        if(departmentOffice == DepartmentOffice.PROGRAMMER){
+            return getProgrammer();
+        }else if(departmentOffice == DepartmentOffice.ANALYST){
+            return getAnalyst();
+        }else {
+            return getHRManager();
+        }
     }
+
 }
 

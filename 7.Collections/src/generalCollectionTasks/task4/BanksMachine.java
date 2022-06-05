@@ -23,7 +23,7 @@ public class BanksMachine {
     private int minutes = 0;                //время
     private int countAwayClients = 0;      //количество ушедших
 
-    static class QueueBankMachine {
+     static class QueueBankMachine {
         private final Queue<Client> bankMachine = new LinkedList<>(); //очередь банкомата
         public int currentTimeServiceInQueue;  //текущее время обслуживания у банкомата
         public int timeServiceInQueue;  //текущее время обслуживания у банкомата
