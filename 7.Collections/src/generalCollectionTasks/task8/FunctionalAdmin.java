@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class FunctionalAdmin {
-    public static Set<String> getAllUsers(Map<String, String> dataUserSite){
+    public Set<String> getAllUsers(Map<String, String> dataUserSite){
         return dataUserSite.keySet();
     }
 
-    public static Set<String> getUsersStrongPassword(Map<String, String> dataUserSite){
+    public Set<String> getUsersStrongPassword(Map<String, String> dataUserSite){
         Set<String> userStrongPassword = new HashSet<>();
         Set<Map.Entry<String, String>> entrySet = dataUserSite.entrySet();
         for (Map.Entry<String, String> entries:entrySet) {
@@ -20,7 +20,7 @@ public class FunctionalAdmin {
         return userStrongPassword;
     }
 
-    public static Set<String> getUsersEmailLogin(Map<String, String> dataUserSite){
+    public Set<String> getUsersEmailLogin(Map<String, String> dataUserSite){
         Set<String> userEmailLogin = new HashSet<>();
         Set<Map.Entry<String, String>> entrySet = dataUserSite.entrySet();
         for (Map.Entry<String, String> entries:entrySet) {

@@ -8,6 +8,7 @@ public class Site {
     static {
         dataUserSite.put("admin", "admin");
     }
+    private static final FunctionalAdmin functionalAdmin = new FunctionalAdmin();
 
     public int enter(String login, String password){
         if(dataUserSite.containsKey(login)){
@@ -34,13 +35,13 @@ public class Site {
 
     public void functionAdmin(String numberChoice){
         if(numberChoice.equalsIgnoreCase("1")){
-            System.out.println(FunctionalAdmin.getAllUsers(dataUserSite));
+            System.out.println(functionalAdmin.getAllUsers(dataUserSite));
         }
         if(numberChoice.equalsIgnoreCase("2")){
-            System.out.println(FunctionalAdmin.getUsersStrongPassword(dataUserSite));
+            System.out.println(functionalAdmin.getUsersStrongPassword(dataUserSite));
         }
         if(numberChoice.equalsIgnoreCase("3")){
-            System.out.println(FunctionalAdmin.getUsersEmailLogin(dataUserSite));
+            System.out.println(functionalAdmin.getUsersEmailLogin(dataUserSite));
         }
     }
 
