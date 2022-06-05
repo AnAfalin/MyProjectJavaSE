@@ -52,9 +52,5 @@ public class CharStream {
         }finally {
             System.out.println();
         }
-
-        //Мостовой поток
-
-
     }
 }
