@@ -25,5 +25,15 @@ public class Solution {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        System.out.println("\nReading a file with saved data...");
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("6.StreamInputOutput/src/part3/task1/DataArray.txt"))){
+            String readString;
+            while ((readString = bufferedReader.readLine()) != null){
+                System.out.println(readString);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
