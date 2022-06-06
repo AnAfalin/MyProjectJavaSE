@@ -15,6 +15,7 @@ public class Solution {
                 expression.delete(0, 2);
                 double num2 = Double.parseDouble(expression.substring(0));
                 double result = 0.0;
+
                 if (operation == '*') {
                     result = num1 * num2;
                 } else if (operation == '/') {
@@ -24,12 +25,15 @@ public class Solution {
                 } else if (operation == '-') {
                     result = num1 - num2;
                 }
+
                 System.out.println(result);
                 break;
+
             } catch (Exception e) {
                 System.out.println("Ошибка. Повторите правильный ввод строки выражения в формате: \"число [operation] число\"");
             }
         } while (true);
+
     }
 }
 
