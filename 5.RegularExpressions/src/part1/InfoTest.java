@@ -3,7 +3,8 @@ package part1;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Info {
+public class InfoTest {
+
     //Matcher:
 
     //boolean matches(): возвращает true, если вся строка совпадает с шаблоном
