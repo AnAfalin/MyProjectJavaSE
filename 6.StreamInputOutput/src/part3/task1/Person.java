@@ -7,7 +7,7 @@ public class Person {
     private String lastname;
     private int age;
     private Job job;
-    Animal[] animals;
+    private Animal[] animals;
 
     public Person(String firstname, String lastname, int age, Job job, Animal[] animals) {
         this.firstname = firstname;
