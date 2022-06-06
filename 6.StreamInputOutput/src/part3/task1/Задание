@@ -1,0 +1,4 @@
+Дан массив класса Person (firstname, lastname, age, job, String[] animals).
+Записать массив в файл, на каждой строке – один элемент массива
+Пример: 1. Mike Scott 25 Programmer [Cat, Dog]\n 2. Karl Watson 20 Manager [Cat] …
+После воссоздать массив, считав информацию из файла.
