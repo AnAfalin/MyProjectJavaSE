@@ -1,12 +1,9 @@
 package part3.task4;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Arrays;
 
-public final class Person implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -4407115334700927133L;
+public final class Person {
+
     private String firstname;
     private String lastname;
     private int age;
