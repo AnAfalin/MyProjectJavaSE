@@ -1,0 +1,23 @@
+<root>
+<people>
+	<firstname>Christian</firstname>
+	<lastname>Grey</lastname>
+	<age>30</age>
+	<job>Programmer</job>
+	<animals>Cat, Dog</animals>
+</people>
+<people>
+	<firstname>Mike</firstname>
+	<lastname>Scott</lastname>
+	<age>20</age>
+	<job>Manager</job>
+	<animals>Cat</animals>
+</people>
+<people>
+	<firstname>Ana</firstname>
+	<lastname>Wilson</lastname>
+	<age>22</age>
+	<job>Programmer</job>
+	<animals>Cat, Dog, Fish</animals>
+</people>
+</root>

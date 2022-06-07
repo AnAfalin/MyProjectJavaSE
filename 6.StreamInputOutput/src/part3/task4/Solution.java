@@ -32,10 +32,27 @@ public class Solution {
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("6.StreamInputOutput/src/part3/task4/XML_data.xml"))) {
             Person[] peopleRead = new Person[3];
+            String[] fieldPerson = new String[5];
             String str;
             int i = 0;
+            int countPerson = 0;
             while ((str = bufferedReader.readLine()) != null) {
 
+                if(str.contains("/people")){
+                    Person person = new Person(fieldPerson[0], fieldPerson[1], Integer.parseInt(fieldPerson[2]), fieldPerson[3], (fieldPerson[4]).split(","));
+                    peopleRead[countPerson] = person;
+                    countPerson++;
+                    i = 0;
+                    continue;
+                }
+                if(!str.contains("root") && !str.contains("people")){
+                    str = str.substring(str.indexOf(">") + 1, str.lastIndexOf("<"));
+                    fieldPerson[i] = str;
+                    i++;
+                }
+            }
+            for (Person el:peopleRead) {
+                System.out.println(el);
             }
 
         } catch (IOException e) {
