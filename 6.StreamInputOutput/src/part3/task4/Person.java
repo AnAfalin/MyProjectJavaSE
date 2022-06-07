@@ -24,40 +24,15 @@ public final class Person implements Serializable {
     public Person() {
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String[] getAnimals() {
-        return animals;
+    public String getElementPerson(String string){
+        return switch (string) {
+            case "firstname" -> firstname;
+            case "lastname" -> lastname;
+            case "age" -> Integer.toString(age);
+            case "job" -> job;
+            case "animals" -> getStringAnimals();
+            default -> "";
+        };
     }
 
     public String getStringAnimals(){
@@ -65,12 +40,8 @@ public final class Person implements Serializable {
         for (String el:animals) {
             str.append(el).append(", ");
         }
-        str.delete(str.length() - 2 , str.length() - 1);
+        str.delete(str.length() - 2 , str.length());
         return str.toString();
-    }
-
-    public void setAnimals(String[] animals) {
-        this.animals = animals;
     }
 
     @Override
