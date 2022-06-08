@@ -1,5 +1,25 @@
-{"people":[
-{"firstname":"Christian","lastname":"Grey","age":"30","job":"Programmer","animals":"Cat, Dog"},
-{"firstname":"Mike","lastname":"Scott","age":"20","job":"Manager","animals":"Cat"},
-{"firstname":"Ana","lastname":"Wilson","age":"22","job":"Programmer","animals":"Cat, Dog, Fish"}
-]}
+{
+"people":[
+{
+"firstname":"Christian",
+"lastname":"Grey",
+"age":"30",
+"job":"Programmer",
+"animals":"Cat, Dog"
+},
+{
+"firstname":"Mike",
+"lastname":"Scott",
+"age":"20",
+"job":"Manager",
+"animals":"Cat"
+},
+{
+"firstname":"Ana",
+"lastname":"Wilson",
+"age":"22",
+"job":"Programmer",
+"animals":"Cat, Dog, Fish"
+}
+]
+}

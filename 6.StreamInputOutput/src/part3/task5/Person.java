@@ -20,15 +20,40 @@ public final class Person {
     public Person() {
     }
 
-    public String getElementPerson(String string){
-        return switch (string) {
-            case "firstname" -> firstname;
-            case "lastname" -> lastname;
-            case "age" -> Integer.toString(age);
-            case "job" -> job;
-            case "animals" -> getStringAnimals();
-            default -> "";
-        };
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String[] getAnimals() {
+        return animals;
     }
 
     public String getStringAnimals(){
@@ -40,24 +65,26 @@ public final class Person {
         return str.toString();
     }
 
-    public String getFirstname() {
-        return firstname;
+    public void setAnimals(String[] animals) {
+        this.animals = animals;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public String[] getAnimals() {
-        return animals;
+    public void setValueField(String key, String value){
+        if(key.equalsIgnoreCase("firstname")){
+            setFirstname(value);
+        }
+        if(key.equalsIgnoreCase("lastname")){
+            setLastname(value);
+        }
+        if(key.equalsIgnoreCase("age")){
+            setAge(Integer.parseInt(value));
+        }
+        if(key.equalsIgnoreCase("job")){
+            setJob(value);
+        }
+        if(key.equalsIgnoreCase("animals")){
+            setAnimals(value.split(","));
+        }
     }
 
     @Override
