@@ -83,7 +83,7 @@ public final class Person {
             setJob(value);
         }
         if(key.equalsIgnoreCase("animals")){
-            setAnimals(value.split(","));
+            setAnimals(value.split(", "));
         }
     }
 
