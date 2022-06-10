@@ -1,13 +1,13 @@
 package part4.task1;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "One");
         map.put(2, "Two");
@@ -39,5 +39,15 @@ public class Solution {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        //запись в файл и чтение из файла с помощью класса Files
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<Integer, String> entries:map.entrySet()) {
+            list.add(entries.toString());
+        }
+        Files.write(Path.of("6.StreamInputOutput/src/part4/task1/MapFiles.txt"), list);
+
+        List<String> listFiles = Files.readAllLines(Path.of("6.StreamInputOutput/src/part4/task1/MapFiles.txt"));
+        System.out.println(listFiles);
     }
 }
