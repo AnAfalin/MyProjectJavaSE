@@ -6,10 +6,10 @@ public class Person {
     private String firstname;
     private String lastname;
     private int age;
-    private Job job;
-    private Animal[] animals;
+    private String job;
+    private String[] animals;
 
-    public Person(String firstname, String lastname, int age, Job job, Animal[] animals) {
+    public Person(String firstname, String lastname, int age, String job, String[] animals) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -19,6 +19,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return firstname + " " + lastname + ", " + age + ", " + job + ", " + Arrays.toString(animals);
+        return firstname + " " + lastname + " " + age + " " + job + " " + Arrays.toString(animals);
     }
 }
