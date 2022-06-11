@@ -29,7 +29,20 @@ public class Solution {
             for (Map<String, String> el:list) {
                 bufferedWriter.write("{\n");
                 for (int i = 1; i < fieldFile.length; i++) {
-                    bufferedWriter.write("\"" + fieldFile[i] + "\"" + ":\"" + el.get(fieldFile[i]) + "\"");
+                    bufferedWriter.write("\"" + fieldFile[i] + "\"");
+                    if(i == fieldFile.length - 1){
+                        bufferedWriter.write(":[");
+                        String[] str = el.get(fieldFile[i]).split(", ");
+                        for (int j = 0; j < str.length; j++) {
+                            bufferedWriter.write("\"" + str[j] + "\"");
+                            if(j != str.length - 1){
+                                bufferedWriter.write(", ");
+                            }
+                        }
+                        bufferedWriter.write("]");
+                    }else {
+                        bufferedWriter.write(":\"" + el.get(fieldFile[i]) + "\"");
+                    }
                     if(i != fieldFile.length - 1){
                         bufferedWriter.write(",\n");
                     }
@@ -53,12 +66,13 @@ public class Solution {
             String str;
             List<Map<String, String>> list = new ArrayList<>();
             Map<String, String> map = null;
+
             while ((str = bufferedReader.readLine()) != null){
                 if(str.contains("{")){
                     map = new HashMap<>();
                     continue;
                 }
-                if(str.contains("]")){
+                if(str.equals("]")){
                     break;
                 }
                 if(str.contains("}")){
@@ -72,7 +86,12 @@ public class Solution {
                         int indexThird = str.indexOf("\"", indexSecond + 1);
                         int indexFourth = str.indexOf("\"", indexThird + 1);
                         String key = str.substring(indexFirst + 1, indexSecond);
-                        String value = str.substring(indexThird + 1, indexFourth);
+                        String value;
+                        if(str.contains(fieldFile[5])){
+                            value = str.substring(indexThird + 1, str.length() - 1).replace("\"", "");
+                        }else {
+                            value = str.substring(indexThird + 1, indexFourth);
+                        }
                         map.put(key, value);
                     }
                 }
