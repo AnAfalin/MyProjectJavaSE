@@ -1,1 +1,2 @@
-Написать метод, который возвращает реализацию UnaryOperator. Реализация должна увеличить на единицу параметр метода UnaryOperator<Integer> increment(int param).
+Написать метод, который возвращает реализацию UnaryOperator.
+Реализация должна увеличить на единицу параметр метода UnaryOperator<Integer> increment(int param).
