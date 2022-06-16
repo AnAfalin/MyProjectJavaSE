@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Function;
 
 public class FileCreate {
 
     public void getJSONFile(List<Employee> employeesList){
-
-        MyFunctionJSON myFunctionJSON = employee -> {
+        Function<Employee, String> myFunctionJSON = employee -> {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("{\n");
             stringBuilder.append("\"firstname\":\"").append(employee.getFirstname()).append("\",\n");
@@ -37,7 +37,7 @@ public class FileCreate {
             bufferedWriter.write("[\n");
 
             for (int i = 0; i < employeesList.size(); i++) {
-                bufferedWriter.write(myFunctionJSON.stringJSON(employeesList.get(i)));
+                bufferedWriter.write(myFunctionJSON.apply(employeesList.get(i)));
                 if (i != employeesList.size() - 1) {
                     bufferedWriter.write(",\n");
                 }

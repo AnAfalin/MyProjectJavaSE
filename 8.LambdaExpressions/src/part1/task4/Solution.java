@@ -24,6 +24,6 @@ public class Solution {
 //            }
 //        };
 
-        Comparator<String> comparator = (str1, str2) -> Integer.compare(str1.length(), str2.length());
+        Comparator<String> comparator = Comparator.comparingInt(String::length);
     }
 }

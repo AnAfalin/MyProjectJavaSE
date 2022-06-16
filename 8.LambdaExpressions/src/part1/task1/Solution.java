@@ -9,7 +9,7 @@ public class Solution {
         List<Integer> list = new ArrayList<>(List.of(100, -10, 10, 200));
         System.out.println(list);
 
-        Predicate<Integer> filter = new Predicate<Integer>() {
+        Predicate<Integer> filter = new Predicate<>() {
             @Override
             public boolean test(Integer integer) {
                 return !(integer >= 10 && integer <= 100);
