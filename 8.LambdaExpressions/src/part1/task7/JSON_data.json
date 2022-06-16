@@ -1,0 +1,18 @@
+{
+"employees":[
+{
+"firstname":"Alex",
+"lastname":"Scott",
+"age":"35",
+"job":"Programmer",
+"cityWorkExperience":["Moscow", "Vladivostok", "New York"]
+},
+{
+"firstname":"Mike",
+"lastname":"Flex",
+"age":"20",
+"job":"Manager",
+"cityWorkExperience":["Moscow", "Saratov"]
+}
+]
+}
