@@ -1,11 +1,11 @@
 package part1.task7;
 
 public class Employee {
-    private String firstname;
-    private String lastname;
-    private int age;
-    private String job;
-    private String[] cityWorkExperience;
+    private final String firstname;
+    private final String lastname;
+    private final int age;
+    private final String job;
+    private final String[] cityWorkExperience;
 
     public Employee(String firstname, String lastname, int age, String job, String[] cityWorkExperience) {
         this.firstname = firstname;
