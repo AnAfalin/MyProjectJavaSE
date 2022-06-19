@@ -8,8 +8,10 @@ public class Solution {
         String pattern = "l+j+k+";
 
         String text = "llk";
+        String text2 = "lljjjjk";
 
         System.out.println(matches(pattern, text));
+        System.out.println(matches(pattern, text2));
 
     }
 
@@ -18,7 +20,6 @@ public class Solution {
             return text.equals(pattern);
         }
 
-        boolean isContains = false;
         String[] s = pattern.split("[+]");
 
         StringBuilder stringBuilder = new StringBuilder(text);
