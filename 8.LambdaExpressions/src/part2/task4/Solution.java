@@ -1,4 +1,4 @@
-package part2.task5;
+package part2.task4;
 
 import java.util.function.Function;
 
