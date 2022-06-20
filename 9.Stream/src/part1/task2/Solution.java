@@ -11,13 +11,8 @@ public class Solution {
             list.add(i);
         }
 
-        List<Integer> list1 = new ArrayList<>();
-        for (int i = 0; i < 32; i++) {
-            list1.add(i*i);
-        }
-
-        Stream<Integer> stream = list.stream().filter(list1::contains);
-        stream.forEach(el-> System.out.print(el + " "));
+        Stream<Integer> stream = list.stream().filter(el -> el == 0 || (Math.sqrt(el) / (int) Math.sqrt(el) == 1.0));
+        stream.forEach(el -> System.out.print(el + " "));
 
     }
 }
