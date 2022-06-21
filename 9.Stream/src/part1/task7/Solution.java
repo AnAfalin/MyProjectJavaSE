@@ -22,7 +22,13 @@ public class Solution {
         Student[] students = {studentFirst, studentSecond};
 
         Arrays.stream(students)
-                .map(el->el.getName() + ": " + el.getMarks().values())
+                .map(student -> student.getName() + ": " +
+                        student
+                                .getMarks()
+                                .values()
+                                .stream()
+                                .flatMap(el->el.stream())
+                                .toList())
                 .forEach(System.out::println);
     }
 }
