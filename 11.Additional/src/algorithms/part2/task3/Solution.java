@@ -27,49 +27,50 @@ public class Solution {
     }
 
     public static int getIndex(int[] array, int key) {
-        //O(n)
-        int indexParts = getIndexParts(array);
-        System.out.println("indexParts " + indexParts);
+        //O(log n)
+        int pivotElement = findPivotElement(array);
 
         //O(log n)
-        if(indexParts == 0){
+        if (pivotElement == 0) {
             return foundIndex(array, 0, array.length - 1, key);
-        }else if (key <= array[indexParts - 1] && key > array[0]) {
-            return foundIndex(array, 0, indexParts - 1, key);
+        } else if (key <= array[pivotElement - 1] && key > array[0]) {
+            return foundIndex(array, 0, pivotElement, key);
         } else {
-            return foundIndex(array, indexParts, array.length - 1, key);
+            return foundIndex(array, pivotElement + 1, array.length - 1, key);
         }
 
     }
 
-    public static int getIndexParts(int[] array) {
-       int indexParts = 0;
-        int min = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] < min) {
-                indexParts = i;
-                min = array[i];
+    public static int findPivotElement(int[] array) {
+        int lowIndex = 0;
+        int highIndex = array.length - 1;
+        while (lowIndex != highIndex && highIndex - lowIndex != 1){
+            int middle = (highIndex + lowIndex) / 2;
+            if(array[middle] < array[lowIndex]){
+                highIndex = middle;
+            }else if(array[middle] >= array[lowIndex]){
+                lowIndex = middle;
             }
         }
-        return indexParts;
+        return lowIndex;
     }
 
     public static int foundIndex(int[] array, int beginIndex, int endIndex, int key) {
         int lowIndex = beginIndex;
         int highIndex = endIndex;
-        int middle = 0;
+        int index = -1;
         while (lowIndex <= highIndex) {
-            middle = lowIndex + (highIndex - lowIndex) / 2;
+            int middle = lowIndex + ((highIndex - lowIndex) / 2);
             if (key < array[middle]) {
                 highIndex = middle - 1;
             } else if (key > array[middle]) {
                 lowIndex = middle + 1;
             } else {
+                index = middle;
                 break;
             }
         }
-        return middle;
-
+        return index;
     }
 }
 
