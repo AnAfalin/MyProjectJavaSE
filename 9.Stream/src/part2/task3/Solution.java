@@ -16,12 +16,11 @@ public class Solution {
 
         boolean isOneAdult = false;
         for (Person person:people) {
-            if(person.getAge() >= 18){
+            if (person.getAge() >= 18) {
                 isOneAdult = true;
-            }
-            if(isOneAdult){
                 break;
             }
+
         }
         System.out.println("Хотя бы один из людей является совершеннолетним ? - " + isOneAdult);
 
