@@ -1,11 +1,9 @@
 package part2.task1;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
-
-public class Solution {
-    public <T extends Number> Optional<T> max(T[] array) {
+public class Solution<T extends Number> {
+    public Optional<T> max(T[] array) {
         if(array == null || array.length == 0){
             return Optional.empty();
         }
@@ -18,7 +16,7 @@ public class Solution {
         return Optional.of(max);
     }
 
-    public <T extends Number> Optional<T> min(T[] array) {
+    public Optional<T> min(T[] array) {
         if(array == null || array.length == 0){
             return Optional.empty();
         }
@@ -31,7 +29,7 @@ public class Solution {
         return Optional.of(min);
     }
 
-    public <T> double sum(T[] array) {
+    public double sum(T[] array) {
         double sum = 0;
         for (T j : array) {
             sum +=Double.parseDouble(j.toString());
@@ -39,7 +37,7 @@ public class Solution {
         return sum;
     }
 
-    public <T> double average(T[] array) {
+    public double average(T[] array) {
         return sum(array) / array.length;
     }
 
