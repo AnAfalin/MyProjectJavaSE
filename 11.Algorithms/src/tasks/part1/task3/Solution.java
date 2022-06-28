@@ -1,4 +1,4 @@
-package algorithms.part1.task3;
+package tasks.part1.task3;
 
 public class Solution {
     public static int binarySearch(int[] array, int el) {

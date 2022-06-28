@@ -1,4 +1,4 @@
-package algorithms.part2.task3;
+package tasks.part2.task3;
 
 import java.util.Arrays;
 import java.util.Random;

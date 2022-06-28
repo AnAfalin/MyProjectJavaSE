@@ -1,6 +1,4 @@
-package algorithms.part1.task1;
-
-import java.util.Arrays;
+package tasks.part1.task1;
 
 public class Solution {
 

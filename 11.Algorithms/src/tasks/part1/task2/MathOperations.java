@@ -1,4 +1,4 @@
-package algorithms.part1.task2;
+package tasks.part1.task2;
 
 public class MathOperations {
     public static <T extends Number> int delete(T number1, T number2) {

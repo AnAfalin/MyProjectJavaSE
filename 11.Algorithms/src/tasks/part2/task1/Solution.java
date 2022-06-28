@@ -1,4 +1,4 @@
-package algorithms.part2.task1;
+package tasks.part2.task1;
 
 import java.util.HashMap;
 import java.util.Map;

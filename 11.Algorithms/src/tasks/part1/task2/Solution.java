@@ -1,4 +1,4 @@
-package algorithms.part1.task2;
+package tasks.part1.task2;
 
 public class Solution {
     public static void main(String[] args) {
