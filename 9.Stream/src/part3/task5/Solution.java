@@ -2,6 +2,7 @@ package part3.task5;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) {
@@ -13,14 +14,24 @@ public class Solution {
 
         Student[] students = {student1, student2, student3, student4, student5};
 
+        System.out.println("#1");
         Arrays.stream(students)
-                .filter(student -> student.getMarks().contains(3))
+                .filter(student -> !student.getMarks().contains(3))
                 .forEach(student -> System.out.println(student.getName()));
+
+        System.out.println("\n#2");
+
+        Arrays.stream(students)
+                .forEach(student -> {
+                    if(!student.getMarks().contains(3)){
+                        System.out.println(student.getName());
+                    }
+                });
 
     }
 }
 
-class Student{
+class Student {
     private String name;
     private List<Integer> marks;
 
