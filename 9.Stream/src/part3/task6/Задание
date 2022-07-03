@@ -1,0 +1,10 @@
+* Дан файл вида:
+
+# Name Surname Marks
+1 Make Scott [4,5,5]
+...
+
+Считать весь файл в List<String>. Преобразовать:
+•	В Stream<String> - поток только имен
+•	В Stream<String[]> - поток массивов из 2 элементов (имя и фамилия)
+•	В Stream<Student> - поток студентов с 4 полями (ID, Name, Surname, Marks).
