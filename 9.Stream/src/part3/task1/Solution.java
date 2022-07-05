@@ -28,7 +28,7 @@ public class Solution {
                                         .orElse(0.0)
                                 ))
                         );
-        System.out.println("Средняя оценка по каждому предмету среди всех студентов\n" + objectAverageMarks);
+        System.out.println("Средняя оценка по каждому предмету среди всех студентов\n" + objectAverageMarks  + "\n");
 
 
         double averageMarkAllObject = Arrays.stream(students)
@@ -41,7 +41,7 @@ public class Solution {
                 .average()
                 .orElse(0.0);
 
-        System.out.println("Общая средняя оценка всех студентов по всем студентам " + averageMarkAllObject);
+        System.out.println("Общая средняя оценка всех студентов по всем студентам " + averageMarkAllObject  + "\n");
 
         Map<String, String> listGeneralMarksStudent =
                 Arrays.stream(students)
@@ -71,7 +71,7 @@ public class Solution {
                         ));
 
         System.out.println("«Оценка» студента, исходя из его общего количества баллов:");
-        System.out.println(listGeneralMarksStudent);
+        System.out.println(listGeneralMarksStudent  + "\n");
 
 
         Map<String, Double> listAverageMarkEveryStudent = Arrays.stream(students)
@@ -86,8 +86,8 @@ public class Solution {
                                 .average()
                                 .orElse(0.0)
                 ));
-        System.out.println("Средняя оценка по всем предметам каждого студента");
-        System.out.println(listAverageMarkEveryStudent);
+        System.out.println("Средняя оценка по всем предметам каждого студента" );
+        System.out.println(listAverageMarkEveryStudent  + "\n");
 
         String easyObject = Arrays.stream(students)
                 .map(student -> student.getMarks())
@@ -103,14 +103,32 @@ public class Solution {
                         )))
                 .entrySet()
                 .stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))
                 .map(Map.Entry::getKey)
                 .toList()
-                .get(1);
+                .get(0);
 
-        System.out.println("Самый легкий предмет среди студентов " + easyObject);
+        System.out.println("Самый легкий предмет среди студентов " + easyObject + "\n");
 
+        String smartStudent = Arrays.stream(students)
+                .collect(Collectors.toMap(
+                        student -> student.getName(),
+                        student -> student.getMarks()
+                                .entrySet()
+                                .stream()
+                                .flatMap(entry -> entry.getValue().stream())
+                                .mapToDouble(mark -> mark.doubleValue())
+                                .average()
+                                .orElse(0.0)
+                ))
+                .entrySet()
+                .stream()
+                .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))
+                .map(entry -> entry.getKey())
+                .toList()
+                .get(0);
 
+        System.out.println("Самый умный студент " + smartStudent  + "\n");
     }
 }
 
