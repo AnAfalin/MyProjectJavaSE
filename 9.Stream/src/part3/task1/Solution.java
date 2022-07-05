@@ -3,79 +3,61 @@ package part3.task1;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/*
+•	Найти среднее каждого студента по предметам;
+•	Посчитать «оценку» студента, исходя из его общего количества баллов: 0-7 – bad, 8-15 – normal, 16+ - good.
+•	Получить String – название самого легкого предмета среди студентов.
+•	Получить String – самого умного студента.
+ */
 public class Solution {
 
     public static void main(String[] args) {
-        Student student1 = new Student("Irina", Map.of("Java", new ArrayList<>(List.of(4.0, 3.0))/*, "Math", new ArrayList<>(List.of(4.0, 4.0, 5.0))*/));
-        Student student2 = new Student("Mike", Map.of("Java", new ArrayList<>(List.of(5.0, 3.0))/*, "Math", new ArrayList<>(List.of(3.0, 3.0, 3.0))*/));
-        Student student3 = new Student("Peter", Map.of("Java", new ArrayList<>(List.of(5.0, 5.0, 5.0, 5.0))/*, "Math", new ArrayList<>(List.of(4.0, 5.0, 4.0))*/));
 
-        Student[] students = {student1, student2, student3};
+        Student[] students = {
+                new Student("Irina", Map.of("Java", new ArrayList<>(List.of(4.0, 3.0)), "Math", new ArrayList<>(List.of(4.0, 4.0, 5.0)))),
+                new Student("Mike", Map.of("Java", new ArrayList<>(List.of(5.0, 3.0)), "Math", new ArrayList<>(List.of(3.0, 3.0, 3.0)))),
+                new Student("Peter", Map.of("Java", new ArrayList<>(List.of(5.0, 5.0, 5.0, 5.0)), "Math", new ArrayList<>(List.of(4.0, 5.0, 4.0))))
+        };
 
-        //средняя оценка всех предметов каждого студента
-        Map<String, Double> map1 = Arrays.stream(students)
-                .collect(Collectors.toMap(
-                        student -> student.getName(),
-                        student -> student
-                                .getMarks()
-                                .values()
-                                .stream()
-                                .flatMap(list -> list.stream())
-                                .mapToInt(el -> el.intValue())
-                                .average()
-                                .orElseThrow(() -> {
-                                    throw new RuntimeException("no marks");
-                                })
-                ));
 
-        System.out.println(map1);
+//        Arrays.stream(students)
+//                .collect(Collectors.toMap(
+//                        student -> student.getName(),
+//                        student -> student.getMarks()
+//                                .entrySet()
+//                                .stream()
+//                                .collect(Collectors.toMap(
+//                                        entry -> entry.
+//                                ))
+//                ))
 
-        //средняя оценка по каждому предмету среди всех студентов
-        Map<String, Double> map2 = Arrays.stream(students)
-                .map(Student::getMarks)
-                .flatMap(marks -> marks.entrySet().stream())
-                .collect(Collectors.groupingBy(
-                        Map.Entry::getKey,
-                        Collectors.averagingDouble(el -> el.getValue()
-                                .stream()
-                                .mapToDouble(Double::doubleValue)
-                                .average()
-                                .getAsDouble()
+        Map<String, Double> objectAverageMarks =
+                Arrays.stream(students)
+                        .map(Student::getMarks)
+                        .flatMap(marks -> marks.entrySet().stream())
+                        .collect(Collectors.groupingBy(
+                                map -> map.getKey(),
+                                Collectors.averagingDouble(map -> map.getValue()
+                                        .stream()
+                                        .mapToDouble(el -> el.doubleValue())
+                                        .average()
+                                        .orElse(0.0)
+                                ))
+                        );
+        System.out.println("Средняя оценка по каждому предмету среди всех студентов\n" + objectAverageMarks);
 
-                        )));
 
-        System.out.println(map2);
-
-        //средяя оценка среди всех студентов по всем предметам (общее среднее)
-        double asDouble = Arrays.stream(students)
-                .map(Student::getMarks)
-                .flatMap(marks -> marks.values().stream())
+        double averageMarkAllObject = Arrays.stream(students)
+                .map(student -> student.getMarks())
+                .flatMap(marks -> marks
+                        .values()
+                        .stream())
                 .flatMap(list -> list.stream())
-                .mapToDouble(el -> el.doubleValue())
+                .mapToDouble(mark -> mark.doubleValue())
                 .average()
-                .getAsDouble();
+                .orElse(0.0);
 
-        System.out.println(asDouble);
-
-        Map<String, Optional<String>> map3 = Arrays.stream(students)
-                .collect(Collectors.toMap(
-                        student -> student.getName(),
-                        student -> student.getMarks()
-                                .values()
-                                .stream()
-                                .flatMap(list -> list.stream())
-                                .reduce(Double::sum)
-                                .map(el -> {
-                                    if (el <= 7) {
-                                        return "bad";
-                                    } else if (el >= 8 && el <= 15) {
-                                        return "normal";
-                                    } else {
-                                        return "good";
-                                    }
-                                })));
-        System.out.println(map3);
-
+        System.out.println("Общая средняя оценка всех студентов по всем студентам " + averageMarkAllObject);
 
 
     }
