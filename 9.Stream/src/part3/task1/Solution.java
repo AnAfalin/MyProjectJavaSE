@@ -3,11 +3,6 @@ package part3.task1;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/*
-•	Найти среднее каждого студента по предметам;
-•	Получить String – название самого легкого предмета среди студентов.
-•	Получить String – самого умного студента.
- */
 public class Solution {
 
     public static void main(String[] args) {
@@ -19,17 +14,6 @@ public class Solution {
                 new Student("Fedor", Map.of("Java", new ArrayList<>(List.of(3.0)), "Math", new ArrayList<>(List.of(3.0))))
         };
 
-
-//        Arrays.stream(students)
-//                .collect(Collectors.toMap(
-//                        student -> student.getName(),
-//                        student -> student.getMarks()
-//                                .entrySet()
-//                                .stream()
-//                                .collect(Collectors.toMap(
-//                                        entry -> entry.
-//                                ))
-//                ))
 
         Map<String, Double> objectAverageMarks =
                 Arrays.stream(students)
@@ -86,8 +70,45 @@ public class Solution {
                                 }
                         ));
 
+        System.out.println("«Оценка» студента, исходя из его общего количества баллов:");
         System.out.println(listGeneralMarksStudent);
 
+
+        Map<String, Double> listAverageMarkEveryStudent = Arrays.stream(students)
+                .collect(Collectors.toMap(
+                        student -> student.getName(),
+                        student -> student
+                                .getMarks()
+                                .values()
+                                .stream()
+                                .flatMap(marks -> marks.stream())
+                                .mapToDouble(el -> el.doubleValue())
+                                .average()
+                                .orElse(0.0)
+                ));
+        System.out.println("Средняя оценка по всем предметам каждого студента");
+        System.out.println(listAverageMarkEveryStudent);
+
+        String easyObject = Arrays.stream(students)
+                .map(student -> student.getMarks())
+                .flatMap(map -> map.entrySet().stream())
+                .collect(Collectors.groupingBy(
+                        Map.Entry::getKey,
+                        Collectors.averagingDouble(entry -> entry
+                                .getValue()
+                                .stream()
+                                .mapToDouble(doubleEl -> doubleEl.doubleValue())
+                                .average()
+                                .orElse(0.0)
+                        )))
+                .entrySet()
+                .stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .toList()
+                .get(1);
+
+        System.out.println("Самый легкий предмет среди студентов " + easyObject);
 
 
     }
