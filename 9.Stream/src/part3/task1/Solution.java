@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 /*
 •	Найти среднее каждого студента по предметам;
-•	Посчитать «оценку» студента, исходя из его общего количества баллов: 0-7 – bad, 8-15 – normal, 16+ - good.
 •	Получить String – название самого легкого предмета среди студентов.
 •	Получить String – самого умного студента.
  */
@@ -15,8 +14,9 @@ public class Solution {
 
         Student[] students = {
                 new Student("Irina", Map.of("Java", new ArrayList<>(List.of(4.0, 3.0)), "Math", new ArrayList<>(List.of(4.0, 4.0, 5.0)))),
-                new Student("Mike", Map.of("Java", new ArrayList<>(List.of(5.0, 3.0)), "Math", new ArrayList<>(List.of(3.0, 3.0, 3.0)))),
-                new Student("Peter", Map.of("Java", new ArrayList<>(List.of(5.0, 5.0, 5.0, 5.0)), "Math", new ArrayList<>(List.of(4.0, 5.0, 4.0))))
+                new Student("Mike", Map.of("Java", new ArrayList<>(List.of(5.0, 3.0)), "Math", new ArrayList<>(List.of(3.0, 3.0)))),
+                new Student("Peter", Map.of("Java", new ArrayList<>(List.of(5.0, 5.0, 5.0, 5.0)), "Math", new ArrayList<>(List.of(4.0, 5.0, 4.0)))),
+                new Student("Fedor", Map.of("Java", new ArrayList<>(List.of(3.0)), "Math", new ArrayList<>(List.of(3.0))))
         };
 
 
@@ -58,6 +58,36 @@ public class Solution {
                 .orElse(0.0);
 
         System.out.println("Общая средняя оценка всех студентов по всем студентам " + averageMarkAllObject);
+
+        Map<String, String> listGeneralMarksStudent =
+                Arrays.stream(students)
+                        .collect(Collectors.toMap(
+                                student -> student.getName(),
+                                student -> student
+                                        .getMarks()
+                                        .values()
+                                        .stream()
+                                        .flatMap(marks -> marks.stream())
+                                        .mapToDouble(el -> el.doubleValue())
+                                        .sum()
+                        ))
+                        .entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                entry -> {
+                                    if (entry.getValue() <= 7) {
+                                        return "bad";
+                                    } else if (entry.getValue() >= 8 && entry.getValue() <= 15) {
+                                        return "normal";
+                                    } else {
+                                        return "good";
+                                    }
+                                }
+                        ));
+
+        System.out.println(listGeneralMarksStudent);
+
 
 
     }
