@@ -21,8 +21,6 @@ public class Solution {
             for (int j = 0; j < subjects.length; j++) {
                 if (j != nonMark) {
                     marks.put(subjects[j], new Random().nextInt(3, 6));
-                }else {
-                    marks.put(subjects[j], 0);
                 }
             }
             students[i] = new Student(names[i], marks);
@@ -31,8 +29,30 @@ public class Solution {
         for (Student student : students) {
             System.out.println(student);
         }
+        System.out.println();
 
-        Arrays.stream(students)
+        Map<String, Double> averagePointEveryStudent = Arrays.stream(students)
+                .collect(Collectors.toMap(
+                                student -> student.getName(),
+                                student -> student
+                                        .getMarks()
+                                        .entrySet()
+                                        .stream()
+                                        .map(entry -> entry.getValue())
+                                        .mapToInt(mark -> mark.intValue())
+                                        .sum()
+                        )
+                )
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> ((double)entry.getValue() / 5)));
+
+        System.out.println(averagePointEveryStudent);
+
+
+        Map<String, Double> collect = Arrays.stream(students)
                 .collect(Collectors.toMap(
                                 student -> student.getName(),
                                 student -> student
@@ -42,35 +62,10 @@ public class Solution {
                                         .map(entry -> entry.getValue())
                                         .mapToInt(mark -> mark.intValue())
                                         .average()
-                                        .orElse(0.0)
-                        )
-                )
-                .entrySet()
-                .forEach(System.out::println);
+                                        .getAsDouble())
+                        );
+        System.out.println(collect);
 
-    }
-}
-
-class Student {
-    private String name;
-    private Map<String, Integer> marks;
-
-    public Student(String name, Map<String, Integer> marks) {
-        this.name = name;
-        this.marks = marks;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Map<String, Integer> getMarks() {
-        return marks;
-    }
-
-    @Override
-    public String toString() {
-        return name + " " + marks;
     }
 }
 
