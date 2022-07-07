@@ -11,7 +11,7 @@ public class Solution {
         mapGroup.put("Group #1", List.of(
                 (new Student("Peter", List.of(4, 3, 5))),
                 new Student("Mike", List.of(4, 3, 3))));
-        mapGroup.put("Group #2", List.of(
+        mapGroup.put("Group #22", List.of(
                 (new Student("Liza", List.of(3, 3, 3, 4))),
                 new Student("Bob", List.of(4, 3, 5))));
         mapGroup.put("Group #3", List.of(
@@ -128,11 +128,15 @@ public class Solution {
         System.out.println("Список групп с отличниками " + listHonorsStudent);
 
 
-        /*Сортировка по названию (по алфавиту), а если группа №22 есть?*/
+
         List<String> sortList = mapGroup
                 .entrySet()
                 .stream()
-                .sorted((o1, o2) -> o2.getKey().compareTo(o1.getKey()))
+                .sorted((o1, o2) -> {
+                    int o1Num = Integer.parseInt(o1.getKey().split("#")[1]);
+                    int o2Num = Integer.parseInt(o2.getKey().split("#")[1]);
+                    return Integer.compare(o2Num, o1Num);
+                })
                 .map(Map.Entry::getKey)
                 .toList();
 
@@ -142,38 +146,3 @@ public class Solution {
 }
 
 
-class Student {
-    private String name;
-    private List<Integer> marks;
-
-    public Student(String name, List<Integer> marks) {
-        this.name = name;
-        this.marks = marks;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Integer> getMarks() {
-        return marks;
-    }
-
-    @Override
-    public String toString() {
-        return name + " " + marks.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return Objects.equals(name, student.name) && Objects.equals(marks, student.marks);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, marks);
-    }
-}
