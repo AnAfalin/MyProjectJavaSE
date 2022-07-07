@@ -47,7 +47,7 @@ public class Solution {
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> ((double)entry.getValue() / 5)));
+                        entry -> ((double)entry.getValue() / subjects.length)));
 
         System.out.println(averagePointEveryStudent);
 
