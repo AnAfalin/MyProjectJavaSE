@@ -41,7 +41,7 @@ public class Solution {
                 .stream()
                 .collect(Collectors.toMap(
                         el -> el.getKey(),
-                        el -> (el.getValue() / 5)
+                        el -> (el.getValue() / subjects.length)
                 ));
 
         System.out.println(averageMarkSubject);
