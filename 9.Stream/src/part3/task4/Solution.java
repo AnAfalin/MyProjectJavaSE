@@ -1,9 +1,6 @@
 package part3.task4;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Solution {
@@ -25,12 +22,12 @@ public class Solution {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                                entry -> entry.getKey(),
+                                Map.Entry::getKey,
                                 entry -> entry.getValue()
                                         .stream()
-                                        .map(student -> student.getMarks())
-                                        .flatMap(list -> list.stream())
-                                        .mapToDouble(mark -> mark.doubleValue())
+                                        .map(Student::getMarks)
+                                        .flatMap(Collection::stream)
+                                        .mapToDouble(Integer::doubleValue)
                                         .average()
                                         .orElse(0.0)
 
@@ -39,46 +36,42 @@ public class Solution {
                 .entrySet()
                 .stream()
                 .max((o1, o2) -> o1.getValue().compareTo(o2.getValue()))
-                .map(el -> el.getKey())
+                .map(Map.Entry::getKey)
                 .orElse("Group #0");
 
         System.out.println("Самая сильная группа (группа с наибольшим средним баллом у студентов " + strongestGroup);
 
-        /*Если студенты повторяются?*/
-        String bestStudent = mapGroup
+        mapGroup
                 .values()
                 .stream()
-                .flatMap(list -> list.stream())
+                .flatMap(Collection::stream)
                 .collect(Collectors.toMap(
-                        student -> student.getName(),
-                        student -> student
+                        el -> el,
+                        el -> el
                                 .getMarks()
                                 .stream()
-                                .mapToDouble(el -> el.doubleValue())
+                                .mapToDouble(Integer::doubleValue)
                                 .average()
                                 .orElse(0.0)
                 ))
                 .entrySet()
                 .stream()
                 .max((o1, o2) -> o1.getValue().compareTo(o2.getValue()))
-                .map(el -> el.getKey())
-                .orElse("Nobody");
-
-
-        System.out.println("Самый сильный студент из всех групп " + bestStudent);
+                .map(Map.Entry::getKey)
+                .ifPresent(student -> System.out.println("Самый сильный студент из всех групп " + student.getName()));
 
 
         double averageMarkAll = mapGroup
                 .values()
                 .stream()
-                .flatMap(list -> list.stream())
-                .map(student -> student.getMarks())
+                .flatMap(Collection::stream)
+                .map(Student::getMarks)
                 .map(marks -> marks
                         .stream()
-                        .mapToDouble(mark -> mark.doubleValue())
+                        .mapToDouble(Integer::doubleValue)
                         .average()
                         .orElse(0.0))
-                .mapToDouble(averageMark -> averageMark.doubleValue())
+                .mapToDouble(Double::doubleValue)
                 .average()
                 .orElse(0.0);
 
@@ -86,11 +79,10 @@ public class Solution {
 
 
         List<String> listStudents = mapGroup
-                .entrySet()
+                .values()
                 .stream()
-                .map(group -> group.getValue())
-                .flatMap(list -> list.stream())
-                .map(student -> student.getName())
+                .flatMap(Collection::stream)
+                .map(Student::getName)
                 .collect(Collectors.toList());
 
         System.out.println("Список всех студентов: ");
@@ -101,8 +93,8 @@ public class Solution {
                 .values()
                 .stream()
                 .flatMap(Collection::stream)
-                .map(student -> student.getMarks())
-                .flatMap(listMarks -> listMarks.stream())
+                .map(Student::getMarks)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
         System.out.println("Список всех оценок студентов: ");
@@ -117,27 +109,21 @@ public class Solution {
                                 entry -> entry
                                         .getValue()
                                         .stream()
-                                        .map(student -> student.getMarks())
-                                        .flatMap(marks -> marks.stream())
+                                        .map(Student::getMarks)
+                                        .flatMap(Collection::stream)
                                         .collect(Collectors.toList())
                         ))
                         .entrySet()
                         .stream()
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey,
-                                entry -> {
-                                    if (entry.getValue().contains(3)) {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                })
+                                entry -> !entry.getValue().contains(3))
                         )
                         .entrySet()
                         .stream()
                         .filter(entry -> entry.getValue().equals(true))
-                        .map(group -> group.getKey())
-                        .collect(Collectors.toList());
+                        .map(Map.Entry::getKey)
+                        .toList();
 
         System.out.println("Список групп с отличниками " + listHonorsStudent);
 
@@ -147,8 +133,8 @@ public class Solution {
                 .entrySet()
                 .stream()
                 .sorted((o1, o2) -> o2.getKey().compareTo(o1.getKey()))
-                .map(entry -> entry.getKey())
-                .collect(Collectors.toList());
+                .map(Map.Entry::getKey)
+                .toList();
 
         System.out.println("Список отсортированных по убыванию групп " + sortList);
 
@@ -176,5 +162,18 @@ class Student {
     @Override
     public String toString() {
         return name + " " + marks.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name) && Objects.equals(marks, student.marks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, marks);
     }
 }
