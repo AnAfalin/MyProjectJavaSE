@@ -4,6 +4,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Solution {
+    private static String getMark(double value){
+        if (value <= 7) {
+            return "bad";
+        } else if (value >= 8 && value <= 15) {
+            return "normal";
+        } else {
+            return "good";
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -59,15 +68,7 @@ public class Solution {
                         .stream()
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey,
-                                entry -> {
-                                    if (entry.getValue() <= 7) {
-                                        return "bad";
-                                    } else if (entry.getValue() >= 8 && entry.getValue() <= 15) {
-                                        return "normal";
-                                    } else {
-                                        return "good";
-                                    }
-                                }
+                                entry -> getMark(entry.getValue())
                         ));
 
         System.out.println("«Оценка» студента, исходя из его общего количества баллов:");
