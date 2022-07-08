@@ -3,8 +3,8 @@ package part3.task7;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Collectors;
-
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -12,24 +12,17 @@ public class Solution {
 
         Path pathRes = Path.of("9.Stream/src/part3/task7/Result.txt");
         Files.createFile(pathRes);
-        String s = Files.walk(Path.of("9.Stream/src/part3/task7/Folder")).toList()
+        Files.walk(Path.of("9.Stream/src/part3/task7/Folder")).toList()
                 .stream()
-                .map(path -> path.toFile())
-                .filter(file -> file.isFile())
-                .map(file -> file.getPath())
-                .map(str -> {
+                .filter(file -> Files.isRegularFile(file))
+                .forEach(path -> {
                     try {
-                        return Files.readAllLines(Path.of(str));
+                        List<String> list = Files.readAllLines(path);
+                        Files.write(pathRes, list, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                })
-                .flatMap(list -> list.stream())
-                .collect(Collectors.joining());
-
-        System.out.println(s);
-
-        Files.writeString(pathRes, s);
+                });
 
 
     }
