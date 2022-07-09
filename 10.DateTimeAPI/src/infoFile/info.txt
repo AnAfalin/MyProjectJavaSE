@@ -1,0 +1,70 @@
+	DataTime APi
+
+	<<<LocatDate>>>
+LocakDate - класс, представляющий дату в формате yyyy-MM-dd.
+
+Создание объекта:
+LocalDate specificDate = LocalDate.of(2020, Month.JULY, 30);
+LocalDate currentDate = LocalDate.now();
+
+Методы:
+* LocalDate ofYearDay(year, day) - возвращает дату с момента пройденных дней (day) в указанном году
+* LocalDate ofEpochDay(day) - возвращает дату с момента 1 января 1970 года, с момента которой прошло 
+указанное количество дней
+* boolean isBefore / isAfter (LocalDate) - сравнивает две даты (до / после)
+* boolean isLeapYear - проверяет, является ли год високосным
+* LocalDate plusDays / minusDays (days) – добавляет / вычитает к / из текущей даты указанное количество дней;
+* LocalDate plusWeeks / minusWeeks (weeks) – добавляет / вычитает к / из текущей даты указанное количество недель;
+* LocalDate plusMonths / minusMonths (months) – добавляет / вычитает к / из текущей даты указанное количество месяцев;
+* LocalDate plusYears / minusYears (years) – добавляет / вычитает к / из текущей даты указанное количество лет;
+* DayOfWeek getDayOfWeek – возвращает день недели (перечисление);
+ 
+ 
+	<<<LocalTime>>>
+LocalTime – класс, представляющий время в формате hh:mm:ss:zzz. 
+Методы:
+LocalTime now – возвращает текущее время;
+String format (DateTimeFormatter) – возвращает отформатированную строку по указанному шаблону:
+
+Методы:
+* LocalTime of (hours, minutes, seconds, nanoseconds) – перегруженные метода для создания определенного времени;
+* boolean isBefore / isAfter (LocalTime) – сравнивает два времени (до / после); 
+* LocalTime plusNanos / minusNanos (nanos) – добавляет / вычитает к / из текущего времени указанное количество наносекунд;
+* LocalTime plusSeconds / minusSeconds (seconds) – добавляет / вычитает к / из текущего времени указанное количество секунд;
+* LocalTime plusMinutes / minusMinutes (minutes) – добавляет / вычитает к / из текущего времени указанное количество минут;
+* LocalTime plusHours / minusHours (years) – добавляет / вычитает к / из текущего времени указанное количество часов;
+
+
+	<<<LocalDateTime>>>
+LocalDateTime – представляет собой дату и время в формате по умолчанию: yyyy-MM-dd-HH-mm-ss.zzz.
+
+Методы:
+* LocalDateTime of (LocalDate, LocalTime) – создает объект даты и времени из переданных параметров;
+* String format (DateTimeFormatter) – форматирует вывод с помощью указанного паттерна:
+* LocalDateTime now – возвращает текущую дату и время;
+* LocalDateTime plus / minus (nanos, seconds, minutes, hours, days, weeks, months, years) – добавляет указанную единицу времени к текущей дате;
+* boolean isBefore / isAfter (LocalDateTime) – сравнивает две даты (до / после); 
+
+
+Period – позволяет создать период между двумя датами
+Методы:
+* int getDays – возвращает период в днях;
+* int getMonths – возвращает период в месяцах;
+* int getYears – возвращает период в годах;
+* Period of (years, months, days) / ofDays / ofWeeks / ofMonths / ofYears – фабричный метод для определенного периода;
+* Period plus (Period) – складывает два периода;
+* Period minus (Period) – вычитает два периода.
+
+
+Duration – позволяет находить продолжительность указанного времени (LocalTime) в секундах и наносекундах:
+Методы:
+* long getSeconds – возвращает количество секунд;
+* long getNano – возвращает количество наносекунд;
+* Duration ofDays / ofHours / ofMinutes / ofSeconds / ofNanos – возвращает продолжительно указанного количества временных единиц (общее количество).
+* toHoursPart / MinutesPart / SecondsPart – продолжительность в часах, минутах и секундах (часы от 0 до 23, минуты от 0 до 59, секунды от 0 до 59).
+
+
+ChronoUnit – перечисление для работы с временными единицами, позволяет находить разницу в датах и времени (общее количество).
+Методы:
+* Duration getDuration – возвращает объект класса Duration;
+* long between (Temporal, Temporal) – возвращает общее количество временных единиц, означающее разницу между двумя датами / временами:
