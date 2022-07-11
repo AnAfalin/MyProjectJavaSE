@@ -5,40 +5,54 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Solution {
+    public static Product[] products = {
+            new Product("Молоко", 40),
+            new Product("Йогурт", 20),
+            new Product("Кефир", 30),
+            new Product("Сыр", 100),
+            new Product("Творог", 60),
+            new Product("Хлеб", 40),
+            new Product("Конфеты", 50),
+            new Product("Мясо", 1000),
+            new Product("Сметана", 20),
+            new Product("Яйца", 150)
+    };
+    public static String[] buyersName = {"Alex", "Sam", "Liza", "Jane", "Peter"};
+    public static List<Buyer> buyerList = new ArrayList<>();
+
     public static void main(String[] args) {
-        Product[] products = {
-                new Product("Молоко", 40),
-                new Product("Йогурт", 20),
-                new Product("Кефир", 30),
-                new Product("Сыр", 100),
-                new Product("Творог", 60),
-                new Product("Хлеб", 40),
-                new Product("Конфеты", 50),
-                new Product("Мясо", 1000),
-                new Product("Сметана", 20),
-                new Product("Яйца", 150)
-        };
+        fillBuyerList();
+        System.out.println("Покупатели и их чеки");
+        printBuyerList();
 
-        String[] buyersName = {"Alex", "Sam", "Liza", "Jane", "Peter"};
+        System.out.println("Всего покупатели потратили: " + revenue());
+        System.out.println("Продукт, который чаще всего покупают " + popularGood().getTitle() + "\n");
+        System.out.println("Средняя стоимость чека равна " + averageCostReceipt());
+        System.out.println("Топ-5 самых неликвидных товаров: " + fiveIlliquidGoods());
 
-        List<Buyer> buyerList = new ArrayList<>();
 
+    }
+
+    public static void fillBuyerList(){
         for (int i = 0; i < buyersName.length; i++) {
             Map<Product, Integer> productsCountMap = new HashMap<>();
             for (int j = 0; j < 3; j++) {
                 int id = new Random().nextInt(0, products.length);
                 int count = new Random().nextInt(1, 5);
                 productsCountMap.put(products[id], count);
-
             }
             buyerList.add(new Buyer(buyersName[i], productsCountMap));
-
         }
+    }
 
+    public static void printBuyerList(){
         for (Buyer buyer : buyerList) {
             System.out.println(buyer);
         }
+        System.out.println();
+    }
 
+    public static int revenue() {
         int sum = buyerList
                 .stream()
                 .map(Buyer::getShoppingList)
@@ -51,9 +65,10 @@ public class Solution {
                 .mapToInt(Integer::intValue)
                 .sum();
 
-        System.out.println("Всего покупатели потратили: " + sum);
+        return sum;
+    }
 
-
+    public static Product popularGood(){
         Product popularProduct = buyerList
                 .stream()
                 .map(Buyer::getShoppingList)
@@ -66,16 +81,10 @@ public class Solution {
                 .get()
                 .getKey();
 
-        System.out.println("Продукт, который чаще всего покупают " + popularProduct.getTitle() + "\n");
+        return popularProduct;
+    }
 
-//        buyerList
-//                .stream()
-//                .collect(Collectors.toMap(el -> el.getShoppingList(), el-> el.getShoppingList().size()))
-//                .entrySet()
-//                .stream()
-//                .limit(1)
-//                .forEach(System.out::println);
-
+    public static double averageCostReceipt(){
         double averageCostReceipt = buyerList
                 .stream()
                 .collect(Collectors.toMap(Buyer::getShoppingList, el -> el.getShoppingList().size()))
@@ -93,9 +102,10 @@ public class Solution {
                 .average()
                 .orElse(0.0);
 
-        System.out.println("Средняя стоимость чека равна " + averageCostReceipt);
+        return averageCostReceipt;
+    }
 
-
+    public static List<String> fiveIlliquidGoods(){
         List<String> illiquidGoods = Stream.concat(
                         buyerList
                                 .stream()
@@ -122,8 +132,6 @@ public class Solution {
                 .map(Map.Entry::getKey)
                 .toList();
 
-        System.out.println("Топ-5 самых неликвидных товаров: " + illiquidGoods);
-
-
+        return illiquidGoods;
     }
 }
