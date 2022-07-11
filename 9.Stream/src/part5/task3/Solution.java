@@ -50,6 +50,20 @@ public class Solution {
         System.out.println("Всего покупатели постратили: " + sum);
 
 
+        Product popularProduct = buyerList
+                .stream()
+                .map(buyer -> buyer.getShoppingList())
+                .flatMap(map -> map.entrySet().stream())
+                .collect(Collectors.groupingBy(entry -> entry.getKey(),
+                        Collectors.summingInt(entry -> entry.getValue())))
+                .entrySet()
+                .stream()
+                .max()
+                .get()
+                .getKey();
+
+        System.out.println("Продукт, который чаще всего покупают " + popularProduct.getTitle());
+
 
     }
 
