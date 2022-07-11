@@ -2,6 +2,7 @@ package part5.task3;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Solution {
     public static void main(String[] args) {
@@ -12,6 +13,9 @@ public class Solution {
                 new Product("Сыр", 100),
                 new Product("Творог", 60),
                 new Product("Хлеб", 40),
+                new Product("Конфеты", 50),
+                new Product("Мясо", 1000),
+                new Product("Сметана", 20),
                 new Product("Яйца", 150)
         };
 
@@ -47,7 +51,7 @@ public class Solution {
                 .mapToInt(Integer::intValue)
                 .sum();
 
-        System.out.println("Всего покупатели постратили: " + sum);
+        System.out.println("Всего покупатели потратили: " + sum);
 
 
         Product popularProduct = buyerList
@@ -64,13 +68,13 @@ public class Solution {
 
         System.out.println("Продукт, который чаще всего покупают " + popularProduct.getTitle() + "\n");
 
-        buyerList
-                .stream()
-                .collect(Collectors.toMap(el -> el.getShoppingList(), el-> el.getShoppingList().size()))
-                .entrySet()
-                .stream()
-                .limit(1)
-                .forEach(System.out::println);
+//        buyerList
+//                .stream()
+//                .collect(Collectors.toMap(el -> el.getShoppingList(), el-> el.getShoppingList().size()))
+//                .entrySet()
+//                .stream()
+//                .limit(1)
+//                .forEach(System.out::println);
 
         double averageCostReceipt = buyerList
                 .stream()
@@ -90,6 +94,36 @@ public class Solution {
                 .orElse(0.0);
 
         System.out.println("Средняя стоимость чека равна " + averageCostReceipt);
+
+
+        List<String> illiquidGoods = Stream.concat(
+                        buyerList
+                                .stream()
+                                .flatMap(el -> el.getShoppingList().entrySet().stream())
+                                .collect(Collectors.groupingBy(
+                                        element -> element.getKey().getTitle(),
+                                        Collectors.summingInt(element -> element.getValue())))
+                                .entrySet()
+                                .stream(),
+
+                        Arrays.stream(products)
+                                //.map(Product::getTitle)
+                                .collect(Collectors.groupingBy(Product::getTitle, Collectors.summingInt(m -> 0)))
+                                .entrySet()
+                                .stream()
+                )
+                .collect(Collectors.groupingBy(
+                        stream -> stream.getKey(),
+                        Collectors.summingInt(stream -> stream.getValue())))
+                .entrySet()
+                .stream()
+                .sorted((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()))
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .toList();
+
+        System.out.println("Топ-5 самых неликвидных товаров: " + illiquidGoods);
+
 
     }
 }
