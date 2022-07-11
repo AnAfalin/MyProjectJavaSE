@@ -52,20 +52,44 @@ public class Solution {
 
         Product popularProduct = buyerList
                 .stream()
-                .map(buyer -> buyer.getShoppingList())
+                .map(Buyer::getShoppingList)
                 .flatMap(map -> map.entrySet().stream())
-                .collect(Collectors.groupingBy(entry -> entry.getKey(),
-                        Collectors.summingInt(entry -> entry.getValue())))
+                .collect(Collectors.groupingBy(Map.Entry::getKey,
+                        Collectors.summingInt(Map.Entry::getValue)))
                 .entrySet()
                 .stream()
-                .max()
+                .max(Comparator.comparing(Map.Entry::getValue))
                 .get()
                 .getKey();
 
-        System.out.println("Продукт, который чаще всего покупают " + popularProduct.getTitle());
+        System.out.println("Продукт, который чаще всего покупают " + popularProduct.getTitle() + "\n");
 
+        buyerList
+                .stream()
+                .collect(Collectors.toMap(el -> el.getShoppingList(), el-> el.getShoppingList().size()))
+                .entrySet()
+                .stream()
+                .limit(1)
+                .forEach(System.out::println);
+
+        double averageCostReceipt = buyerList
+                .stream()
+                .collect(Collectors.toMap(Buyer::getShoppingList, el -> el.getShoppingList().size()))
+                .entrySet()
+                .stream()
+                .map(entry ->
+                        (entry
+                                .getKey()
+                                .entrySet()
+                                .stream()
+                                .map(l -> l.getKey().getPrice() * l.getValue())
+                                .mapToDouble(Integer::doubleValue)
+                                .sum()) / entry.getValue())
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+
+        System.out.println("Средняя стоимость чека равна " + averageCostReceipt);
 
     }
-
-
 }
