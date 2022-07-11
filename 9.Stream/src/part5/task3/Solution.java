@@ -1,8 +1,7 @@
 package part5.task3;
 
-
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) {
@@ -22,15 +21,34 @@ public class Solution {
 
         for (int i = 0; i < buyersName.length; i++) {
             Map<Product, Integer> productsCountMap = new HashMap<>();
-            int id = new Random().nextInt(0, products.length);
-            int count = new Random().nextInt(1, 5);
-            productsCountMap.put(products[id], count);
+            for (int j = 0; j < 3; j++) {
+                int id = new Random().nextInt(0, products.length);
+                int count = new Random().nextInt(1, 5);
+                productsCountMap.put(products[id], count);
+
+            }
             buyerList.add(new Buyer(buyersName[i], productsCountMap));
+
         }
 
         for (Buyer buyer : buyerList) {
             System.out.println(buyer);
         }
+
+        int sum = buyerList
+                .stream()
+                .map(Buyer::getShoppingList)
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)))
+                .entrySet()
+                .stream()
+                .map(entry -> entry.getValue() * entry.getKey().getPrice())
+                .mapToInt(Integer::intValue)
+                .sum();
+
+        System.out.println("Всего покупатели постратили: " + sum);
+
 
 
     }
