@@ -9,9 +9,10 @@ public class Solution {
         List<Post> postList = new ArrayList<>();
         String[] title = {"About Me", "Sea", "Sun", "Summer", "It is love", "Me and my friends", "Happy New Year",
         "My new life", "About IT and Java", "Java or C++"};
+        Random random = new Random();
         for (int i = 0; i < 10; i++) {
             int id = i * 2 + i + 1;
-            int rating = new Random().nextInt(0, 100);
+            int rating = random.nextInt(0, 100);
             postList.add(new Post(id, title[i], rating));
         }
 
