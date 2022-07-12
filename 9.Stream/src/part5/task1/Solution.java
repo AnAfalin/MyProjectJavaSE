@@ -16,9 +16,7 @@ public class Solution {
         }
 
         System.out.println("All available posts:");
-        for (Post post : postList) {
-            System.out.println(post);
-        }
+        postList.forEach(System.out::println);
 
         List<Post> fivePostMaxRating = postList
                 .stream()
@@ -27,8 +25,7 @@ public class Solution {
                 .toList();
 
         System.out.println("\nThe five best posts: ");
-        for (Post post : fivePostMaxRating) {
-            System.out.println(post.getTitle());
-        }
+        fivePostMaxRating.forEach(System.out::println);
+
     }
 }
