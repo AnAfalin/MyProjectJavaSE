@@ -5,28 +5,25 @@ import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) {
-        Map<Product, Integer> map = new HashMap<>();
+        Map<Product, Integer> mapCashReceipt = new HashMap<>();
         String[] products = {"Яйца(1д)", "Сахар(1кг)", "Масло(1п = 200гр))", "Сыр(1кг)", "Молоко(1л)", "Кефир(1л)", "Овощи(1кг)", "Фрукты(1кг)"};
 
-        for (int i = 0; i < products.length; i++) {
-            int count = new Random().nextInt(1, 5);
-            map.put(new Product(products[i], new Random().nextInt(50, 150)), count);
-            ;
-        }
-        for (Map.Entry<Product, Integer> productIntegerEntry : map.entrySet()) {
-            System.out.println(productIntegerEntry);
-        }
+        Random random = new Random();
 
-        Product popularProduct = map
+        for (int i = 0; i < products.length; i++) {
+            int count = random.nextInt(1, 5);
+            mapCashReceipt.put(new Product(products[i], random.nextInt(50, 150)), count);
+        }
+        mapCashReceipt.entrySet().forEach(System.out::println);
+
+        Optional<Map.Entry<Product, Integer>> popularProduct = mapCashReceipt
                 .entrySet()
                 .stream()
-                .max(Comparator.comparing(Map.Entry::getValue))
-                .get()
-                .getKey();
+                .max(Map.Entry.comparingByValue());
 
         System.out.println("\nСамый популярный товар: " + popularProduct);
 
-        Map<Product, Integer> mapExpenses = map
+        Map<Product, Integer> mapExpenses = mapCashReceipt
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
@@ -35,9 +32,7 @@ public class Solution {
                 );
 
         System.out.println("\nТовар - Кол-во д/с, потраченных на товар");
-        for (Map.Entry<Product, Integer> productIntegerEntry : mapExpenses.entrySet()) {
-            System.out.println(productIntegerEntry.getKey() + " - " + productIntegerEntry.getValue());
-        }
+        mapExpenses.entrySet().forEach(System.out::println);
 
     }
 }
