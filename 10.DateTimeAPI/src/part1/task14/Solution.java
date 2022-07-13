@@ -11,19 +11,20 @@ public class Solution {
 
         Map<LocalTime, Integer> scheduleTrain = getScheduleTrain();
 
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("Время отправления = Время прибытия -- Время в пути");
         scheduleTrain
                 .forEach((key, value) -> System.out.println(key + "-" + "-" + value +"-" + key.plusMinutes(value)));
 
         System.out.println("Введите время отправления");
-        LocalTime inputTime = LocalTime.parse(new Scanner(System.in).nextLine());
+        LocalTime inputTime = LocalTime.parse(scanner.nextLine());
 
         System.out.println("Введите время в пути");
-        int timeTravel = Integer.parseInt(new Scanner(System.in).nextLine());
+        int timeTravel = Integer.parseInt(scanner.nextLine());
 
         LocalTime timeArrive = inputTime.plusMinutes(timeTravel);
         System.out.println(inputTime + "-" + timeTravel + "-" + timeArrive);
-
 
         LocalTime prevLocalTime = scheduleTrain.entrySet()
                 .stream()
@@ -55,21 +56,17 @@ public class Solution {
     }
 
     public static Map<LocalTime, Integer> getScheduleTrain() {
-        Map<LocalTime, Integer> map = new TreeMap<>();
+        Map<LocalTime, Integer> map = new LinkedHashMap<>();
         LocalTime departure = LocalTime.of(0, 0, 0);
-        LocalTime arrive;
         int min = 0;
 
+        Random random = new Random();
         while (min < Duration.ofDays(1).toMinutes()) {
-
-            int departureMin = new Random().nextInt(40, 60);
+            int departureMin = random.nextInt(40, 60);
             departure = departure.plusMinutes(departureMin);
             min += departureMin;
-            int travelMin = new Random().nextInt(15, 40);
-            arrive = departure.plusMinutes(travelMin);
-            min += travelMin;
+            int travelMin = random.nextInt(15, 40);
             map.put(departure, travelMin);
-            departure = arrive;
         }
         return map;
     }
