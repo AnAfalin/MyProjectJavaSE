@@ -1,15 +1,15 @@
 package part5.task4;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Post {
     private int id;
     private String title;
     private int rating;
-    private LocalTime postTime;
+    private LocalDateTime postTime;
 
-    public Post(int id, String title, int rating, LocalTime postTime) {
+    public Post(int id, String title, int rating, LocalDateTime postTime) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -28,14 +28,12 @@ public class Post {
         return rating;
     }
 
-    public LocalTime getPostTime() {
+    public LocalDateTime getPostTime() {
         return postTime;
     }
 
-
-
     @Override
     public String toString() {
-        return "Post: id:" + id + ", title:" + title + ", rating:" + rating + ", timePost: " + postTime.format(DateTimeFormatter.ofPattern("hh:mm:ss"));
+        return postTime.format(DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"))  + " Post: id:" + id + ", title:" + title + ", rating:" + rating;
     }
 }
