@@ -20,16 +20,14 @@ public class Solution {
         LocalTime arrive;
         int min = 0;
 
+        Random random = new Random();
         while (min < Duration.ofDays(1).toMinutes()) {
 
-            int departureMin = new Random().nextInt(40, 60);
+            int departureMin = random.nextInt(40, 60);
             departure = departure.plusMinutes(departureMin);
             min += departureMin;
-            int travelMin = new Random().nextInt(15, 40);
-            arrive = departure.plusMinutes(travelMin);
-            min += travelMin;
+            int travelMin = random.nextInt(15, 40);
             map.put(departure, travelMin);
-            departure = arrive;
         }
         return map;
     }
