@@ -6,7 +6,6 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-
         Map<LocalTime, Integer> scheduleTrain = getScheduleTrain();
 
         System.out.println("Время отправления = Время в пути");
@@ -17,7 +16,6 @@ public class Solution {
     public static Map<LocalTime, Integer> getScheduleTrain() {
         Map<LocalTime, Integer> map = new LinkedHashMap<>();
         LocalTime departure = LocalTime.of(0, 0, 0);
-        LocalTime arrive;
         int min = 0;
 
         Random random = new Random();
