@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Solution {
-    public static Product[] products = {
+    public static List<Product> products = List.of(
             new Product("Молоко", 40),
             new Product("Йогурт", 20),
             new Product("Кефир", 30),
@@ -16,7 +16,7 @@ public class Solution {
             new Product("Мясо", 1000),
             new Product("Сметана", 20),
             new Product("Яйца", 150)
-    };
+    );
     public static String[] buyersName = {"Alex", "Sam", "Liza", "Jane", "Peter"};
     public static List<Buyer> buyerList = new ArrayList<>();
 
@@ -30,25 +30,22 @@ public class Solution {
         System.out.println("Средняя стоимость чека равна " + averageCostReceipt());
         System.out.println("Топ-5 самых неликвидных товаров: " + fiveIlliquidGoods());
 
-
     }
 
-    public static void fillBuyerList(){
-        for (int i = 0; i < buyersName.length; i++) {
+    public static void fillBuyerList() {
+        for (String s : buyersName) {
             Map<Product, Integer> productsCountMap = new HashMap<>();
-            for (int j = 0; j < 3; j++) {
-                int id = new Random().nextInt(0, products.length);
+            for (int j = 0; j < 1; j++) {
+                int id = new Random().nextInt(0, products.size());
                 int count = new Random().nextInt(1, 5);
-                productsCountMap.put(products[id], count);
+                productsCountMap.put(products.get(id), count);
             }
-            buyerList.add(new Buyer(buyersName[i], productsCountMap));
+            buyerList.add(new Buyer(s, productsCountMap));
         }
     }
 
-    public static void printBuyerList(){
-        for (Buyer buyer : buyerList) {
-            System.out.println(buyer);
-        }
+    public static void printBuyerList() {
+        buyerList.forEach(System.out::println);
         System.out.println();
     }
 
@@ -68,7 +65,7 @@ public class Solution {
         return sum;
     }
 
-    public static Product popularGood(){
+    public static Product popularGood() {
         Product popularProduct = buyerList
                 .stream()
                 .map(Buyer::getShoppingList)
@@ -84,7 +81,7 @@ public class Solution {
         return popularProduct;
     }
 
-    public static double averageCostReceipt(){
+    public static double averageCostReceipt() {
         double averageCostReceipt = buyerList
                 .stream()
                 .collect(Collectors.toMap(Buyer::getShoppingList, el -> el.getShoppingList().size()))
@@ -105,33 +102,34 @@ public class Solution {
         return averageCostReceipt;
     }
 
-    public static List<String> fiveIlliquidGoods(){
-        List<String> illiquidGoods = Stream.concat(
-                        buyerList
-                                .stream()
-                                .flatMap(el -> el.getShoppingList().entrySet().stream())
-                                .collect(Collectors.groupingBy(
-                                        element -> element.getKey().getTitle(),
-                                        Collectors.summingInt(element -> element.getValue())))
-                                .entrySet()
-                                .stream(),
+    public static List<String> fiveIlliquidGoods() {
+        List<String> illiquidGoods =
+                Stream.concat(
+                                products.stream().filter(product ->
+                                                !(buyerList.stream()
+                                                        .flatMap(buyer -> buyer.getShoppingList()
+                                                                .keySet().stream())
+                                                        .toList())
+                                                        .contains(product))
+                                        .collect(Collectors.toMap(Product::getTitle, el -> 0))
+                                        .entrySet()
+                                        .stream(),
 
-                        Arrays.stream(products)
-                                //.map(Product::getTitle)
-                                .collect(Collectors.groupingBy(Product::getTitle, Collectors.summingInt(m -> 0)))
-                                .entrySet()
-                                .stream()
-                )
-                .collect(Collectors.groupingBy(
-                        stream -> stream.getKey(),
-                        Collectors.summingInt(stream -> stream.getValue())))
-                .entrySet()
-                .stream()
-                .sorted((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()))
-                .limit(5)
-                .map(Map.Entry::getKey)
-                .toList();
+                                buyerList
+                                        .stream()
+                                        .flatMap(el -> el.getShoppingList().entrySet().stream())
+                                        .collect(Collectors.groupingBy(
+                                                element -> element.getKey().getTitle(),
+                                                Collectors.summingInt(Map.Entry::getValue)))
+                                        .entrySet()
+                                        .stream()
+                        )
+                        .map(Map.Entry::getKey)
+                        .limit(5)
+                        .toList();
+
 
         return illiquidGoods;
+
     }
 }
