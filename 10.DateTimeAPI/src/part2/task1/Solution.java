@@ -8,9 +8,9 @@ public class Solution {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime date = LocalDateTime.now().minusHours(35);
 
-        double between = (double) ChronoUnit.HOURS.between(date, now);
+        long between = ChronoUnit.HOURS.between(date, now);
         System.out.println("Между датами " + between + " час.");
-        double l = between / (LocalDateTime.MAX.getHour() + 1);
+        double l = (double) between / (LocalDateTime.MAX.getHour() + 1);
         System.out.printf("%.2f дня", l);
     }
 }
