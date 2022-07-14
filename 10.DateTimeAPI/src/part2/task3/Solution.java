@@ -32,11 +32,11 @@ public class Solution {
                 .max(LocalDate::compareTo)
                 .get();
 
-        System.out.println(min);
-        System.out.println(max);
-        long between = ChronoUnit.DAYS.between(min, max) / 2;
-
-        System.out.println(min.plusDays(between));
+        System.out.println("Самая ранняя дата " + min);
+        System.out.println("Самая поздняя дата " + max);
+        long mediumBetween = ChronoUnit.DAYS.between(min, max) / 2;
+        LocalDate mediumDate = min.plusDays(mediumBetween);
+        System.out.println("Срединная дата " + mediumDate);
 
     }
 }
