@@ -6,7 +6,7 @@ public class Test {
 
     }
 
-    @AnnotationDate1(year = 2022)
+    @AnnotationDate(year = 2022)
     public void method1() {
 
     }

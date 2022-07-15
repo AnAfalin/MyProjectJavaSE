@@ -8,9 +8,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})     //применяется только к полям и методам
 @Retention(RetentionPolicy.RUNTIME)                 //видна во время выполнения программы
 public @interface AnnotationDate {
-        int value();
-        int month() default 01;
-        int day() default 01;
+        int value() default 1;
+        int year() default 2022;
+        int month() default 1;
+        int day() default 1;
 }
 
 
