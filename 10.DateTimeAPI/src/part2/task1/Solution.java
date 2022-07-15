@@ -1,5 +1,6 @@
 package part2.task1;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -10,7 +11,7 @@ public class Solution {
 
         long between = ChronoUnit.HOURS.between(date, now);
         System.out.println("Между датами " + between + " час.");
-        double l = (double) between / (LocalDateTime.MAX.getHour() + 1);
+        double l = (double) between / (Duration.ofDays(1).toHours());
         System.out.printf("%.2f дня", l);
     }
 }
