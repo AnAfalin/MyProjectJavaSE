@@ -32,9 +32,10 @@ public class Solution {
             list.getClass().getDeclaredMethod("addFirst", int.class).invoke(list, 300);
             list.getClass().getDeclaredMethod("print");
 
-            Method method = list.getClass().getDeclaredMethod("isCheckIndex");
+            Method method = list.getClass().getDeclaredMethod("isCheckIndex", int.class);
             method.setAccessible(true);
-            /*Как тут дальше?*/
+            Boolean res = (Boolean) method.invoke(list,5);
+            System.out.println(res);
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
