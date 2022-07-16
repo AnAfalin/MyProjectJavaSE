@@ -21,7 +21,7 @@ public class Solution {
         long countMethods = Arrays.stream(object.getClass().getDeclaredMethods()).count();
         long countPublicMethods = Arrays.stream(object.getClass().getDeclaredMethods()).filter(method -> method.getModifiers() == Modifier.PUBLIC).count();
         long countPrivateMethods = Arrays.stream(object.getClass().getDeclaredMethods()).filter(method -> method.getModifiers() == Modifier.PRIVATE).count();
-        System.out.println("Количество все методов " + countMethods);
+        System.out.println("Количество всех методов " + countMethods);
         System.out.println("Количество public методов " + countPublicMethods + ", а количество всех остальных " + (countMethods - countPublicMethods));
         System.out.println("Количество private методов " + countPrivateMethods);
 
