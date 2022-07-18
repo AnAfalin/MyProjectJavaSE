@@ -1,6 +1,7 @@
 package part2.task3;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,28 +15,27 @@ public class Solution {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
             int year = random.nextInt(2000, 2023);
-            int month = random.nextInt(01, 13);
+            int month = random.nextInt(1, 13);
             array.add(LocalDate.of(year, month, 15));
         }
         array.forEach(System.out::println);
 
         System.out.println("---");
 
-        LocalDate min = array
-                .stream()
-                .min(LocalDate::compareTo)
-                .get();
+        LocalDate epoch = LocalDate.of(1970, 1, 1);
 
-        LocalDate max = array
-                .stream()
-                .max(LocalDate::compareTo)
-                .get();
+        System.out.println(ChronoUnit.DAYS.between(epoch, array.get(0)));
 
-        System.out.println("Самая ранняя дата " + min);
-        System.out.println("Самая поздняя дата " + max);
-        long mediumBetween = ChronoUnit.DAYS.between(min, max) / 2;
-        LocalDate mediumDate = min.plusDays(mediumBetween);
-        System.out.println("Срединная дата " + mediumDate);
+        long averageDays = (long) array.stream()
+                .map(el -> ChronoUnit.DAYS.between(epoch, el))
+                .mapToInt(Long::intValue)
+                .average()
+                .orElse(0);
+
+        LocalDate mediumDate = LocalDate.ofEpochDay(averageDays);
+
+        System.out.println(mediumDate);
+
 
     }
 }
