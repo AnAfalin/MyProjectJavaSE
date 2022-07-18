@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public class Solution {
     public static void main(String[] args) {
 
-        Map<LocalTime, Integer> scheduleTrain = getScheduleTrain();
+        NavigableMap<LocalTime, Integer> scheduleTrain = getScheduleTrain();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -18,45 +18,33 @@ public class Solution {
                 .forEach((key, value) -> System.out.println(key + "-" + "-" + value +"-" + key.plusMinutes(value)));
 
         System.out.println("Введите время отправления");
-        LocalTime inputTime = LocalTime.parse(scanner.nextLine());
+        LocalTime departureTime = LocalTime.parse(scanner.nextLine());
 
         System.out.println("Введите время в пути");
         int timeTravel = Integer.parseInt(scanner.nextLine());
+        LocalTime timeArrive = departureTime.plusMinutes(timeTravel);
 
-        LocalTime timeArrive = inputTime.plusMinutes(timeTravel);
-        System.out.println(inputTime + "-" + timeTravel + "-" + timeArrive);
+        System.out.println(departureTime + "-" + timeTravel + "-" + timeArrive);
 
-        LocalTime prevLocalTime = scheduleTrain.entrySet()
-                .stream()
-                .map(el -> el.getKey().plusMinutes(el.getValue()))
-                .filter(time -> time.isBefore(timeArrive))
-                .toList()
-                .stream()
-                .sorted((o1, o2) -> o2.compareTo(o1))
-                .findFirst()
-                .get();
+        Map.Entry<LocalTime, Integer> lowerTrain = scheduleTrain.lowerEntry(departureTime);
+        Map.Entry<LocalTime, Integer> higherTrain = scheduleTrain.higherEntry(departureTime);
 
-        LocalTime lastLocalTime = scheduleTrain.entrySet()
-                .stream()
-                .filter(time -> time.getKey().isAfter(timeArrive))
-                .map(el -> el.getKey())
-                .collect(Collectors.toList())
-                .stream()
-                .sorted((o1, o2) -> o2.compareTo(o1))
-                .findFirst()
-                .get();
-
-        if((prevLocalTime.isBefore(inputTime) || prevLocalTime == inputTime) && (inputTime.isBefore(lastLocalTime) || inputTime == lastLocalTime)){
+        if(lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).isBefore(departureTime)
+                && higherTrain.getKey().isAfter(timeArrive)){
             System.out.println("Рейс добавлен");
-            scheduleTrain.put(inputTime, timeTravel);
+            scheduleTrain.put(departureTime, timeTravel);
         }else {
             System.out.println("Error! Данный рейс добавить нельзя, т.к. происходит накладка");
         }
-        System.out.println(scheduleTrain);
+
+        System.out.println("\nНовое расписание:\nВремя отправления = Время прибытия -- Время в пути");
+        scheduleTrain
+                .forEach((key, value) -> System.out.println(key + "-" + "-" + value +"-" + key.plusMinutes(value)));
+
     }
 
-    public static Map<LocalTime, Integer> getScheduleTrain() {
-        Map<LocalTime, Integer> map = new LinkedHashMap<>();
+    public static NavigableMap<LocalTime, Integer> getScheduleTrain() {
+        NavigableMap<LocalTime, Integer> map = new TreeMap<>();
         LocalTime departure = LocalTime.of(0, 0, 0);
         int min = 0;
 
