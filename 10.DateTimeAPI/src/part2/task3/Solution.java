@@ -21,7 +21,6 @@ public class Solution {
 
         System.out.println("---");
 
-        /*Как правильно получить значение в Optional*/
         LocalDate min = array
                 .stream()
                 .min(LocalDate::compareTo)
