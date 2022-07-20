@@ -1,13 +1,10 @@
-package part3.task5;
+package part3.task5.v2;
 
-        import java.lang.annotation.ElementType;
-        import java.lang.annotation.Retention;
-        import java.lang.annotation.RetentionPolicy;
-        import java.lang.annotation.Target;
-        import java.lang.reflect.Field;
-        import java.lang.reflect.InvocationTargetException;
-        import java.util.*;
-        import java.util.stream.Stream;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.*;
 
 public class Solution1 {
     public static void main(String[] args) throws NoSuchMethodException {
@@ -31,20 +28,19 @@ class Student {
         handleInjectValueFieldAnnotation();
     }
 
-    private void handleInjectValueFieldAnnotation(){
-        Stream.of(this.getClass().getDeclaredFields())
+    private void handleInjectValueFieldAnnotation() {
+        Arrays.stream(this.getClass().getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(InjectValueField.class))
                 .forEach(field -> {
                     InjectValueField anno = field.getDeclaredAnnotation(InjectValueField.class);
-                    Stream.of(anno.getClass().getDeclaredMethods())
+                    Arrays.stream(anno.getClass().getDeclaredMethods())
                             .filter(annoMethod -> annoMethod.getName().equalsIgnoreCase(field.getName()))
                             .findFirst()
                             .ifPresent(method -> {
                                 try {
-                                    if(field.getType().isAssignableFrom(List.class)){
-                                        field.set(this, Arrays.stream((int[])method.invoke(anno)).boxed().toList());
-                                    }
-                                    else{
+                                    if (field.getType().isAssignableFrom(List.class)) {
+                                        field.set(this, Arrays.stream((int[]) method.invoke(anno)).boxed().toList());
+                                    } else {
                                         field.set(this, method.invoke(anno));
                                     }
                                 } catch (Exception e) {
@@ -52,6 +48,7 @@ class Student {
                                 }
                             });
                 });
+
     }
 
     @Override
