@@ -16,10 +16,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Person [" +
                 "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                '}';
+                ']';
     }
 }

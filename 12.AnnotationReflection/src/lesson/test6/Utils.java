@@ -9,14 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Utils {
-//    public static List<Person> readAllLines(String filename) throws IOException {
-//        List<Person> list = new ArrayList<>();
-//        Files.readAllLines(Path.of(filename))
-//                .stream()
-//                .map(row -> row.split(" "))
-//                .forEach(arr -> list.add(new Person(arr[0], arr[1], Integer.parseInt(arr[2]))));
-//    }
-
 
     public static <T> List<T> readAllLines(String filename, Class<T> clazz) throws Exception {
         List<String> lines = Files.readAllLines(Path.of(filename));
