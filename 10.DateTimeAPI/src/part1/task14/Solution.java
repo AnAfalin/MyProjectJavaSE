@@ -26,21 +26,39 @@ public class Solution {
 
         System.out.println(departureTime + "-" + timeTravel + "-" + timeArrive);
 
-        Map.Entry<LocalTime, Integer> lowerTrain = scheduleTrain.lowerEntry(departureTime);
-        Map.Entry<LocalTime, Integer> higherTrain = scheduleTrain.higherEntry(departureTime);
-
-        if(lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).isBefore(departureTime)
-                && higherTrain.getKey().isAfter(timeArrive)){
-            System.out.println("Рейс добавлен");
+        if(isAddTrain(scheduleTrain, departureTime,timeArrive)){
             scheduleTrain.put(departureTime, timeTravel);
+            System.out.println("Рейс добавлен");
+            System.out.println("\nНовое расписание:\nВремя отправления = Время прибытия -- Время в пути");
+            scheduleTrain
+                    .forEach((key, value) -> System.out.println(key + "-" + "-" + value +"-" + key.plusMinutes(value)));
         }else {
             System.out.println("Error! Данный рейс добавить нельзя, т.к. происходит накладка");
         }
 
-        System.out.println("\nНовое расписание:\nВремя отправления = Время прибытия -- Время в пути");
-        scheduleTrain
-                .forEach((key, value) -> System.out.println(key + "-" + "-" + value +"-" + key.plusMinutes(value)));
 
+    }
+
+    public static boolean isAddTrain(NavigableMap<LocalTime, Integer> scheduleTrain,
+                                     LocalTime departureTime, LocalTime timeArrive){
+
+        Map.Entry<LocalTime, Integer> lowerTrain = scheduleTrain.lowerEntry(departureTime);
+        Map.Entry<LocalTime, Integer> higherTrain = scheduleTrain.higherEntry(departureTime);
+        Map.Entry<LocalTime, Integer> firstTrain = scheduleTrain.firstEntry();
+        Map.Entry<LocalTime, Integer> lastTrain = scheduleTrain.lastEntry();
+
+         if(lowerTrain == null){
+
+            return (higherTrain.getKey().isAfter(timeArrive) || higherTrain.getKey().equals(timeArrive))
+                    && (lastTrain.getKey().plusMinutes(lastTrain.getValue()).isBefore(departureTime) || lastTrain.getKey().plusMinutes(lastTrain.getValue()).equals(departureTime));
+
+        } else if (higherTrain == null) {
+            return (lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).isBefore(departureTime) || lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).equals(departureTime))
+                    && (firstTrain.getKey().isAfter(timeArrive) || firstTrain.getKey().equals(timeArrive));
+
+        }
+         return (lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).isBefore(departureTime) || lowerTrain.getKey().plusMinutes(lowerTrain.getValue()).equals(departureTime))
+                 && (higherTrain.getKey().isAfter(timeArrive) || higherTrain.getKey().equals(timeArrive));
     }
 
     public static NavigableMap<LocalTime, Integer> getScheduleTrain() {
