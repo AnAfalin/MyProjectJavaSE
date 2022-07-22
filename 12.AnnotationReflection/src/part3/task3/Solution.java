@@ -17,7 +17,7 @@ public class Solution {
 
         Method doubleString = stringJavaClass.getDeclaredMethod("doubleString");
         doubleString.setAccessible(true);
-        String result = (String) doubleString.invoke(stringJavaClass);
+        String result = (String) doubleString.invoke(null);     //т.к вызываем статический метод, то можно передавать null
         System.out.println(result);
     }
 }
